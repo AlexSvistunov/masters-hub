@@ -6,10 +6,16 @@ const MiniCatalog = () => {
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Каталог</h2>
 
-        <div className="grid-cols-4">
+        <div className="cards grid gap-6 grid-cols-12">
           <CatalogCard />
           <CatalogCard />
           <CatalogCard />
+          <CatalogCard />
+          <CatalogCard />
+        </div>
+
+        <div className="flex justify-center p-4">
+          <button className="btn btn-secondary">Посмотреть все</button>
         </div>
       </div>
     </section>

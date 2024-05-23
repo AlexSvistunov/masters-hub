@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cards {
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.card {
+  grid-column: 3 span;
+}
+
+.category-card span {
+  transform: translate(-50%);
+}
