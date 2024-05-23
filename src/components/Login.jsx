@@ -11,7 +11,7 @@ const Login = () => {
         <dialog id="my_modal_3" className="modal" open>
           <div className="modal-box">
             <div className="flex flex-col gap-5 p-5">
-              <label className="input input-bordered flex items-center gap-2">
+              <label className="input input-bordered flex items-center gap-2 input-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -23,7 +23,7 @@ const Login = () => {
                 </svg>
                 <input type="text" className="grow" placeholder="Email" />
               </label>
-              <label className="input input-bordered flex items-center gap-2">
+              <label className="input input-bordered flex items-center gap-2 input-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
