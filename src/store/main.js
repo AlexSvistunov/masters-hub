@@ -3,6 +3,6 @@ import  themeSlice  from "./slices/ThemeSlice";
 
 export const store = configureStore({
   reducer: {
-    themeSlice
+    theme: themeSlice
   },
 });
