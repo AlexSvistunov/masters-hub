@@ -1,16 +1,35 @@
 import { Link } from "react-router-dom";
-import useThemeChanger from "../hooks/useThemeChanger";
+// import useThemeChanger from "../hooks/useThemeChanger";
 import { changeTheme, startTheme } from "../store/slices/ThemeSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     dispatch(startTheme());
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      const visible = prevScrollPos > currentScrollPos;
+      
+      setPrevScrollPos(currentScrollPos);
+      setVisible(visible);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos]);
 
   const stateTheme = useSelector((state) => state.theme.currentTheme);
   console.log(stateTheme);
@@ -21,7 +40,7 @@ const Header = () => {
   };
 
   return (
-    <div className="navbar justify-between p-5 container mx-auto">
+    <div className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-100 z-20 rounded-xl mt-8" style={{ top: visible ? '0' : '-120px', transition: '.3s ease'}}>
       <a className="font-bold text-3xl tracking-widest" href="">
         MASTERS HUB
       </a>
@@ -36,8 +55,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <p>Current Theme: {stateTheme}</p>
-        <label className="" onClick={handleThemeChange}>
+        <label className="" onClick={handleThemeChange} style={{cursor: 'pointer'}}>
           {stateTheme === "light" ? (
             <svg
               className="fill-current w-10 h-10"

@@ -3,6 +3,7 @@ import Hero from "../components/Hero"
 import MiniCatalog from "../components/MiniCatalog"
 import MiniCategories from "../components/MiniCategories"
 import Popular from "../components/Popular"
+import Tabs from "../components/Tabs"
 
 
 const LandingPage = () => {
@@ -10,6 +11,7 @@ const LandingPage = () => {
     <>  
         <Header/>
         <Hero/>
+        <Tabs/>
         <MiniCategories/>
         <Popular/>
         <MiniCatalog/>
