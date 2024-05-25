@@ -1,3 +1,5 @@
+import { useState } from "react"
+import EnrollModal from "../components/EnrollModal"
 import Header from "../components/Header"
 import Hero from "../components/Hero"
 import MiniCatalog from "../components/MiniCatalog"
@@ -7,6 +9,9 @@ import Tabs from "../components/Tabs"
 
 
 const LandingPage = () => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <>  
         <Header/>
@@ -14,7 +19,8 @@ const LandingPage = () => {
         <Tabs/>
         <MiniCategories/>
         <Popular/>
-        <MiniCatalog/>
+        <MiniCatalog setIsModalOpen={setIsModalOpen}/>
+        <EnrollModal isModalOpen={isModalOpen}/>
     </>
   )
 }

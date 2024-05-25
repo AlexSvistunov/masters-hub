@@ -1,4 +1,4 @@
-const CatalogCard = () => {
+const CatalogCard = ({setIsModalOpen}) => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl col-span-3">
       <figure>
@@ -11,7 +11,7 @@ const CatalogCard = () => {
         <h2 className="card-title">Eskova Studio</h2>
         <p>Ленина 54</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-secondary">Записаться</button>
+          <button className="btn btn-secondary" onClick={() => setIsModalOpen(true)}>Записаться</button>
         </div>
       </div>
     </div>
