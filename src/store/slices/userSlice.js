@@ -21,6 +21,27 @@ export const logIn = createAsyncThunk(
   }
 );
 
+
+export const register = createAsyncThunk(
+  "user/register",
+  async ({ password, username }) => {
+    try {
+      const response = await fetch(`${URL}/api/auth/token/register/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ password: password, username: username }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 export const logOut = createAsyncThunk("user/logOut", async ({ token }) => {
   try {
     await fetch(`${URL}/api/auth/token/logout/`, {

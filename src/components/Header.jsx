@@ -35,7 +35,6 @@ const Header = () => {
   console.log(stateTheme);
 
   const handleThemeChange = () => {
-    console.log("123");
     dispatch(changeTheme());
   };
 
