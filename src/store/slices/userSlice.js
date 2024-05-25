@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { URL } from "../../utils/backend-url";
 
+
 export const logIn = createAsyncThunk(
   "user/logIn",
   async ({ password, username }) => {
@@ -14,7 +15,7 @@ export const logIn = createAsyncThunk(
         body: JSON.stringify({ password: password, username: username }),
       });
       const data = await response.json();
-      console.log(data);
+      return data
     } catch (error) {
       console.log(error.message);
     }

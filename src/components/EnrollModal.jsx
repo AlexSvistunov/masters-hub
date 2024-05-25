@@ -10,7 +10,6 @@ const EnrollModal = ({isModalOpen}) => {
     "Подтверждение записи",
   ];
   const [step, setStep] = useState(0);
-  console.log(step);
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
