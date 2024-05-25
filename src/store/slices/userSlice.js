@@ -9,7 +9,6 @@ export const logIn = createAsyncThunk(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:5173",
         },
 
         body: JSON.stringify({ password: password, username: username }),
@@ -22,13 +21,57 @@ export const logIn = createAsyncThunk(
   }
 );
 
+export const logOut = createAsyncThunk("user/logOut", async ({ token }) => {
+  try {
+    await fetch(`${URL}/api/auth/token/logout/`, {
+      method: "POST",
+
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
+
 const initialState = {
-  token: null,
+  token: localStorage.getItem("token")?.length
+    ? localStorage.getItem("token")
+    : null,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    removeUser: (state) => {
+      localStorage.removeItem("token");
+      state.token = null;
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(logIn.fulfilled, (state, action) => {
+      if (action.payload.auth_token) {
+        state.token = action.payload.auth_token;
+        localStorage.setItem("token", action.payload.auth_token);
+      }
+
+      if (action.payload["non_field_errors"]) {
+        alert(action.payload["non_field_errors"][0]);
+      }
+    });
+
+    builder.addCase(logOut.fulfilled, (state) => {
+      localStorage.removeItem("token");
+      state.token = null;
+    });
+
+    builder.addCase(logOut.rejected, () => {
+      alert("Вы не можете выйти с аккаунта");
+    });
+  },
 });
 
 export default userSlice.reducer;
