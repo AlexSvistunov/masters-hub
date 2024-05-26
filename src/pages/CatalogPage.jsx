@@ -26,7 +26,7 @@ const CatalogPage = () => {
             </div>
 
             <aside className="col-start-10 col-end-13 p-5 rounded-xl bg-base-200 max-w-64 ml-auto">
-              <label className="input input-bordered flex items-center gap-2">
+              <label className="input flex items-center gap-2">
                 <input type="text" className="grow" placeholder="Search" />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,10 @@
+import { useState } from "react";
+
 const CatalogCard = ({setIsModalOpen}) => {
+
+  const [isFav, setIsFav] = useState(false)
+
+
   return (
     <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
       <div className="flex items-center gap-5 mb-5">
@@ -9,20 +15,20 @@ const CatalogCard = ({setIsModalOpen}) => {
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
-        <div className="flex gap-1 items-center rounded-xl bg-base-300 max-w-fit px-2 py-1">
+        <div className="flex gap-1 items-center rounded-xl bg-base-300 px-3">
           <img className="h-3 w-3" src="https://dikidi.ru/assets/images/catalog/star.png"></img>
           <div>4.9 <span>(33)</span></div>
         </div>
         <button className="btn btn-primary">Записаться</button>
       </footer>
 
-      <button className="absolute top-4 right-4">
+      <button className="absolute top-4 right-4" onClick={() => setIsFav(!isFav)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
+                stroke={isFav ? 'rgb(99, 111, 228)' : 'currentColor'}
               >
                 <path
                   strokeLinecap="round"
