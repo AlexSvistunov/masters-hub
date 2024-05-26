@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <div
-      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-100 z-20 rounded-xl mt-8"
+      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8"
       style={{ top: visible ? "0" : "-120px", transition: ".3s ease" }}
     >
       <Link to={'/'} className="font-bold text-3xl tracking-widest" href="">

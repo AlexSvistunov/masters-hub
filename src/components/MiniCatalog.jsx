@@ -15,7 +15,7 @@ const MiniCatalog = ({setIsModalOpen}) => {
         </div>
 
         <div className="flex justify-center p-4">
-          <button className="btn btn-secondary">Посмотреть все</button>
+          <button className="btn">Посмотреть все</button>
         </div>
       </div>
     </section>

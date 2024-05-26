@@ -9,11 +9,11 @@ const CatalogCard = ({setIsModalOpen}) => {
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
-        <div className="flex gap-1 items-center rounded-md bg-base-300 max-w-fit px-2 py-1">
+        <div className="flex gap-1 items-center rounded-xl bg-base-300 max-w-fit px-2 py-1">
           <img className="h-3 w-3" src="https://dikidi.ru/assets/images/catalog/star.png"></img>
           <div>4.9 <span>(33)</span></div>
         </div>
-        <button>Записаться</button>
+        <button className="btn btn-primary">Записаться</button>
       </footer>
 
       <button className="absolute top-4 right-4">

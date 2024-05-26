@@ -4,6 +4,8 @@ import RegisterPage from "../pages/RegisterPage"
 import LoginPage from "../pages/LoginPage"
 import MasterPage from "../pages/MasterPage"
 import CatalogPage from "../pages/CatalogPage"
+import FavoritesPage from "../pages/FavoritesPage"
+import NotesPage from "../pages/NotesPage"
 
 const AppRoutes = () => {
   return (
@@ -14,6 +16,8 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage/>}></Route>
         <Route path="/profile" element={<MasterPage/>}></Route>
         <Route path="/catalog" element={<CatalogPage/>}></Route>
+        <Route path="/favorites" element={<FavoritesPage/>}></Route>
+        <Route path="/notes" element={<NotesPage/>}></Route>
       </Routes>
     </div>
   )

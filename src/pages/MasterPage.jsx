@@ -118,7 +118,7 @@ const MasterPage = () => {
             </div>
 
             <div className="flex justify-center mt-auto">
-              <button className="btn btn-primary">Посмотреть все</button>
+              <button className="btn">Посмотреть все</button>
             </div>
           </div>
 
@@ -404,7 +404,7 @@ const MasterPage = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <button className="btn btn-primary">Показать еще</button>
+              <button className="btn">Показать еще</button>
             </div>
           </div>
         </div>
