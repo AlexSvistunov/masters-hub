@@ -3,6 +3,7 @@ import LandingPage from "../pages/LandingPage"
 import RegisterPage from "../pages/RegisterPage"
 import LoginPage from "../pages/LoginPage"
 import MasterPage from "../pages/MasterPage"
+import CatalogPage from "../pages/CatalogPage"
 
 const AppRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
         <Route path="/register" element={<RegisterPage/>}></Route>
         <Route path="/login" element={<LoginPage/>}></Route>
         <Route path="/profile" element={<MasterPage/>}></Route>
+        <Route path="/catalog" element={<CatalogPage/>}></Route>
       </Routes>
     </div>
   )

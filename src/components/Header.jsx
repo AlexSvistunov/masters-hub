@@ -40,9 +40,9 @@ const Header = () => {
       className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-100 z-20 rounded-xl mt-8"
       style={{ top: visible ? "0" : "-120px", transition: ".3s ease" }}
     >
-      <a className="font-bold text-3xl tracking-widest" href="">
+      <Link to={'/'} className="font-bold text-3xl tracking-widest" href="">
         MASTERS HUB
-      </a>
+      </Link>
 
       <div className="flex items-center gap-8">
         <div className="flex gap-5">
