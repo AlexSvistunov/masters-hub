@@ -12,28 +12,30 @@ const Auth = ({ keyword, authHandler }) => {
       {keyword === "Зарегистрироваться" && isModalOpen && (
         <dialog id="my_modal_3" className="modal" open>
           <div className="modal-box">
-            <div role="tablist" className="tabs tabs-boxed">
-              <button
-                role="tab"
-                className={activeTab === "Клиент" ? "tab tab-active" : "tab"}
-                onClick={() => setActiveTab("Клиент")}
-              >
-                Клиент
-              </button>
-              <button
-                role="tab"
-                className={activeTab === "Мастер" ? "tab tab-active" : "tab"}
-                onClick={() => setActiveTab("Мастер")}
-              >
-                Мастер
-              </button>
-              <button
-                role="tab"
-                className={activeTab === "Студия" ? "tab tab-active" : "tab"}
-                onClick={() => setActiveTab("Студия")}
-              >
-                Студия
-              </button>
+            <div className="px-5">
+              <div role="tablist" className="tabs tabs-boxed">
+                <button
+                  role="tab"
+                  className={activeTab === "Клиент" ? "tab tab-active" : "tab"}
+                  onClick={() => setActiveTab("Клиент")}
+                >
+                  Клиент
+                </button>
+                <button
+                  role="tab"
+                  className={activeTab === "Мастер" ? "tab tab-active" : "tab"}
+                  onClick={() => setActiveTab("Мастер")}
+                >
+                  Мастер
+                </button>
+                <button
+                  role="tab"
+                  className={activeTab === "Студия" ? "tab tab-active" : "tab"}
+                  onClick={() => setActiveTab("Студия")}
+                >
+                  Студия
+                </button>
+              </div>
             </div>
             <div className="flex flex-col gap-5 p-5">
               <label className="input input-bordered flex items-center gap-2 input-primary">
@@ -95,7 +97,16 @@ const Auth = ({ keyword, authHandler }) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </label>
-              <button onClick={() => authHandler({email, username, specialization: activeTab, password})}>
+              <button
+                onClick={() =>
+                  authHandler({
+                    email,
+                    username,
+                    specialization: activeTab,
+                    password,
+                  })
+                }
+              >
                 {keyword}
               </button>
             </div>
@@ -106,6 +117,31 @@ const Auth = ({ keyword, authHandler }) => {
       {keyword === "Войти" && isModalOpen && (
         <dialog id="my_modal_3" className="modal" open>
           <div className="modal-box">
+          <div className="px-5">
+              <div role="tablist" className="tabs tabs-boxed">
+                <button
+                  role="tab"
+                  className={activeTab === "Клиент" ? "tab tab-active" : "tab"}
+                  onClick={() => setActiveTab("Клиент")}
+                >
+                  Клиент
+                </button>
+                <button
+                  role="tab"
+                  className={activeTab === "Мастер" ? "tab tab-active" : "tab"}
+                  onClick={() => setActiveTab("Мастер")}
+                >
+                  Мастер
+                </button>
+                <button
+                  role="tab"
+                  className={activeTab === "Студия" ? "tab tab-active" : "tab"}
+                  onClick={() => setActiveTab("Студия")}
+                >
+                  Студия
+                </button>
+              </div>
+            </div>
             <div className="flex flex-col gap-5 p-5">
               <label className="input input-bordered flex items-center gap-2 input-primary">
                 <svg
@@ -121,10 +157,11 @@ const Auth = ({ keyword, authHandler }) => {
                   type="text"
                   className="grow"
                   placeholder="Email"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </label>
+
               <label className="input input-bordered flex items-center gap-2 input-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +183,16 @@ const Auth = ({ keyword, authHandler }) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </label>
-              <button onClick={() => authHandler(username, password)}>
+              <button
+                onClick={() =>
+                  authHandler({
+                    email,
+                    username,
+                    specialization: activeTab,
+                    password,
+                  })
+                }
+              >
                 {keyword}
               </button>
             </div>
