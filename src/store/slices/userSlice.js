@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { URL } from "../../utils/backend-url";
 
-
 export const logIn = createAsyncThunk(
   "user/logIn",
   async ({ password, username }) => {
@@ -15,13 +14,12 @@ export const logIn = createAsyncThunk(
         body: JSON.stringify({ password: password, username: username }),
       });
       const data = await response.json();
-      return data
+      return data;
     } catch (error) {
       console.log(error.message);
     }
   }
 );
-
 
 export const register = createAsyncThunk(
   "user/register",
@@ -37,6 +35,36 @@ export const register = createAsyncThunk(
       });
       const data = await response.json();
       console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
+export const signUp = createAsyncThunk(
+  "user/signUp",
+  async ({ email, username, specialization, password }) => {
+    console.log(email)
+    console.log(username)
+    console.log(specialization)
+    console.log(password)
+    try {
+      const response = await fetch(`${URL}/api/users/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          username,
+          specialization,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error.message);
     }
