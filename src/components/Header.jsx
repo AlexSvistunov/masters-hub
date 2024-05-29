@@ -40,7 +40,11 @@ const Header = () => {
       className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8"
       style={{ top: visible ? "0" : "-120px", transition: ".3s ease" }}
     >
-      <Link to={'/'} className="font-bold text-3xl tracking-widest block flex items-center gap-1" href="">
+      <Link
+        to={"/"}
+        className="font-bold text-3xl tracking-widest block flex items-center gap-1"
+        href=""
+      >
         MASTERS <span className="text-primary">HUB</span>
       </Link>
 
@@ -55,7 +59,48 @@ const Header = () => {
                 Зарегистрироваться
               </Link>
             </>
-          ) : <button className="btn btn-primary" onClick={() => dispatch(logOut({token}))}>Выйти</button>}
+          ) : (
+            <div className="">
+              
+              <details className="dropdown">
+                <summary className="m-1 btn bg-base-300 border-base-300">
+                  <div className="avatar bg">
+                    <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                  </div>
+                </summary>
+                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                <li>
+                    <Link to='/'>Главная</Link>
+                  </li>
+                  <li>
+                    <Link to='/notes'>Мои записи</Link>
+                  </li>
+
+                  <li>
+                    <Link to='/favorites'>Избранное</Link>
+                  </li>
+
+                  <li>
+                    <a>
+                      Мои проекты <span className="text-accent">business</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a>
+                      Мой профиль <span className="text-accent">business</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <button onClick={() => dispatch(logOut({ token }))}>Выйти</button>
+                  </li>
+                </ul>
+              </details>
+            </div>
+          )}
         </div>
 
         <label
@@ -82,8 +127,6 @@ const Header = () => {
           )}
         </label>
       </div>
-
-
     </div>
   );
 };

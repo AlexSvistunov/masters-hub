@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../store/slices/ThemeSlice";
+import { logOut } from "../store/slices/userSlice";
 
 const HeaderBusiness = () => {
   const dispatch = useDispatch();
@@ -8,6 +9,8 @@ const HeaderBusiness = () => {
   const handleThemeChange = () => {
     dispatch(changeTheme());
   };
+
+  const token = useSelector((state) => state.user.token);
   return (
     <header className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8">
       <div className="container mx-auto">
@@ -21,13 +24,43 @@ const HeaderBusiness = () => {
           </Link>
 
           <div className="flex items-center gap-8">
-            <div className="flex items-center gap-3">
-              <Link to={"/login"} className="btn btn-accent">
-                Войти
-              </Link>
-              <Link to={"/register"} className="btn btn-accent">
-                Зарегистрироваться
-              </Link>
+            <div className="flex gap-5">
+              {!token ? (
+                <>
+                  <Link to={"/login"} className="btn btn-accent">
+                    Войти
+                  </Link>
+                  <Link to={"/register"} className="btn btn-accent">
+                    Зарегистрироваться
+                  </Link>
+                </>
+              ) : (
+                <div className="">
+                  <details className="dropdown">
+                    <summary className="m-1 btn bg-base-300 border-base-300">
+                      <div className="avatar bg">
+                        <div className="w-10 h-10 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
+                          <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        </div>
+                      </div>
+                    </summary>
+                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                      <li>
+                        <Link to='/business/profile'>Мой профиль</Link>
+                      </li>
+
+                      <li>
+                        <a>Мои проекты</a>
+                      </li>
+                      <li>
+                        <button onClick={() => dispatch(logOut({ token }))}>
+                          Выйти
+                        </button>
+                      </li>
+                    </ul>
+                  </details>
+                </div>
+              )}
             </div>
 
             <label

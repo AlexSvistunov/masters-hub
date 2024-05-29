@@ -7,6 +7,7 @@ import CatalogPage from "../pages/CatalogPage"
 import FavoritesPage from "../pages/FavoritesPage"
 import NotesPage from "../pages/NotesPage"
 import BusinessPage from "../pages/BusinessPage"
+import BusinessProfilePage from "../pages/BusinessProfilePage"
 
 
 const AppRoutes = () => {
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/favorites" element={<FavoritesPage/>}></Route>
         <Route path="/notes" element={<NotesPage/>}></Route>
         <Route path="/business" element={<BusinessPage/>}></Route>
+        <Route path="/business/profile" element={<BusinessProfilePage/>}></Route>
       </Routes>
     </div>
   )

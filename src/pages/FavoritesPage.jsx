@@ -2,13 +2,14 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
+import CatalogCard from "../components/CatalogCard";
 
 const FavoritesPage = () => {
   const { token } = useAuth();
   return (
     <div>
       <Header />
-      <Hero/>
+      <Hero />
       <div className="container mx-auto">
         <Tabs />
 
@@ -18,6 +19,10 @@ const FavoritesPage = () => {
               Авторизируйтесь, чтобы посмотреть избранное
             </div>
           )}
+
+          <div className="p-5">
+            <CatalogCard />
+          </div>
         </div>
       </div>
     </div>

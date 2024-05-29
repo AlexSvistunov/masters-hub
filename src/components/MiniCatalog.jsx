@@ -1,4 +1,5 @@
 import CatalogCard from "./CatalogCard";
+import { Link } from "react-router-dom";
 
 const MiniCatalog = ({setIsModalOpen}) => {
   return (
@@ -15,7 +16,7 @@ const MiniCatalog = ({setIsModalOpen}) => {
         </div>
 
         <div className="flex justify-center p-4">
-          <button className="btn">Посмотреть все</button>
+          <Link className="btn" to='/catalog'>Посмотреть все</Link>
         </div>
       </div>
     </section>
