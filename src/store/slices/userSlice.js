@@ -4,6 +4,8 @@ import { URL } from "../../utils/backend-url";
 export const logIn = createAsyncThunk(
   "user/logIn",
   async ({ password, email }) => {
+    console.log(password)
+    console.log(email)
 
     try {
       const response = await fetch(`${URL}/api/auth/token/login/`, {
