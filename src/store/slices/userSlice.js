@@ -4,8 +4,7 @@ import { URL } from "../../utils/backend-url";
 export const logIn = createAsyncThunk(
   "user/logIn",
   async ({ password, email }) => {
-    console.log(password)
-    console.log(email)
+
 
     try {
       const response = await fetch(`${URL}/api/auth/token/login/`, {
@@ -20,38 +19,15 @@ export const logIn = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   }
 );
 
-// export const register = createAsyncThunk(
-//   "user/register",
-//   async ({ password, username }) => {
-//     try {
-//       const response = await fetch(`${URL}/api/auth/token/register/`, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-
-//         body: JSON.stringify({ password: password, username: username }),
-//       });
-//       const data = await response.json();
-//       console.log(data);
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   }
-// );
-
 export const signUp = createAsyncThunk(
   "user/signUp",
   async ({ email, username, specialization, password }) => {
-    console.log(email)
-    console.log(username)
-    console.log(specialization)
-    console.log(password)
+
     try {
       const response = await fetch(`${URL}/api/users/`, {
         method: "POST",
@@ -66,20 +42,10 @@ export const signUp = createAsyncThunk(
         }),
       });
 
-      if(response.ok) {
-        const data = await response.json();
-        console.log(data)
-        return data
-      } else {
-        const errorMessage = await response.json();
-        throw new Error(JSON.stringify(errorMessage))
-
-      }
-
-  
+      const data = await response.json();
+      return data;
     } catch (error) {
-      throw new Error(error.message)
-
+      alert(error);
     }
   }
 );
@@ -116,18 +82,17 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
-      console.log('fulfilled')
       if (action.payload.auth_token) {
         state.token = action.payload.auth_token;
         localStorage.setItem("token", action.payload.auth_token);
+      } else {
+        for(let key in action.payload) {
+          alert(`Некорректный ${key}`)
+        }
       }
 
-    })
 
-    builder.addCase(signUp.rejected, (state, action) => {
-      console.log('rejected')
-      console.log(action.payload)
-    })
+    });
 
     builder.addCase(logIn.fulfilled, (state, action) => {
       if (action.payload.auth_token) {

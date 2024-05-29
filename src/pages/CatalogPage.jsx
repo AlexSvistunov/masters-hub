@@ -1,13 +1,15 @@
 import CatalogCard from "../components/CatalogCard";
 import Header from "../components/Header";
+import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 
 const CatalogPage = () => {
   return (
     <>
       <Header />
+      <Hero/>
 
-      <div className="pt-40">
+      <div className="">
         <Tabs />
         <section className="">
           <div className="container mx-auto grid grid-cols-12 gap-8">

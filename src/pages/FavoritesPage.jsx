@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
 
@@ -7,7 +8,8 @@ const FavoritesPage = () => {
   return (
     <div>
       <Header />
-      <div className="pt-40 container mx-auto">
+      <Hero/>
+      <div className="container mx-auto">
         <Tabs />
 
         <div>

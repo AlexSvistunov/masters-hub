@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -10,7 +11,11 @@ const Hero = () => {
             Онлайн-запись, напоминания клиентам и ведение клиентской базы для
             профессионалов индустрии красоты.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+
+          <div className="flex items-center gap-3 justify-center">
+            <button className="btn btn-primary">Для мастера</button>
+            <Link className="btn btn-primary" to={'/business'}>Для бизнеса</Link>
+          </div>
         </div>
       </div>
     </div>
