@@ -187,8 +187,6 @@ const Auth = ({ keyword, authHandler }) => {
                 onClick={() =>
                   authHandler({
                     email,
-                    username,
-                    specialization: activeTab,
                     password,
                   })
                 }

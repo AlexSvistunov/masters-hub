@@ -3,7 +3,8 @@ import { URL } from "../../utils/backend-url";
 
 export const logIn = createAsyncThunk(
   "user/logIn",
-  async ({ password, username }) => {
+  async ({ password, email }) => {
+
     try {
       const response = await fetch(`${URL}/api/auth/token/login/`, {
         method: "POST",
@@ -11,8 +12,9 @@ export const logIn = createAsyncThunk(
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify({ password: password, username: username }),
+        body: JSON.stringify({ password: password, email: email }),
       });
+
       const data = await response.json();
       return data;
     } catch (error) {
@@ -21,25 +23,25 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
-  "user/register",
-  async ({ password, username }) => {
-    try {
-      const response = await fetch(`${URL}/api/auth/token/register/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+// export const register = createAsyncThunk(
+//   "user/register",
+//   async ({ password, username }) => {
+//     try {
+//       const response = await fetch(`${URL}/api/auth/token/register/`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
 
-        body: JSON.stringify({ password: password, username: username }),
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-);
+//         body: JSON.stringify({ password: password, username: username }),
+//       });
+//       const data = await response.json();
+//       console.log(data);
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   }
+// );
 
 export const signUp = createAsyncThunk(
   "user/signUp",
@@ -62,11 +64,20 @@ export const signUp = createAsyncThunk(
         }),
       });
 
-      const data = await response.json();
-      console.log(data);
-      return data;
+      if(response.ok) {
+        const data = await response.json();
+        console.log(data)
+        return data
+      } else {
+        const errorMessage = await response.json();
+        throw new Error(JSON.stringify(errorMessage))
+
+      }
+
+  
     } catch (error) {
-      console.log(error.message);
+      throw new Error(error.message)
+
     }
   }
 );
@@ -102,6 +113,20 @@ const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    builder.addCase(signUp.fulfilled, (state, action) => {
+      console.log('fulfilled')
+      if (action.payload.auth_token) {
+        state.token = action.payload.auth_token;
+        localStorage.setItem("token", action.payload.auth_token);
+      }
+
+    })
+
+    builder.addCase(signUp.rejected, (state, action) => {
+      console.log('rejected')
+      console.log(action.payload)
+    })
+
     builder.addCase(logIn.fulfilled, (state, action) => {
       if (action.payload.auth_token) {
         state.token = action.payload.auth_token;

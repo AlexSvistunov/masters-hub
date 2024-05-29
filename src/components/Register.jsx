@@ -1,6 +1,6 @@
 
 import { useDispatch } from "react-redux";
-import { register, signUp } from "../store/slices/userSlice";
+import { signUp } from "../store/slices/userSlice";
 import Auth from "./Auth";
 
 

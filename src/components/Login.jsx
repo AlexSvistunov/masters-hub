@@ -8,8 +8,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const loginHandler = async (username, password) => {
-    await dispatch(logIn({ username, password })).then((data) => {
+  const loginHandler = async ({email, password}) => {
+    console.log(email)
+    console.log(password)
+    await dispatch(logIn({ email, password })).then((data) => {
       if (data.payload.auth_token) {
         navigate('/');
       }
