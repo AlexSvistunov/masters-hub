@@ -1,61 +1,113 @@
 import { Link } from "react-router-dom";
 // import useThemeChanger from "../hooks/useThemeChanger";
-import { changeTheme, startTheme } from "../store/slices/ThemeSlice";
+import { changeTheme } from "../store/slices/ThemeSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
+import { logOut } from "../store/slices/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    dispatch(startTheme());
-  }, []);
+  const token = useSelector((state) => state.user.token);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       const visible = prevScrollPos > currentScrollPos;
-      
+
       setPrevScrollPos(currentScrollPos);
       setVisible(visible);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollPos]);
 
   const stateTheme = useSelector((state) => state.theme.currentTheme);
-  console.log(stateTheme);
 
   const handleThemeChange = () => {
-    console.log("123");
     dispatch(changeTheme());
   };
 
   return (
-    <div className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-100 z-20 rounded-xl mt-8" style={{ top: visible ? '0' : '-120px', transition: '.3s ease'}}>
-      <a className="font-bold text-3xl tracking-widest" href="">
-        MASTERS HUB
-      </a>
+    <div
+      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8"
+      style={{ top: visible ? "0" : "-120px", transition: ".3s ease" }}
+    >
+      <Link
+        to={"/"}
+        className="font-bold text-3xl tracking-widest block flex items-center gap-1"
+        href=""
+      >
+        MASTERS <span className="text-primary">HUB</span>
+      </Link>
 
       <div className="flex items-center gap-8">
         <div className="flex gap-5">
-          <Link to={"/login"} className="btn btn-primary">
-            Войти
-          </Link>
-          <Link to={"/register"} className="btn btn-primary">
-            Зарегистрироваться
-          </Link>
+          {!token ? (
+            <>
+              <Link to={"/login"} className="btn btn-primary">
+                Войти
+              </Link>
+              <Link to={"/register"} className="btn btn-primary">
+                Зарегистрироваться
+              </Link>
+            </>
+          ) : (
+            <div className="">
+              
+              <details className="dropdown">
+                <summary className="m-1 btn bg-base-300 border-base-300">
+                  <div className="avatar bg">
+                    <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                  </div>
+                </summary>
+                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                <li>
+                    <Link to='/'>Главная</Link>
+                  </li>
+                  <li>
+                    <Link to='/notes'>Мои записи</Link>
+                  </li>
+
+                  <li>
+                    <Link to='/favorites'>Избранное</Link>
+                  </li>
+
+                  <li>
+                    <a>
+                      Мои проекты <span className="text-accent">business</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a>
+                      Мой профиль <span className="text-accent">business</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <button onClick={() => dispatch(logOut({ token }))}>Выйти</button>
+                  </li>
+                </ul>
+              </details>
+            </div>
+          )}
         </div>
 
-        <label className="" onClick={handleThemeChange} style={{cursor: 'pointer'}}>
+        <label
+          className=""
+          onClick={handleThemeChange}
+          style={{ cursor: "pointer" }}
+        >
           {stateTheme === "light" ? (
             <svg
               className="fill-current w-10 h-10"
