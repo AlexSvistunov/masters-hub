@@ -1,17 +1,18 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const CatalogCard = ({setIsModalOpen}) => {
+const CatalogCard = ({setIsModalOpen, catalogItem}) => {
 
   const [isFav, setIsFav] = useState(false)
 
-
   return (
     <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
+      <Link className="absolute inset-0" to={`/profile/${catalogItem.id}`}/>
       <div className="flex items-center gap-5 mb-5">
         <img className="w-16 h-16 rounded-lg" src="https://f1.dikidi.ru/c8/v7611/4q9bokl6bv.jpg?size=m"></img>
         <div className="flex flex-col gap-1">
-          <span className="text-xl">Beauty break</span>
-          <span>Московский проспект 11</span>
+          <span className="text-xl">{catalogItem.name}</span>
+          <span>{catalogItem.address}</span>
         </div>
       </div>
       <footer className="flex justify-between mt-auto">

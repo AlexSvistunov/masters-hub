@@ -1,22 +1,49 @@
+import { useEffect, useState } from "react";
 import CatalogCard from "./CatalogCard";
 import { Link } from "react-router-dom";
+import { URL } from "../utils/backend-url";
 
-const MiniCatalog = ({setIsModalOpen}) => {
+const MiniCatalog = ({ setIsModalOpen }) => {
+  const [catalogItems, setCatalogItems] = useState({});
+
+  console.log(catalogItems);
+  const getCatalogItem = async () => {
+    try {
+      const reponse = await fetch(`${URL}/api/users/1/`);
+      const data = await reponse.json();
+      console.log(data);
+      setCatalogItems(data);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getCatalogItem();
+  }, []);
   return (
     <section className="p-7">
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Каталог</h2>
-
-        <div className="cards grid gap-6 grid-cols-12">
-          <CatalogCard setIsModalOpen={setIsModalOpen} />
-          <CatalogCard setIsModalOpen={setIsModalOpen} />
-          <CatalogCard setIsModalOpen={setIsModalOpen} />
-          <CatalogCard setIsModalOpen={setIsModalOpen} />
-          <CatalogCard setIsModalOpen={setIsModalOpen} />
-        </div>
+        <></>
+        {['detail'] in catalogItems? (
+          <h2 className="text-center text-2xl my-3">
+            Нет каталога, нужно его добавить
+          </h2>
+        ) : (
+          <div className="cards grid gap-6 grid-cols-12">
+            <CatalogCard
+              key={catalogItems.id}
+              setIsModalOpen={setIsModalOpen}
+              catalogItem={catalogItems}
+            />
+          </div>
+        )}
 
         <div className="flex justify-center p-4">
-          <Link className="btn" to='/catalog'>Посмотреть все</Link>
+          <Link className="btn" to="/catalog">
+            Посмотреть все
+          </Link>
         </div>
       </div>
     </section>
