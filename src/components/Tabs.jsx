@@ -1,16 +1,19 @@
+import { Link, NavLink } from "react-router-dom";
 
 const Tabs = () => {
   return (
     <div className="my-2">
-      <div className="container mx-auto bg-base-200 rounded-lg p-2">
+      <div className="container mx-auto rounded-lg p-2">
         <div className="w-full flex justify-center gap-4">
-          <button className="btn btn-primary">Подборка</button>
-          <button className="btn btn-secondary">Каталог</button>
-          <button className="btn btn-accent">Мои записи</button>
+          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/'}>Подборка</NavLink>
+          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/catalog'}>Каталог</NavLink>
+          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/favorites'}>Избранное</NavLink>
+          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/notes'}>Мои записи</NavLink>
         </div>
       </div>
     </div>
-  )
-}
 
-export default Tabs
+  );
+};
+
+export default Tabs;
