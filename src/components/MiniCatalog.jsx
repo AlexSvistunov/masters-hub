@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 
 const MiniCatalog = ({ setIsModalOpen }) => {
-  const [catalogItems, setCatalogItems] = useState({});
+  const [catalogItems, setCatalogItems] = useState([]);
 
   console.log(catalogItems);
   const getCatalogItem = async () => {
     try {
-      const reponse = await fetch(`${URL}/api/users/1/`);
+      const reponse = await fetch(`${URL}/api/catalog/`);
       const data = await reponse.json();
       console.log(data);
       setCatalogItems(data);
@@ -26,17 +26,19 @@ const MiniCatalog = ({ setIsModalOpen }) => {
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Каталог</h2>
         <></>
-        {['detail'] in catalogItems? (
+        {["detail"] in catalogItems ? (
           <h2 className="text-center text-2xl my-3">
             Нет каталога, нужно его добавить
           </h2>
         ) : (
           <div className="cards grid gap-6 grid-cols-12">
-            <CatalogCard
-              key={catalogItems.id}
-              setIsModalOpen={setIsModalOpen}
-              catalogItem={catalogItems}
-            />
+            {catalogItems.map((catalogItem) => (
+              <CatalogCard
+                key={catalogItem.id}
+                setIsModalOpen={setIsModalOpen}
+                catalogItem={catalogItem}
+              />
+            ))}
           </div>
         )}
 

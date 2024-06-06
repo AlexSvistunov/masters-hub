@@ -1,9 +1,28 @@
+import { useEffect, useState } from "react";
 import CatalogCard from "../components/CatalogCard";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
+import { URL } from "../utils/backend-url";
 
 const CatalogPage = () => {
+  const [catalog, setCatalog] = useState([])
+
+  const fetchCatalog = async () => {
+    try {
+      const response = await fetch(`${URL}/api/catalog/`)
+      const data = await response.json()
+      setCatalog(data)
+      console.log(data)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  useEffect(() => {
+    fetchCatalog()
+  }, [])
+
   return (
     <>
       <Header />
@@ -16,10 +35,10 @@ const CatalogPage = () => {
             <div className="col-span-9">
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
+                {catalog.map((catalogItem) => (
+                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id}/>
+                ))}
+
               </div>
 
               <div className="flex justify-center p-5">
