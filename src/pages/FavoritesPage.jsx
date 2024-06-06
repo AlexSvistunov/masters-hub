@@ -21,7 +21,7 @@ const FavoritesPage = () => {
           )}
 
           <div className="p-5">
-            <CatalogCard />
+            {/* <CatalogCard /> */}
           </div>
         </div>
       </div>
