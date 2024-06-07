@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
 
+  const averageRating = masterData?.reviews?.average_rating;
+  const formattedRating =
+    averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
+
   const { id } = useParams();
   console.log(id);
 
@@ -48,7 +52,7 @@ const MasterPage = () => {
 
                   <div className="flex items-center gap-2">
                     <span className="text-5xl">
-                      {masterData.reviews?.average_rating}
+                      {formattedRating}
                     </span>
                     <div className="flex flex-col">
                       <div className="rating">
@@ -365,7 +369,7 @@ const MasterPage = () => {
                           ></img>
                           <div className="font-medium dark:text-white">
                             <p>
-                             {review.user_name}
+                              {review.user_name}
                               <time
                                 dateTime="2014-08-16 19:00"
                                 className="block text-sm text-gray-500 dark:text-gray-400"

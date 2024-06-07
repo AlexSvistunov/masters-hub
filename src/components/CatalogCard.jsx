@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 const CatalogCard = ({setIsModalOpen, catalogItem}) => {
 
   const [isFav, setIsFav] = useState(false)
+  const averageRating = catalogItem?.reviews?.average_rating;
+  const formattedRating =
+    averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
   return (
     <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
@@ -18,7 +21,7 @@ const CatalogCard = ({setIsModalOpen, catalogItem}) => {
       <footer className="flex justify-between mt-auto">
         <div className="flex gap-1 items-center rounded-xl bg-base-300 px-3">
           <img className="h-3 w-3" src="https://dikidi.ru/assets/images/catalog/star.png"></img>
-          <div>4.9 <span>(33)</span></div>
+          <div>{formattedRating}<span>{`(${catalogItem?.reviews?.count})`}</span></div>
         </div>
         <button className="btn btn-primary">Записаться</button>
       </footer>

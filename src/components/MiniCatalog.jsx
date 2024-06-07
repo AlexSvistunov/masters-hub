@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 
 const MiniCatalog = ({ setIsModalOpen }) => {
+  
   const [catalogItems, setCatalogItems] = useState([]);
 
   console.log(catalogItems);
