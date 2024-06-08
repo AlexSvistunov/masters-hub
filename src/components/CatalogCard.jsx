@@ -1,27 +1,30 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import {URL} from '../utils/backend-url'
+import { URL } from "../utils/backend-url";
 
-const CatalogCard = ({ setIsModalOpen, catalogItem, token }) => {
-console.log(token)
+const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList }) => {
+  const item = favList.find((el) => el.id === catalogItem.id);
+
   const addToFav = async () => {
     try {
-      const response = await fetch(`${URL}/api/favorites/?id=${catalogItem.id}`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${URL}/api/favorites/?id=${catalogItem.id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
       const data = await response.json();
       console.log(data);
-      return data
+      return data;
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const [isFav, setIsFav] = useState(false);
   const averageRating = catalogItem?.reviews?.average_rating;
   const formattedRating =
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
@@ -56,16 +59,13 @@ console.log(token)
       <button
         className="absolute top-4 right-4"
         onClick={() => {
-          addToFav().then(data => {
-            if(data?.error) {
-              return
+          addToFav().then((data) => {
+            if (data?.error) {
+              return;
             }
 
-            if(data) {
-              setIsFav(data)
-            }
-          })
-         
+           
+          });
         }}
       >
         <svg
@@ -73,7 +73,7 @@ console.log(token)
           className="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
-          stroke={isFav ? "rgb(99, 111, 228)" : "currentColor"}
+          stroke={item ? "rgb(99, 111, 228)" : "currentColor"}
         >
           <path
             strokeLinecap="round"

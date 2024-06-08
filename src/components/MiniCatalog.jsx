@@ -5,9 +5,28 @@ import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 
 const MiniCatalog = ({ setIsModalOpen }) => {
-  const {currentToken} = useAuth()
   const [catalogItems, setCatalogItems] = useState([]);
-  
+  const [favList, setFavList] = useState([])
+  const { currentToken } = useAuth();
+
+  const getFav = async () => {
+    try {
+      const response = await fetch(`${URL}/api/favorites/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+
+    
+      const data = await response.json();
+      setFavList(data)
+      
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   console.log(catalogItems);
   const getCatalogItem = async () => {
@@ -23,6 +42,7 @@ const MiniCatalog = ({ setIsModalOpen }) => {
   };
   useEffect(() => {
     getCatalogItem();
+    getFav();
   }, []);
   return (
     <section className="p-7">
@@ -41,6 +61,7 @@ const MiniCatalog = ({ setIsModalOpen }) => {
                 setIsModalOpen={setIsModalOpen}
                 catalogItem={catalogItem}
                 token={currentToken}
+                favList={favList}
               />
             ))}
           </div>
