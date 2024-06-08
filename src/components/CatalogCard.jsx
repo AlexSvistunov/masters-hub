@@ -15,6 +15,7 @@ console.log(token)
       });
       const data = await response.json();
       console.log(data);
+      return data
     } catch (error) {
       console.log(error.message);
     }
@@ -54,7 +55,18 @@ console.log(token)
 
       <button
         className="absolute top-4 right-4"
-        onClick={() => addToFav()}
+        onClick={() => {
+          addToFav().then(data => {
+            if(data?.error) {
+              return
+            }
+
+            if(data) {
+              setIsFav(data)
+            }
+          })
+         
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

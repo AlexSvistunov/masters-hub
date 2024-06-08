@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 const MiniCatalog = ({ setIsModalOpen }) => {
   const {currentToken} = useAuth()
   const [catalogItems, setCatalogItems] = useState([]);
+  
 
   console.log(catalogItems);
   const getCatalogItem = async () => {
