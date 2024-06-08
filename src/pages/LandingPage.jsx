@@ -18,7 +18,7 @@ const LandingPage = () => {
         <Hero/>
         <Tabs/>
         <MiniCategories/>
-        <Popular/>
+        {/* <Popular/> */}
         <MiniCatalog setIsModalOpen={setIsModalOpen}/>
         <EnrollModal isModalOpen={isModalOpen}/>
     </>

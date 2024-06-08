@@ -3,9 +3,40 @@ import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
 import CatalogCard from "../components/CatalogCard";
+import { useEffect, useState } from "react";
+import { URL } from "../utils/backend-url";
+
 
 const FavoritesPage = () => {
+  const [favList, setFavList] = useState([])
+  const {currentToken} = useAuth()
+
+
   const { token } = useAuth();
+  const getFav = async () => {
+    try {
+      const response = await fetch(`${URL}/api/favorites/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+
+    
+      const data = await response.json();
+      setFavList(data)
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getFav()
+  }, [])
+
+  console.log(favList)
+
   return (
     <div>
       <Header />
@@ -20,9 +51,14 @@ const FavoritesPage = () => {
             </div>
           )}
 
-          <div className="p-5">
+          <div className="p-10">
             {/* <CatalogCard /> */}
+            {favList.length ?   
+          favList.map(favEl => (
+            <CatalogCard catalogItem={favEl} favList={favList}/>
+          )) : <div className="text-4xl text-center">Вы еще ничего не добавляли в избранное</div>}
           </div>
+
         </div>
       </div>
     </div>

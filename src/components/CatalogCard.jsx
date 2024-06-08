@@ -5,7 +5,7 @@ import { URL } from "../utils/backend-url";
 
 const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }) => {
   console.log('favList ->>> ', favList)
-  const item = favList.find((el) => el.id === catalogItem.id);
+  const item = favList?.find((el) => el.id === catalogItem.id);
 
   const addToFav = async () => {
     try {
@@ -25,6 +25,23 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       console.log(error.message);
     }
   };
+
+
+  const deleteFav = async () => {
+    try {
+      const response = await fetch(`${URL}/api/favorites/${catalogItem.id}/`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+
+      const data = await response.json()
+      console.log(data)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   const averageRating = catalogItem?.reviews?.average_rating;
   const formattedRating =
@@ -60,15 +77,22 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       <button
         className="absolute top-4 right-4"
         onClick={() => {
-          addToFav().then((data) => {
-            if (data?.error) {
-              return;
-            }
+          if(!item) {
+            addToFav().then((data) => {
+              if (data?.error) {
+                return;
+              }
+  
+              setFavList(data)
+  
+             
+            });
+          }
 
-            setFavList(data)
+          deleteFav()
 
-           
-          });
+
+         
         }}
       >
         <svg
