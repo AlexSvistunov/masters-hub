@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import CatalogCard from "./CatalogCard";
 import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
+import useAuth from "../hooks/useAuth";
 
 const MiniCatalog = ({ setIsModalOpen }) => {
-  
+  const {currentToken} = useAuth()
   const [catalogItems, setCatalogItems] = useState([]);
 
   console.log(catalogItems);
@@ -38,6 +39,7 @@ const MiniCatalog = ({ setIsModalOpen }) => {
                 key={catalogItem.id}
                 setIsModalOpen={setIsModalOpen}
                 catalogItem={catalogItem}
+                token={currentToken}
               />
             ))}
           </div>
