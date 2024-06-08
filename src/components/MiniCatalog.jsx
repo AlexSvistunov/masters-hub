@@ -62,6 +62,7 @@ const MiniCatalog = ({ setIsModalOpen }) => {
                 catalogItem={catalogItem}
                 token={currentToken}
                 favList={favList}
+                setFavList={setFavList}
               />
             ))}
           </div>

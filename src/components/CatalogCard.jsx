@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 
-const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList }) => {
+const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }) => {
+  console.log('favList ->>> ', favList)
   const item = favList.find((el) => el.id === catalogItem.id);
 
   const addToFav = async () => {
@@ -63,6 +64,8 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList }) => {
             if (data?.error) {
               return;
             }
+
+            setFavList(data)
 
            
           });
