@@ -16,3 +16,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 
 // отзывы заменить цвет
+// think of redux and hooks to not repeat the logic
+// profile just big card, I can use the component

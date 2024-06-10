@@ -85,7 +85,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       </footer>
 
       <button
-        className="absolute top-4 right-4"
+        className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
           if(!item) {
             addToFav().then((data) => {
@@ -112,7 +112,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
+          className="h-5 w-5 group-hover:scale-110 transition-all"
           fill="none"
           viewBox="0 0 24 24"
           stroke={item ? "rgb(99, 111, 228)" : "currentColor"}
