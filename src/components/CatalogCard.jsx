@@ -6,7 +6,7 @@ import { URL } from "../utils/backend-url";
 const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }) => {
   console.log('favList ->>> ', favList)
 
-  const item = favList?.find((el) => el.id === catalogItem.id);
+  // const item = favList?.find((el) => el.id === catalogItem.id);
   const { currentToken } = useAuth();
 
   const addToFav = async () => {
@@ -45,13 +45,13 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
     }
   }
 
-  const averageRating = catalogItem?.reviews?.average_rating;
-  const formattedRating =
-    averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
+  // const averageRating = catalogItem?.reviews?.average_rating;
+  // const formattedRating =
+  //   averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
   return (
     <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
-      <Link className="absolute inset-0" to={`/profile/${catalogItem.id}`} />
+      <Link className="absolute inset-0" to={``} />
       <div className="flex items-center gap-5 mb-5">
         <img
           className="w-16 h-16 rounded-lg"
@@ -69,7 +69,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
             src="https://dikidi.ru/assets/images/catalog/star.png"
           ></img>
           <div>
-            {formattedRating}
+            {/* {formattedRating} */}
             <span>{`(${catalogItem?.reviews?.count})`}</span>
           </div>
         </div>
@@ -102,7 +102,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
           className="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
-          stroke={item ? "rgb(99, 111, 228)" : "currentColor"}
+          stroke={ "currentColor"}
         >
           <path
             strokeLinecap="round"
