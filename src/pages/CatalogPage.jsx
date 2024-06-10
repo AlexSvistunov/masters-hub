@@ -4,9 +4,28 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import { URL } from "../utils/backend-url";
+import useAuth from "../hooks/useAuth";
 
 const CatalogPage = () => {
   const [catalog, setCatalog] = useState([])
+  const [favList, setFavList] = useState([]);
+  const { currentToken } = useAuth();
+
+  const getFav = async () => {
+    try {
+      const response = await fetch(`${URL}/api/favorites/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+
+      const data = await response.json();
+      setFavList(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const fetchCatalog = async () => {
     try {
@@ -23,6 +42,10 @@ const CatalogPage = () => {
     fetchCatalog()
   }, [])
 
+  useEffect(() => {
+    getFav();
+  }, []);
+
   return (
     <>
       <Header />
@@ -36,7 +59,7 @@ const CatalogPage = () => {
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
                 {catalog.map((catalogItem) => (
-                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id}/>
+                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id} favList={favList} setFavList={setFavList}/>
                 ))}
 
               </div>
