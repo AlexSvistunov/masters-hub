@@ -9,6 +9,7 @@ const MiniCatalog = ({ setIsModalOpen }) => {
   const [favList, setFavList] = useState([])
   const { currentToken } = useAuth();
 
+
   const getFav = async () => {
     try {
       const response = await fetch(`${URL}/api/favorites/`, {

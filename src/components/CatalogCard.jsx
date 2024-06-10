@@ -5,7 +5,9 @@ import { URL } from "../utils/backend-url";
 
 const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }) => {
   console.log('favList ->>> ', favList)
+
   const item = favList?.find((el) => el.id === catalogItem.id);
+  const { currentToken } = useAuth();
 
   const addToFav = async () => {
     try {
@@ -14,7 +16,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
         {
           method: "POST",
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Token ${currentToken}`,
           },
         }
       );
@@ -32,7 +34,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       const response = await fetch(`${URL}/api/favorites/${catalogItem.id}/`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${currentToken}`,
         },
       })
 

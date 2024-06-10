@@ -49,6 +49,7 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
     services = serializers.SerializerMethodField()
     specialists = serializers.SerializerMethodField()
     reviews = serializers.SerializerMethodField()
+    photo = serializers.SerializerMethodField()
 
     def get_images_work(self, obj):
         specialization = obj.specialization
@@ -81,17 +82,24 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
 
     def get_reviews(self, obj):
         queryset = obj.reviews_profile.all()
-        rating_star_all = [i.get_rating_star_display() for i in queryset]
         len_queryset = len(queryset)
-        serializer = ReviewsSerializer(queryset[:5], many=True)
-        rating_detail = {f'rating_{i}': rating_star_all.count(i) * 100 // len_queryset for i in range(1, 6)}
         data = {
             'count': len_queryset,
-            'average_rating': round(sum(rating_star_all) / len_queryset, 2)
         }
-        data.update(rating_detail)
+        if len_queryset == 0:
+            average_rating = 'нет отзывов'
+        else:
+            rating_star_all = [i.get_rating_star_display() for i in queryset]
+            rating_detail = {f'rating_{i}': rating_star_all.count(i) * 100 // len_queryset for i in range(1, 6)}
+            data.update(rating_detail)
+            average_rating = round(sum(rating_star_all) / len_queryset, 2)
+        serializer = ReviewsSerializer(queryset[:5], many=True)
+        data['average_rating'] = average_rating
         data['detail'] = serializer.data
         return data
+
+    def get_photo(self, obj):
+        return obj.photo.url
 
     class Meta:
         model = ProfileMaster
@@ -99,9 +107,12 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'name',
+            'photo',
             'specialization',
-            'address', 'phone',
-            'link_vk', 'link_tg',
+            'address',
+            'phone',
+            'link_vk',
+            'link_tg',
             'description',
             'specialists',
             'images_work',

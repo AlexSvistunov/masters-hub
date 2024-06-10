@@ -7,10 +7,14 @@ from django.conf import settings
 
 # Create your models here.
 
-def upload_photo_profile(instance, filename):
+def upload_photo_profile_services(instance, filename):
     if instance.specialist:
         return f'{settings.BASE_DIR}/static/media/specialist/{instance.specialist.name}/{filename}'
     return f'{settings.BASE_DIR}/static/media/profile/{instance.profile.user}/{filename}'
+
+
+def upload_photo_profile(instance, filename):
+    return f'{settings.BASE_DIR}/static/media/profile/{instance.user}/{filename}'
 
 
 class CustomUser(AbstractUser):
@@ -43,6 +47,9 @@ class ProfileMaster(models.Model):
         verbose_name='имя',
         max_length=255,
         blank=True
+    )
+    photo = models.ImageField(
+        upload_to=upload_photo_profile,
     )
     address = models.CharField(
         verbose_name='адрес',
@@ -104,6 +111,7 @@ class Specialist(models.Model):
         blank=True,
         null=True
     )
+
     def __str__(self):
         return f'specialist_{self.profile}'
 
@@ -127,7 +135,7 @@ class ProfileImages(models.Model):
     )
     image = models.ImageField(
         verbose_name='изображение',
-        upload_to=upload_photo_profile,
+        upload_to=upload_photo_profile_services,
     )
     date_creation = models.DateField(auto_now_add=True)
 

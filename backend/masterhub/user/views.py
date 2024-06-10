@@ -14,6 +14,7 @@ from rest_framework.generics import GenericAPIView
 from service.serializers import ProfileCatalogSerialize
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
+from rest_framework import status
 
 
 # Create your views here.
@@ -56,10 +57,10 @@ class FavoritesViewSet(GenericViewSet, ListModelMixin, DestroyModelMixin):
     def create(self, request, *args, **kwargs):
         profile_master_id = request.GET.get('id')
         if not profile_master_id:
-            return Response({'a': 'wd'})
+            return Response({'error': 'wrong ID'}, status=status.HTTP_400_BAD_REQUEST)
         flag = Favorites.objects.filter(user=request.user, profile__id=profile_master_id)
         if flag.exists():
-            return Response({'error': 'podpisan'})
+            return Response({'error': 'already signed'}, status=status.HTTP_400_BAD_REQUEST)
         data = {'user': request.user.id, 'profile': profile_master_id}
         serializer = FavoritesSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
@@ -70,7 +71,7 @@ class FavoritesViewSet(GenericViewSet, ListModelMixin, DestroyModelMixin):
         pk = kwargs.get('pk')
         favorite = get_object_or_404(Favorites, user=request.user, profile_id=pk)
         favorite.delete()
-        return Response({'detail': 'removed from favorites'})
+        return self.list(request)
 
 
 class FeedbackAPIView(GenericAPIView):
@@ -80,8 +81,8 @@ class FeedbackAPIView(GenericAPIView):
         serializer = FeedbackSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, profile=profile)
-            return Response({'s': 's'})
-        return Response({'a': 'a'})
+            return Response({'detail': 'comment created'}, status=status.HTTP_201_CREATED)
+        return Response({'detail': 'error'}, status=status.HTTP_400_BAD_REQUEST)
 
 # class Test(APIView):
 #     def post(self, request):
