@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import CustomUserSerializer, ProfileMasterSerializer, FavoritesSerializer
+from .serializers import CustomUserSerializer, ProfileMasterSerializer, FavoritesSerializer, FeedbackSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.viewsets import ModelViewSet, ViewSet, GenericViewSet
 from .models import CustomUser, ProfileMaster, ProfileImages
 from rest_framework.decorators import action
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, ListModelMixin, DestroyModelMixin
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, RetrieveModelMixin, ListModelMixin, \
+    DestroyModelMixin
 from rest_framework.views import APIView
 from .models import Favorites
 from rest_framework.generics import GenericAPIView
@@ -67,9 +68,20 @@ class FavoritesViewSet(GenericViewSet, ListModelMixin, DestroyModelMixin):
 
     def destroy(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
-        favorite = get_object_or_404(Favorites, pk=pk)
+        favorite = get_object_or_404(Favorites, user=request.user, profile_id=pk)
         favorite.delete()
         return Response({'detail': 'removed from favorites'})
+
+
+class FeedbackAPIView(GenericAPIView):
+    def post(self, request, pk):
+        profile = get_object_or_404(ProfileMaster, pk=pk)
+        data = request.data
+        serializer = FeedbackSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, profile=profile)
+            return Response({'s': 's'})
+        return Response({'a': 'a'})
 
 # class Test(APIView):
 #     def post(self, request):

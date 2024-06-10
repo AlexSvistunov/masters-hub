@@ -114,3 +114,14 @@ class FavoritesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorites
         fields = ['id', 'user', 'profile', 'date_create']
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reviews
+        fields = ['rating_star', 'user', 'description']
+        # read_only_fields =['user']
+        extra_kwargs = {
+            'rating_star': {'required': True},
+            'user': {'required': False}
+        }

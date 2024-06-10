@@ -8,5 +8,7 @@ router.register('favorites', views.FavoritesViewSet, basename='favorites')
 
 urlpatterns = [
     # path('auth/token/login/', views.Test.as_view()),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('feedback/<int:pk>/', views.FeedbackAPIView.as_view()),
+
 ]
