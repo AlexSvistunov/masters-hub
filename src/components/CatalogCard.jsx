@@ -6,7 +6,8 @@ import { URL } from "../utils/backend-url";
 const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }) => {
   console.log('favList ->>> ', favList)
 
-  // const item = favList?.find((el) => el.id === catalogItem.id);
+  const item = favList?.find((el) => el.id === catalogItem.id);
+
   const { currentToken } = useAuth();
 
   const addToFav = async () => {
@@ -39,19 +40,19 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       })
 
       const data = await response.json()
-      console.log(data)
+      return data
     } catch (error) {
       console.log(error.message)
     }
   }
 
-  // const averageRating = catalogItem?.reviews?.average_rating;
-  // const formattedRating =
-  //   averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
+  const averageRating = catalogItem?.reviews?.average_rating;
+  const formattedRating =
+    averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
   return (
     <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
-      <Link className="absolute inset-0" to={``} />
+      <Link className="absolute inset-0" to={`/profile/${catalogItem.id}`} />
       <div className="flex items-center gap-5 mb-5">
         <img
           className="w-16 h-16 rounded-lg"
@@ -63,15 +64,22 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
-        <div className="flex gap-1 items-center rounded-xl bg-base-300 px-3">
-          <img
-            className="h-3 w-3"
-            src="https://dikidi.ru/assets/images/catalog/star.png"
-          ></img>
-          <div>
-            {/* {formattedRating} */}
-            <span>{`(${catalogItem?.reviews?.count})`}</span>
-          </div>
+        <div className="flex items-center">
+        {formattedRating === "нет отзывов" ? (
+            <span>Нет отзывов</span>
+          ) : (
+            <div className="flex gap-1 items-center rounded-xl bg-base-300 px-3 py-2">
+              <img
+                className="h-3 w-3"
+                src="https://dikidi.ru/assets/images/catalog/star.png"
+              ></img>
+              <div className="flex items-center gap-2">
+                {formattedRating}
+                <span>{`(${catalogItem?.reviews?.count})`}</span>
+              </div>
+            </div>
+          )}
+         
         </div>
         <button className="btn btn-primary">Записаться</button>
       </footer>
@@ -89,9 +97,14 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
   
              
             });
+          } else {
+            deleteFav().then((data) => {
+              console.log(data);
+              setFavList(data)
+            })
           }
 
-          deleteFav()
+
 
 
          
@@ -102,7 +115,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
           className="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
-          stroke={ "currentColor"}
+          stroke={item ? "rgb(99, 111, 228)" : "currentColor"}
         >
           <path
             strokeLinecap="round"

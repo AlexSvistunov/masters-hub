@@ -6,11 +6,9 @@ import CatalogCard from "../components/CatalogCard";
 import { useEffect, useState } from "react";
 import { URL } from "../utils/backend-url";
 
-
 const FavoritesPage = () => {
-  const [favList, setFavList] = useState([])
-  const {currentToken} = useAuth()
-
+  const [favList, setFavList] = useState([]);
+  const { currentToken } = useAuth();
 
   const { token } = useAuth();
   const getFav = async () => {
@@ -22,20 +20,18 @@ const FavoritesPage = () => {
         },
       });
 
-    
       const data = await response.json();
-      setFavList(data)
-      
+      setFavList(data);
     } catch (error) {
       console.log(error.message);
     }
   };
 
   useEffect(() => {
-    getFav()
-  }, [])
+    getFav();
+  }, []);
 
-  console.log(favList)
+  console.log(favList);
 
   return (
     <div>
@@ -52,13 +48,16 @@ const FavoritesPage = () => {
           )}
 
           <div className="p-10">
-            {/* <CatalogCard /> */}
-            {favList.length ?   
-          favList.map(favEl => (
-            <CatalogCard catalogItem={favEl} favList={favList}/>
-          )) : <div className="text-4xl text-center">Вы еще ничего не добавляли в избранное</div>}
+            {favList.length ? (
+              favList.map((favEl) => (
+                <CatalogCard catalogItem={favEl} favList={favList} setFavList={setFavList} key={favEl.id} />
+              ))
+            ) : (
+              <div className="text-4xl text-center">
+                Вы еще ничего не добавляли в избранное
+              </div>
+            )}
           </div>
-
         </div>
       </div>
     </div>
