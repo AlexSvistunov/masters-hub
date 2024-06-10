@@ -36,7 +36,7 @@ const MasterPage = () => {
                   <div className="flex gap-3">
                     <img
                       className="h-12 w-12 rounded-lg"
-                      src="https://f1.dikidi.ru/c7/v6913/36l6rro98f.jpg?size=m"
+                      src={`/backend/masterhub${masterData.photo}`}
                       alt=""
                     />
                     <div className="flex flex-col">

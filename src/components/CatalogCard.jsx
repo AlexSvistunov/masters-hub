@@ -56,7 +56,7 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       <div className="flex items-center gap-5 mb-5">
         <img
           className="w-16 h-16 rounded-lg"
-          src="https://f1.dikidi.ru/c8/v7611/4q9bokl6bv.jpg?size=m"
+          src={`/backend/masterhub${catalogItem.photo}`}
         ></img>
         <div className="flex flex-col gap-1">
           <span className="text-xl">{catalogItem.name}</span>
