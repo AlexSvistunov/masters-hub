@@ -4,37 +4,16 @@ import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 
-const MiniCatalog = ({ isModalOpen, setIsModalOpen }) => {
+const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
 
   const [catalogItems, setCatalogItems] = useState([]);
-  const [favList, setFavList] = useState([])
   const { currentToken } = useAuth();
-
-  const getFav = async () => {
-    try {
-      const response = await fetch(`${URL}/api/favorites/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-
-    
-      const data = await response.json();
-      setFavList(data)
-      
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const getCatalogItem = async () => {
     try {
       const reponse = await fetch(`${URL}/api/catalog/`);
       const data = await reponse.json();
-      console.log(data);
-      setCatalogItems(data);
+      setCatalogItems(data.results);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -42,8 +21,8 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen }) => {
   };
   useEffect(() => {
     getCatalogItem();
-    getFav();
   }, []);
+
   return (
     <section className="p-7">
       <div className="container mx-auto">
@@ -62,8 +41,7 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen }) => {
                 setIsModalOpen={setIsModalOpen}
                 catalogItem={catalogItem}
                 token={currentToken}
-                favList={favList}
-                setFavList={setFavList}
+                setId={setId}
               />
             ))}
           </div>

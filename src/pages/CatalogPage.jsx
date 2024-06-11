@@ -8,30 +8,13 @@ import useAuth from "../hooks/useAuth";
 
 const CatalogPage = () => {
   const [catalog, setCatalog] = useState([])
-  const [favList, setFavList] = useState([]);
   const { currentToken } = useAuth();
-
-  const getFav = async () => {
-    try {
-      const response = await fetch(`${URL}/api/favorites/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-
-      const data = await response.json();
-      setFavList(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const fetchCatalog = async () => {
     try {
-      const response = await fetch(`${URL}/api/catalog/`)
+      const response = await fetch(`${URL}/api/catalog/?page=2`)
       const data = await response.json()
-      setCatalog(data)
+      setCatalog(data.results)
       console.log(data)
     } catch (error) {
       console.log(error.message)
@@ -42,9 +25,6 @@ const CatalogPage = () => {
     fetchCatalog()
   }, [])
 
-  useEffect(() => {
-    getFav();
-  }, []);
 
   return (
     <>
@@ -59,7 +39,7 @@ const CatalogPage = () => {
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
                 {catalog.map((catalogItem) => (
-                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id} favList={favList} setFavList={setFavList}/>
+                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id}/>
                 ))}
 
               </div>

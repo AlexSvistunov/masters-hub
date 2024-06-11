@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ChooseService from "./ChooseService";
 
-const EnrollModal = ({isModalOpen}) => {
+const EnrollModal = ({isModalOpen, id}) => {
   const array = [
     "Новая запись",
     "Выбор услуг",
@@ -49,7 +49,7 @@ const EnrollModal = ({isModalOpen}) => {
 
           {step === 1 && (
             <>
-              <ChooseService array={array} step={step} setStep={setStep} nextStep={nextStep}/>
+              <ChooseService array={array} step={step} setStep={setStep} nextStep={nextStep} id={id}/>
             </>
           )}
         </div>

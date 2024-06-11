@@ -5,7 +5,6 @@ import CategoryCard from "./CategoryCard";
 
 const MiniCategories = () => {
   const [categories, setCategories] = useState([])
-  console.log(categories);
 
   const getCategories = async () => {
     try {

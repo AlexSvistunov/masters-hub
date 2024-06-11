@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 
-const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, favList, setFavList }) => {
-
-  const item = favList?.find((el) => el.id === catalogItem.id);
+const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId }) => {
 
   const { currentToken } = useAuth();
 
@@ -45,23 +43,6 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, favList,
   }
 
 
-  const getEnrollServices = async () => {
-    try {
-      const response = await fetch(`${URL}/api/recording/${catalogItem.id}/services/`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      })
-
-      const data = await response.json()
-      console.log(data);
-      return data
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
   const averageRating = catalogItem?.reviews?.average_rating;
   const formattedRating =
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
@@ -98,30 +79,17 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, favList,
          
         </div>
         <button className="btn btn-primary relataive z-10" onClick={() => {
+          setId(catalogItem.id)
           setIsModalOpen(true)
-          getEnrollServices()
+
+  
         }}>Записаться</button>
       </footer>
 
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          if(!item) {
-            addToFav().then((data) => {
-              if (data?.error) {
-                return;
-              }
-  
-              setFavList(data)
-  
-             
-            });
-          } else {
-            deleteFav().then((data) => {
-              console.log(data);
-              setFavList(data)
-            })
-          }
+          alert('ZAGLUSHKA')
 
          
         }}
@@ -129,9 +97,9 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, favList,
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill={item ? "rgb(99, 111, 228)" : "transparent"}
+          fill={true ? "rgb(99, 111, 228)" : "transparent"}
           viewBox="0 0 24 24"
-          stroke={item ? "rgb(99, 111, 228)" : "currentColor"}
+          stroke={true ? "rgb(99, 111, 228)" : "currentColor"}
         >
           <path
             strokeLinecap="round"

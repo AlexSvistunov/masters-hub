@@ -1,7 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
+import { URL } from "../utils/backend-url";
 
 const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
+  const [enrollServices, setEnrollServices] = useState([]);
+  const { currentToken } = useAuth();
+  console.log(enrollServices);
+  console.log(props.id);
+
+  const getEnrollServices = async () => {
+    try {
+      const response = await fetch(
+        `${URL}/api/recording/${props.id}/services/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${currentToken}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      setEnrollServices(data);
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getEnrollServices();
+  }, []);
 
   return (
     <>
@@ -51,8 +82,16 @@ const ChooseService = (props) => {
         </label>
       </div>
 
+      <div className="flex items-center gap-4 my-4">
+        {enrollServices.map((service, index) => (
+          <button className="btn btn-primary" key={index}>
+            {Object.keys(service)}
+          </button>
+        ))}
+      </div>
+
       <div className="list flex flex-col gap-3">
-        <div className="item rounded-lg bg-primary p-3 text-white">
+        {/* <div className="item rounded-lg bg-primary p-3 text-white">
           <div className="flex gap-2 items-center mb-2">
             <img
               src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
@@ -69,7 +108,36 @@ const ChooseService = (props) => {
           <div className="flex justify-end">
             <button>Выбрать</button>
           </div>
-        </div>
+        </div> */}
+
+        {enrollServices.map((enrollService, index) => (
+          <div
+            className="item rounded-lg bg-primary p-3 text-white"
+            key={index}
+          >
+            {Object.values(enrollService).map((enrollServiceArray, index) => (
+              <div key={index}>
+                <div className="flex gap-2 items-center mb-2">
+                  <img
+                    src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
+                    // src={`/backend/masterhub${enrollServiceArray.photo}`}
+                    alt=""
+                  />
+                  <h3>Покрытие гелем</h3>
+                </div>
+
+                <div className="flex gap-1 flex-col mb-2">
+                  <span>1700 rub</span>
+                  <span>2 часа</span>
+                </div>
+
+                <div className="flex justify-end">
+                  <button>Выбрать</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </>
   );
