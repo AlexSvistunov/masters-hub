@@ -2,16 +2,42 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { URL } from "../utils/backend-url";
 import { useEffect, useState } from "react";
+import CatalogCard from "../components/CatalogCard";
+import useAuth from "../hooks/useAuth";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
+
+  const [favList, setFavList] = useState([]);
+  const { currentToken } = useAuth();
+
+  const getFav = async () => {
+    try {
+      const response = await fetch(`${URL}/api/favorites/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+
+      const data = await response.json();
+      setFavList(data);
+
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getFav();
+  }, []);
 
   const averageRating = masterData?.reviews?.average_rating;
   const formattedRating =
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
   const { id } = useParams();
-  console.log(id);
 
   const fetchMasterProfile = async () => {
     const response = await fetch(`${URL}/api/users/${id}/`);
@@ -30,7 +56,7 @@ const MasterPage = () => {
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
-            <div className="p-5 rounded-2xl min-h-32 bg-base-200 relative mb-4">
+            {/* <div className="p-5 rounded-2xl min-h-32 bg-base-200 relative mb-4">
               <div className="flex justify-between">
                 <div className="flex flex-col gap-4">
                   <div className="flex gap-3">
@@ -109,10 +135,19 @@ const MasterPage = () => {
                   />
                 </svg>
               </button>
+            </div> */}
+
+            <div className="mb-5">
+              <CatalogCard
+                catalogItem={masterData}
+                favList={favList}
+                token={currentToken}
+                setFavList={setFavList}
+              />
             </div>
 
             <div className="bg-base-200 p-5 rounded-2xl mb-5">
-              <h3 className="text-3xl">Описание</h3>
+              <h3 className="text-3xl mb-3">Описание</h3>
               <p>{masterData.description}</p>
             </div>
 
@@ -173,8 +208,11 @@ const MasterPage = () => {
 
             <div className="bg-base-200 p-5 rounded-2xl mb-5">
               <div className="flex justify-between">
-                <h3 className="text-3xl">Отзывы</h3>
-                <button>Оставить отзыв</button>
+                <h3 className="text-3xl mb-2">Отзывы</h3>
+                {/* <button>Оставить отзыв</button> */}
+                <div className="lg:tooltip" data-tip="Отзыв можно оставить только после визита">
+                  <button className="btn">Оставить отзыв</button>
+                </div>
               </div>
 
               <div className="flex">
@@ -283,10 +321,11 @@ const MasterPage = () => {
                       5
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  {/* <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     1,745 global ratings
-                  </p>
-                  <div className="flex items-center mt-4">
+                  </p> */}
+
+                  {/* <div className="flex items-center mt-4">
                     <a href="#" className="text-sm font-mediu">
                       5 star
                     </a>
@@ -355,11 +394,11 @@ const MasterPage = () => {
                     <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       1%
                     </span>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="user-reviews max-w-150 w-full">
                   {masterData?.reviews?.detail.map((review) => (
-                    <article className="w-full" key={review.id}>
+                    <article className="w-full mb-5" key={review.id}>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center mb-4">
                           <img
@@ -433,9 +472,9 @@ const MasterPage = () => {
                         {review.description}
                       </p>
 
-                      <a href="#" className="block mb-5 text-sm font-medium">
+                      {/* <a href="#" className="block mb-5 text-sm font-medium">
                         Read more
-                      </a>
+                      </a> */}
                     </article>
                   ))}
                 </div>

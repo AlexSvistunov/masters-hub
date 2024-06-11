@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 
-const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }) => {
-  console.log('favList ->>> ', favList)
+const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, favList, setFavList }) => {
 
   const item = favList?.find((el) => el.id === catalogItem.id);
 
@@ -22,7 +21,6 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
         }
       );
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -40,6 +38,24 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
       })
 
       const data = await response.json()
+      return data
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+
+  const getEnrollServices = async () => {
+    try {
+      const response = await fetch(`${URL}/api/recording/${catalogItem.id}/services/`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      })
+
+      const data = await response.json()
+      console.log(data);
       return data
     } catch (error) {
       console.log(error.message)
@@ -81,7 +97,10 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
           )}
          
         </div>
-        <button className="btn btn-primary">Записаться</button>
+        <button className="btn btn-primary relataive z-10" onClick={() => {
+          setIsModalOpen(true)
+          getEnrollServices()
+        }}>Записаться</button>
       </footer>
 
       <button
@@ -104,16 +123,13 @@ const CatalogCard = ({ setIsModalOpen, catalogItem, token, favList, setFavList }
             })
           }
 
-
-
-
          
         }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill="none"
+          fill={item ? "rgb(99, 111, 228)" : "transparent"}
           viewBox="0 0 24 24"
           stroke={item ? "rgb(99, 111, 228)" : "currentColor"}
         >

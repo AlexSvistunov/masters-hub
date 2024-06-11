@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 
-const MiniCatalog = ({ setIsModalOpen }) => {
+const MiniCatalog = ({ isModalOpen, setIsModalOpen }) => {
+
   const [catalogItems, setCatalogItems] = useState([]);
   const [favList, setFavList] = useState([])
   const { currentToken } = useAuth();
-
 
   const getFav = async () => {
     try {
@@ -29,7 +29,6 @@ const MiniCatalog = ({ setIsModalOpen }) => {
     }
   };
 
-  console.log(catalogItems);
   const getCatalogItem = async () => {
     try {
       const reponse = await fetch(`${URL}/api/catalog/`);
@@ -59,6 +58,7 @@ const MiniCatalog = ({ setIsModalOpen }) => {
             {catalogItems.map((catalogItem) => (
               <CatalogCard
                 key={catalogItem.id}
+                isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
                 catalogItem={catalogItem}
                 token={currentToken}
@@ -69,11 +69,12 @@ const MiniCatalog = ({ setIsModalOpen }) => {
           </div>
         )}
 
-        <div className="flex justify-center p-4">
-          <Link className="btn" to="/catalog">
+        <div className="flex justify-center">
+          <Link className="btn my-4" to="/catalog">
             Посмотреть все
           </Link>
         </div>
+
       </div>
     </section>
   );
