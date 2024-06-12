@@ -18,7 +18,7 @@ const NotesPage = () => {
           )}
 
           <div className="p-5">
-            <span className="text-3xl text-center">Вы пока не записывались на прием в салон или к мастеру</span>
+            <span className="text-3xl text-center">У вас нет текущих записей! Запишитесь к мастеру или к специалисту</span>
           </div>
         </div>
       </div>

@@ -21,9 +21,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // id modal redux
 
 
+
 // Additional: 
 
 // leave a review
 // photo library
 // breadcrumbs
+// loader
+// jumping tabs
 

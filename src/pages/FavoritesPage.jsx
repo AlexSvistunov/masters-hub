@@ -54,7 +54,7 @@ const FavoritesPage = () => {
               ))
             ) : (
               <div className="text-4xl text-center">
-                Вы еще ничего не добавляли в избранное
+                Ваше избранное пусто!
               </div>
             )}
           </div>
