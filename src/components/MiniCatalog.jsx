@@ -8,11 +8,13 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
 
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
+  console.log(catalogItems);
 
   const getCatalogItem = async () => {
     try {
-      const reponse = await fetch(`${URL}/api/catalog/?page=2`);
+      const reponse = await fetch(`${URL}/api/catalog/`);
       const data = await reponse.json();
+      console.log(data);
       setCatalogItems(data.results);
       return data;
     } catch (error) {

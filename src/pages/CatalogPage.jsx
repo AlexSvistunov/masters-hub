@@ -10,11 +10,11 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const { currentToken } = useAuth();
 
+
   const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
     try {
       const response = await fetch(`${url}`);
       const data = await response.json();
-      console.log(data);
       setCatalog(data);
       console.log(data);
     } catch (error) {
@@ -23,10 +23,8 @@ const CatalogPage = () => {
   };
 
   const showMoreCatalog = async () => {
-    const data = await fetchCatalog(catalog.next);
-    if (data) {
-      setCatalog(data);
-    }
+    fetchCatalog(catalog.next);
+
   };
 
   useEffect(() => {
