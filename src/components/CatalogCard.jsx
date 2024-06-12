@@ -5,6 +5,7 @@ import { URL } from "../utils/backend-url";
 
 const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId }) => {
 
+
   const { currentToken } = useAuth();
 
   const addToFav = async () => {
@@ -79,7 +80,7 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId })
          
         </div>
         <button className="btn btn-primary relataive z-10" onClick={() => {
-          setId(catalogItem.id)
+          setId(catalogItem?.id)
           setIsModalOpen(true)
 
   
@@ -89,7 +90,11 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId })
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          alert('ZAGLUSHKA')
+         if(catalogItem.is_favorite) {
+          deleteFav()
+         }
+
+         addToFav()
 
          
         }}
@@ -97,9 +102,9 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId })
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill={true ? "rgb(99, 111, 228)" : "transparent"}
+          fill={catalogItem.is_favorite ? "rgb(99, 111, 228)" : "transparent"}
           viewBox="0 0 24 24"
-          stroke={true ? "rgb(99, 111, 228)" : "currentColor"}
+          stroke={catalogItem.is_favorite ? "rgb(99, 111, 228)" : "currentColor"}
         >
           <path
             strokeLinecap="round"

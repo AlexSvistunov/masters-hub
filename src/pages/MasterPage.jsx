@@ -8,30 +8,8 @@ import useAuth from "../hooks/useAuth";
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
 
-  const [favList, setFavList] = useState([]);
   const { currentToken } = useAuth();
 
-  const getFav = async () => {
-    try {
-      const response = await fetch(`${URL}/api/favorites/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-
-      const data = await response.json();
-      setFavList(data);
-
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  useEffect(() => {
-    getFav();
-  }, []);
 
   const averageRating = masterData?.reviews?.average_rating;
   const formattedRating =
@@ -140,9 +118,7 @@ const MasterPage = () => {
             <div className="mb-5">
               <CatalogCard
                 catalogItem={masterData}
-                favList={favList}
                 token={currentToken}
-                setFavList={setFavList}
               />
             </div>
 

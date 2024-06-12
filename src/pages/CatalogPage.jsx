@@ -7,29 +7,36 @@ import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 
 const CatalogPage = () => {
-  const [catalog, setCatalog] = useState([])
+  const [catalog, setCatalog] = useState([]);
   const { currentToken } = useAuth();
 
-  const fetchCatalog = async () => {
+  const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
     try {
-      const response = await fetch(`${URL}/api/catalog/?page=2`)
-      const data = await response.json()
-      setCatalog(data.results)
-      console.log(data)
+      const response = await fetch(`${url}`);
+      const data = await response.json();
+      console.log(data);
+      setCatalog(data);
+      console.log(data);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
+
+  const showMoreCatalog = async () => {
+    const data = await fetchCatalog(catalog.next);
+    if (data) {
+      setCatalog(data);
+    }
+  };
 
   useEffect(() => {
-    fetchCatalog()
-  }, [])
-
+    fetchCatalog();
+  }, []);
 
   return (
     <>
       <Header />
-      <Hero/>
+      <Hero />
 
       <div className="">
         <Tabs />
@@ -38,14 +45,15 @@ const CatalogPage = () => {
             <div className="col-span-9">
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
-                {catalog.map((catalogItem) => (
-                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id}/>
+                {catalog?.results?.map((catalogItem) => (
+                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id} />
                 ))}
-
               </div>
 
               <div className="flex justify-center p-5">
-                <button className="btn my-5">Показать еще</button>
+                <button onClick={showMoreCatalog} className="btn my-5">
+                  Показать еще
+                </button>
               </div>
             </div>
 

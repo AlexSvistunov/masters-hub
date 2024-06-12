@@ -1,8 +1,12 @@
 from django.contrib import admin
+
+from user.models import ProfileMaster
 from .models import Service, Categories
 
 
 # Register your models here.
+
+
 
 
 @admin.register(Service)

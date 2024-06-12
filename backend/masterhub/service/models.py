@@ -6,10 +6,11 @@ from user.models import ProfileMaster, Specialist, Categories
 
 
 def upload_photo_service(instance, filename):
-    return f'{settings.BASE_DIR}/static/media/service/{instance.user}/{filename}'
 
-
-
+    if instance.profile:
+        return f'{settings.BASE_DIR}/static/media/service/{instance.profile.user}/{filename}'
+    else:
+        return f'{settings.BASE_DIR}/static/media/service/{instance.specialist.name}/{filename}'
 
 
 class Service(models.Model):
@@ -52,7 +53,6 @@ class Service(models.Model):
         Categories,
         verbose_name='категория',
         on_delete=models.CASCADE,
-
 
     )
     date_creation = models.DateField(

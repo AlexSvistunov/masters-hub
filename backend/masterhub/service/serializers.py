@@ -1,5 +1,5 @@
 from .models import Service
-from user.models import Categories
+from user.models import Categories, Favorites
 from rest_framework import serializers
 from user.models import ProfileMaster
 
@@ -17,6 +17,7 @@ class CategoriesSerializer(serializers.ModelSerializer):
 class ProfileCatalogSerialize(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField()
     photo = serializers.SerializerMethodField()
+    is_favorite = serializers.SerializerMethodField()
 
     def get_photo(self, obj):
         return obj.photo.url
@@ -34,6 +35,13 @@ class ProfileCatalogSerialize(serializers.ModelSerializer):
         }
         return data
 
+    def get_is_favorite(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            favorites = Favorites.objects.filter(user=user, profile=obj).exists()
+            return favorites
+        return False
+
     class Meta:
         model = ProfileMaster
-        fields = ['id', 'name', 'photo', 'address', 'specialization', 'reviews']
+        fields = ['id', 'name', 'is_favorite', 'photo', 'address', 'specialization', 'reviews']

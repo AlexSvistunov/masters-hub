@@ -11,7 +11,7 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
 
   const getCatalogItem = async () => {
     try {
-      const reponse = await fetch(`${URL}/api/catalog/`);
+      const reponse = await fetch(`${URL}/api/catalog/?page=2`);
       const data = await reponse.json();
       setCatalogItems(data.results);
       return data;

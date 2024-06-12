@@ -10,29 +10,54 @@ from user.models import ProfileMaster, Specialist
 from user.serializers import SpecialistSerializer
 from service.models import Service, Categories
 from .serializers import ServicesSerializer, ServicesRecordingSerializer
+from rest_framework.mixins import RetrieveModelMixin
 
 
 # Create your views here.
 
-
-class SpecialistRecordingAPIView(GenericViewSet):
+class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin):
     permission_classes = [IsAuthenticated]
 
-    @action(methods=['get'], detail=True)
-    def specialist(self, request, *args, **kwargs):
-        pk = kwargs.get('pk')
-        specialists = Specialist.objects.filter(profile__id=pk)
-        serializer = SpecialistSerializer(specialists, many=True)
-        return Response(serializer.data)
-
-    @action(methods=['get'], detail=True)
-    def services(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
         queryset = []
-        services = Service.objects.filter(specialist__id=pk)
+        profile = ProfileMaster.objects.get(id=pk)
+        if profile.specialization == 'master':
+            services = Service.objects.filter(profile=profile)
+        else:
+            services = Service.objects.none()
+            specialists = profile.profile_specialist.all()
+            for i in specialists:
+                services = services.union(i.specialist_services.all())
         for i in services:
             if i.category not in queryset:
                 queryset.append(i.category)
         # serializer = ServicesSerializer(services, many=True)
         serializer = ServicesRecordingSerializer(queryset, many=True, context={'services': services})
         return Response(serializer.data)
+
+    @action(methods=['get'], detail=True, url_path='(?P<id_services>[^/.]+)')
+    def recording(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        specialists = Specialist.objects.filter(profile__id=pk)
+        serializer = SpecialistSerializer(specialists, many=True)
+        return Response(serializer.data)
+
+    # @action(methods=['get'], detail=True)
+    # def services(self, request, *args, **kwargs):
+    #     pk = kwargs.get('pk')
+    #     queryset = []
+    #     profile = ProfileMaster.objects.get(id=pk)
+    #     if profile.specialization == 'master':
+    #         services = Service.objects.filter(profile=profile)
+    #     else:
+    #         services = Service.objects.none()
+    #         specialists = profile.profile_specialist.all()
+    #         for i in specialists:
+    #             services = services.union(i.specialist_services.all())
+    #     for i in services:
+    #         if i.category not in queryset:
+    #             queryset.append(i.category)
+    #     # serializer = ServicesSerializer(services, many=True)
+    #     serializer = ServicesRecordingSerializer(queryset, many=True, context={'services': services})
+    #     return Response(serializer.data)

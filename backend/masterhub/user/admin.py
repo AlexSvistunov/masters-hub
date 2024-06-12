@@ -1,5 +1,16 @@
 from django.contrib import admin
 from .models import CustomUser, ProfileMaster, ProfileImages, Specialist, Reviews, Favorites
+from service.models import Service
+
+
+class SpecialistInline(admin.StackedInline):
+    model = Specialist
+    extra = 1
+
+
+class ServiceInline(admin.StackedInline):
+    model = Service
+    extra = 1
 
 
 # Register your models here.
@@ -14,6 +25,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 class ProfileMasterAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'specialization']
     list_display_links = ['id', 'name']
+    inlines = [SpecialistInline]
 
 
 @admin.register(ProfileImages)
@@ -25,6 +37,7 @@ class ProfileImagesAdmin(admin.ModelAdmin):
 @admin.register(Specialist)
 class SpecialistAdmin(admin.ModelAdmin):
     list_display = ['id']
+    inlines = [ServiceInline]
 
 
 @admin.register(Reviews)
