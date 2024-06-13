@@ -6,20 +6,15 @@ const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
   const [enrollServices, setEnrollServices] = useState([]);
   const { currentToken } = useAuth();
-  console.log(enrollServices);
-  console.log(props.id);
 
   const getEnrollServices = async () => {
     try {
-      const response = await fetch(
-        `${URL}/api/recording/${props.id}/services/`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Token ${currentToken}`,
-          },
-        }
-      );
+      const response = await fetch(`${URL}/api/recording/${props.id}/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
 
       const data = await response.json();
       setEnrollServices(data);
@@ -115,27 +110,29 @@ const ChooseService = (props) => {
             className="item rounded-lg bg-primary p-3 text-white"
             key={index}
           >
-            {Object.values(enrollService).map((enrollServiceArray, index) => (
-              <div key={index}>
-                <div className="flex gap-2 items-center mb-2">
-                  <img
-                    src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
-                    // src={`/backend/masterhub${enrollServiceArray.photo}`}
-                    alt=""
-                  />
-                  <h3>Покрытие гелем</h3>
-                </div>
+            {Object.values(enrollService).map(
+              (enrollServiceArray, innerIndex) =>
+                enrollServiceArray.map((enService, innerInnerIndex) => (
+                  <div key={innerInnerIndex}>
+                    <div className="flex gap-2 items-center mb-2">
+                      <img
+                        src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
+                        alt=""
+                      />
+                      <h3>{enService.title}</h3>
+                    </div>
 
-                <div className="flex gap-1 flex-col mb-2">
-                  <span>1700 rub</span>
-                  <span>2 часа</span>
-                </div>
+                    <div className="flex gap-1 flex-col mb-2">
+                      <span>1700 rub</span>
+                      <span>2 часа</span>
+                    </div>
 
-                <div className="flex justify-end">
-                  <button>Выбрать</button>
-                </div>
-              </div>
-            ))}
+                    <div className="flex justify-end">
+                      <button>Выбрать</button>
+                    </div>
+                  </div>
+                ))
+            )}
           </div>
         ))}
       </div>
