@@ -21,7 +21,7 @@ const LandingPage = () => {
         <MiniCategories/>
         {/* <Popular/> */}
         <MiniCatalog isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setId={setId}/>
-        <EnrollModal isModalOpen={isModalOpen} id={id}/>
+        <EnrollModal isModalOpen={isModalOpen} id={id} setIsModalOpen={setIsModalOpen}/>
     </>
   )
 }

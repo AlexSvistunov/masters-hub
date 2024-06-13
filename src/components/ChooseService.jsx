@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
+import ServiceItem from "./ServiceItem";
 
 const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
@@ -32,7 +33,7 @@ const ChooseService = (props) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <button>
+        <button onClick={() => props.setStep(props.step - 1)}>
           <svg
             className="h-6 w-6 fill-current md:h-8 md:w-8"
             xmlns="http://www.w3.org/2000/svg"
@@ -94,28 +95,13 @@ const ChooseService = (props) => {
           >
             {Object.values(enrollService).map(
               (enrollServiceArray, innerIndex) => (
-               <div>
-                <h3>{enrollServiceArray.description}</h3>
+               <div key={innerIndex}>
+                <h3 className="text-3xl mb-2">{Object.keys(enrollService)}</h3>
+                 <div className="flex flex-col gap-3">
                  {enrollServiceArray.map((enService, innerInnerIndex) => (
-                  <div className="item rounded-lg bg-primary p-3 text-white" key={innerInnerIndex}>
-                    <div className="flex gap-2 items-center mb-2">
-                      <img
-                        src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
-                        alt=""
-                      />
-                      <h3>{enService.title}</h3>
-                    </div>
-
-                    <div className="flex gap-1 flex-col mb-2">
-                      <span>1700 rub</span>
-                      <span>2 часа</span>
-                    </div>
-
-                    <div className="flex justify-end">
-                      <button>Выбрать</button>
-                    </div>
-                  </div>
+                  <ServiceItem enService={enService} key={innerInnerIndex} step={props.step} setStep={props.setStep}/>
                 ))}
+                 </div>
                </div>
               )
                 

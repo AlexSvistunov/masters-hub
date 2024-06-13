@@ -3,8 +3,8 @@ import ChooseService from "./ChooseService";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 
-const EnrollModal = ({isModalOpen, id}) => {
-  const {currentToken} = useAuth()
+const EnrollModal = ({ setIsModalOpen, isModalOpen, id }) => {
+  const { currentToken } = useAuth();
   const array = [
     "Новая запись",
     "Выбор услуг",
@@ -20,24 +20,22 @@ const EnrollModal = ({isModalOpen, id}) => {
 
   const fetchRecording = async () => {
     try {
-      const response = await fetch(`${URL}/api/recording/1/`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Token ${currentToken}`,
-          },
-        }
-      )
-      const data = await response.json()
+      const response = await fetch(`${URL}/api/recording/1/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+      const data = await response.json();
       console.log(data);
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchRecording()
-  }, [isModalOpen])
+    fetchRecording();
+  }, [isModalOpen]);
 
   return (
     <>
@@ -46,7 +44,11 @@ const EnrollModal = ({isModalOpen, id}) => {
           {step === 0 && (
             <>
               <div className="flex justify-between items-center">
-                <button>
+                <button
+                  onClick={() => {
+                    setIsModalOpen(false);
+                  }}
+                >
                   <svg
                     className="h-6 w-6 fill-current md:h-8 md:w-8"
                     xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +75,39 @@ const EnrollModal = ({isModalOpen, id}) => {
 
           {step === 1 && (
             <>
-              <ChooseService array={array} step={step} setStep={setStep} nextStep={nextStep} id={id}/>
+              <ChooseService
+                array={array}
+                step={step}
+                setStep={setStep}
+                nextStep={nextStep}
+                id={id}
+              />
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={() => {
+                    setStep(step - 1);
+                  }}
+                >
+                  <svg
+                    className="h-6 w-6 fill-current md:h-8 md:w-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
+                  </svg>
+                </button>
+
+                <span className="block mx-auto">Дата и время</span>
+              </div>
+
+              
             </>
           )}
         </div>
