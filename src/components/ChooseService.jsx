@@ -85,35 +85,19 @@ const ChooseService = (props) => {
         ))}
       </div>
 
-      <div className="list flex flex-col gap-3">
-        {/* <div className="item rounded-lg bg-primary p-3 text-white">
-          <div className="flex gap-2 items-center mb-2">
-            <img
-              src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
-              alt=""
-            />
-            <h3>Покрытие гелем</h3>
-          </div>
-
-          <div className="flex gap-1 flex-col mb-2">
-            <span>1700 rub</span>
-            <span>2 часа</span>
-          </div>
-
-          <div className="flex justify-end">
-            <button>Выбрать</button>
-          </div>
-        </div> */}
-
+      <div className="list flex flex-col gap-5">
+     
         {enrollServices.map((enrollService, index) => (
           <div
-            className="item rounded-lg bg-primary p-3 text-white"
+            className="flex flex-col gap-3"
             key={index}
           >
             {Object.values(enrollService).map(
-              (enrollServiceArray, innerIndex) =>
-                enrollServiceArray.map((enService, innerInnerIndex) => (
-                  <div key={innerInnerIndex}>
+              (enrollServiceArray, innerIndex) => (
+               <div>
+                <h3>{enrollServiceArray.description}</h3>
+                 {enrollServiceArray.map((enService, innerInnerIndex) => (
+                  <div className="item rounded-lg bg-primary p-3 text-white" key={innerInnerIndex}>
                     <div className="flex gap-2 items-center mb-2">
                       <img
                         src="https://dikidi.ru/assets/images/newrecord/bg-service-icon.svg"
@@ -131,7 +115,10 @@ const ChooseService = (props) => {
                       <button>Выбрать</button>
                     </div>
                   </div>
-                ))
+                ))}
+               </div>
+              )
+                
             )}
           </div>
         ))}
