@@ -8,7 +8,7 @@ import useAuth from "../hooks/useAuth";
 
 const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(true);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [chosenCategories, setChosenCategories] = useState([])
   console.log(chosenCategories);
@@ -102,7 +102,9 @@ const CatalogPage = () => {
               <div className="py-5">
                 <h3>Категория</h3>
 
-                <button className="btn btn-primary my-2" onClick={() => {}}>
+                <button className="btn btn-primary my-2" onClick={() => {
+                  setIsCategoryModalOpen(true)
+                }}>
                   Выбрать категорию
                 </button>
                 {/* <details className="dropdown">
