@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChooseService from "./ChooseService";
+import { URL } from "../utils/backend-url";
+import useAuth from "../hooks/useAuth";
 
 const EnrollModal = ({isModalOpen, id}) => {
+  const {currentToken} = useAuth()
   const array = [
     "Новая запись",
     "Выбор услуг",
@@ -14,6 +17,27 @@ const EnrollModal = ({isModalOpen, id}) => {
   const nextStep = () => {
     setStep((prev) => prev + 1);
   };
+
+  const fetchRecording = async () => {
+    try {
+      const response = await fetch(`${URL}/api/recording/1/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${currentToken}`,
+          },
+        }
+      )
+      const data = await response.json()
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchRecording()
+  }, [isModalOpen])
 
   return (
     <>
