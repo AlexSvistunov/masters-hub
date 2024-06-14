@@ -33,9 +33,9 @@ const EnrollModal = ({ setIsModalOpen, isModalOpen, id }) => {
     }
   };
 
-  useEffect(() => {
-    fetchRecording();
-  }, [isModalOpen]);
+  // useEffect(() => {
+  //   fetchRecording();
+  // }, [isModalOpen]);
 
   return (
     <>

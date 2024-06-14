@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 
-const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId }) => {
-
+const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId, catalogItems, setCatalogItems }) => {
 
   const { currentToken } = useAuth();
 
@@ -20,6 +19,10 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId })
         }
       );
       const data = await response.json();
+  
+      // setCatalogItems(prevItems => {
+      //   return [...prevItems, data]
+      // })
       return data;
     } catch (error) {
       console.log(error.message);
@@ -37,6 +40,7 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId })
       })
 
       const data = await response.json()
+      setCatalogItems(data)
       return data
     } catch (error) {
       console.log(error.message)

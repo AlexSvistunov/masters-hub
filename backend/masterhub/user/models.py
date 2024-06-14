@@ -142,7 +142,7 @@ class Specialist(models.Model):
     )
 
     def __str__(self):
-        return f'specialist_{self.profile}'
+        return f'specialist_{self.profile}_{self.name}'
 
 
 class ProfileImages(models.Model):

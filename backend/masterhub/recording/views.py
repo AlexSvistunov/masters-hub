@@ -39,8 +39,14 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin):
     @action(methods=['get'], detail=True, url_path='(?P<id_services>[^/.]+)')
     def recording(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
+        pk_services = kwargs.get('id_services')
+        services = Service.objects.get(id=pk_services)
+        qs = []
         specialists = Specialist.objects.filter(profile__id=pk)
-        serializer = SpecialistSerializer(specialists, many=True)
+        for i in specialists:
+            if i.specialist_services.all().filter(title=services.title):
+                qs.append(i)
+        serializer = SpecialistSerializer(qs, many=True)
         return Response(serializer.data)
 
     # @action(methods=['get'], detail=True)

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 
 class CatalogPagination(PageNumberPagination):
-    page_size = 6
+    page_size = 3
 
     def get_paginated_response(self, data):
         return super(CatalogPagination, self).get_paginated_response(data)

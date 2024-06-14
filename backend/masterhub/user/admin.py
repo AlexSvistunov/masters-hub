@@ -23,7 +23,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(ProfileMaster)
 class ProfileMasterAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'specialization']
+    list_display = ['id', 'name', 'specialization', 'user']
     list_display_links = ['id', 'name']
     inlines = [SpecialistInline]
 
@@ -36,7 +36,7 @@ class ProfileImagesAdmin(admin.ModelAdmin):
 
 @admin.register(Specialist)
 class SpecialistAdmin(admin.ModelAdmin):
-    list_display = ['id']
+    list_display = ['id', 'name', 'profile']
     inlines = [ServiceInline]
 
 
