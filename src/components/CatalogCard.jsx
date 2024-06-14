@@ -3,8 +3,15 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 
-const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId, catalogItems, setCatalogItems }) => {
-
+const CatalogCard = ({
+  isModalOpen,
+  setIsModalOpen,
+  catalogItem,
+  token,
+  setId,
+  catalogItems,
+  setCatalogItems,
+}) => {
   const { currentToken } = useAuth();
 
   const addToFav = async () => {
@@ -19,34 +26,45 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId, c
         }
       );
       const data = await response.json();
-  
-      // setCatalogItems(prevItems => {
-      //   return [...prevItems, data]
-      // })
+      console.log("data ->>> ", data);
+
+      const item = data.filter((item) => item.id === catalogItem.id);
+
+      setCatalogItems((prevItems) => {
+        prevItems.map((myItem) => {
+          if (myItem.id === item.id) {
+            return {
+              ...item,
+              is_favorite: item.is_favorite,
+            };
+          } else {
+            return myItem;
+          }
+        });
+      });
+      console.log(item);
+
       return data;
     } catch (error) {
       console.log(error.message);
     }
   };
 
-
   const deleteFav = async () => {
     try {
       const response = await fetch(`${URL}/api/favorites/${catalogItem.id}/`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           Authorization: `Token ${currentToken}`,
         },
-      })
+      });
 
-      const data = await response.json()
-      setCatalogItems(data)
-      return data
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
-
+  };
 
   const averageRating = catalogItem?.reviews?.average_rating;
   const formattedRating =
@@ -67,7 +85,7 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId, c
       </div>
       <footer className="flex justify-between mt-auto">
         <div className="flex items-center">
-        {formattedRating === "нет отзывов" ? (
+          {formattedRating === "нет отзывов" ? (
             <span>Нет отзывов</span>
           ) : (
             <div className="flex gap-1 items-center rounded-xl bg-base-300 px-3 py-2">
@@ -81,26 +99,26 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId, c
               </div>
             </div>
           )}
-         
         </div>
-        <button className="btn btn-primary relataive z-10" onClick={() => {
-          setId(catalogItem?.id)
-          setIsModalOpen(true)
-
-  
-        }}>Записаться</button>
+        <button
+          className="btn btn-primary relataive z-10"
+          onClick={() => {
+            setId(catalogItem?.id);
+            setIsModalOpen(true);
+          }}
+        >
+          Записаться
+        </button>
       </footer>
 
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-         if(catalogItem.is_favorite) {
-          deleteFav()
-         }
+          if (catalogItem.is_favorite) {
+            deleteFav();
+          }
 
-         addToFav()
-
-         
+          addToFav();
         }}
       >
         <svg
@@ -108,7 +126,9 @@ const CatalogCard = ({ isModalOpen, setIsModalOpen, catalogItem, token, setId, c
           className="h-5 w-5 group-hover:scale-110 transition-all"
           fill={catalogItem.is_favorite ? "rgb(99, 111, 228)" : "transparent"}
           viewBox="0 0 24 24"
-          stroke={catalogItem.is_favorite ? "rgb(99, 111, 228)" : "currentColor"}
+          stroke={
+            catalogItem.is_favorite ? "rgb(99, 111, 228)" : "currentColor"
+          }
         >
           <path
             strokeLinecap="round"
