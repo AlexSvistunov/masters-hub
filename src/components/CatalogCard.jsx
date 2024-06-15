@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
+import { addToFav } from "../store/slices/favSlice";
+import { deleteFromFav } from "../store/slices/favSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CatalogCard = ({
   isModalOpen,
@@ -9,42 +12,15 @@ const CatalogCard = ({
   token,
   item
 }) => {
+  const favList = useSelector(state => state.fav.favList)
+  const [favListState, setFavListState] = useState([])
   const { currentToken } = useAuth();
+  const dispatch = useDispatch()
+  // console.log('ITEM', item);
 
-  const addToFav = async () => {
-    try {
-      const response = await fetch(
-        `${URL}/api/favorites/?id=${item.id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Token ${currentToken}`,
-          },
-        }
-      );
-      const data = await response.json();
-      console.log("data ->>> ", data);
-
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const deleteFav = async () => {
-    try {
-      const response = await fetch(`${URL}/api/favorites/${item.id}/`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  useEffect(() => {
+    setFavListState(favList)
+  }, [favList])
 
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
@@ -94,10 +70,16 @@ const CatalogCard = ({
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
           if (item.is_favorite) {
-            deleteFav();
+            dispatch(deleteFromFav({currentToken, id: item.id}))
+            
           }
 
-          addToFav();
+          dispatch(addToFav({currentToken, id: item.id}))
+          console.log(favListState);
+          const myitem = favListState.filter(favItem => favItem.id === item.id)
+          console.log('ITEM', myitem);
+          
+
         }}
       >
         <svg

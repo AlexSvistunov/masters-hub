@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { URL } from "../../utils/backend-url";
 
 export const addToFav = createAsyncThunk(
   "fav/addToFav",
@@ -11,7 +12,8 @@ export const addToFav = createAsyncThunk(
         },
       });
       const data = await response.json();
-      console.log("data ->>> ", data);
+      console.log("addtofav data ->>> ", data);
+      return data
     } catch (error) {
       console.log(error.message);
     }
@@ -30,6 +32,7 @@ export const deleteFromFav = createAsyncThunk(
       });
 
       const data = await response.json();
+      console.log("deletefromfav data =>>> ", data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -43,7 +46,16 @@ const initialState = {
 const favSlice = createSlice({
   name: "fav",
   initialState,
+  extraReducers: (builder) => {
+    builder.addCase(addToFav.fulfilled, (state, action) => {
+        console.log(213);
+        console.log(action);
+        state.favList = action.payload
+    })
+  }
 });
+
+
 
 export default favSlice.reducer;
 export const { startTheme, changeTheme } = favSlice.actions;

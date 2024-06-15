@@ -3,10 +3,13 @@ import CatalogCard from "./CatalogCard";
 import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
+  const favList = useSelector(state => state.fav.favList)
+  console.log(favList);
   console.log(catalogItems);
 
   const getCatalogItem = async () => {
