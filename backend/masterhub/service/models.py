@@ -45,6 +45,11 @@ class Service(models.Model):
         verbose_name='цена',
         default=0
     )
+    time = models.TimeField(
+        verbose_name='время процедуры',
+        blank=True,
+        null=True
+    )
     photo = models.ImageField(
         verbose_name='изображение',
         upload_to=upload_photo_service,

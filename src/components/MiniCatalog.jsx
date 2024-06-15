@@ -5,7 +5,6 @@ import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 
 const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
-
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
   console.log(catalogItems);
@@ -13,7 +12,7 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
   const getCatalogItem = async () => {
     try {
       const reponse = await fetch(`${URL}/api/catalog/`, {
-        method: 'GET',
+        method: "GET",
         headers: {
           Authorization: `Token ${currentToken}`,
         },
@@ -35,33 +34,25 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Каталог</h2>
         <></>
-        {["detail"] in catalogItems ? (
-          <h2 className="text-center text-2xl my-3">
-            Нет каталога, нужно его добавить
-          </h2>
-        ) : (
-          <div className="cards grid gap-6 grid-cols-12">
-            {catalogItems.map((catalogItem) => (
-              <CatalogCard
-                key={catalogItem.id}
-                isModalOpen={isModalOpen}
-                setIsModalOpen={setIsModalOpen}
-                catalogItem={catalogItem}
-                catalogItems={catalogItems}
-                setCatalogItems={setCatalogItems}
-                token={currentToken}
-                setId={setId}
-              />
-            ))}
-          </div>
-        )}
+
+        <div className="cards grid gap-6 grid-cols-12">
+          {catalogItems.map((catalogItem) => (
+            <CatalogCard
+              key={catalogItem.id}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              token={currentToken}
+              item={catalogItem}
+  
+            />
+          ))}
+        </div>
 
         <div className="flex justify-center">
           <Link className="btn my-4" to="/catalog">
             Посмотреть все
           </Link>
         </div>
-
       </div>
     </section>
   );

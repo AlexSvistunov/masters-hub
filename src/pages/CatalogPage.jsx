@@ -71,7 +71,7 @@ const CatalogPage = () => {
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
                 {catalog?.results?.map((catalogItem) => (
-                  <CatalogCard catalogItem={catalogItem} key={catalogItem.id} />
+                  <CatalogCard item={catalogItem} key={catalogItem.id} />
                 ))}
               </div>
 
