@@ -14,15 +14,12 @@ const CatalogCard = ({
   items,
   setItems
 }) => {
-  // const favList = useSelector(state => state.fav.favList)
-  // const [favListState, setFavListState] = useState([])
+
   const { currentToken } = useAuth();
   const dispatch = useDispatch()
-  // console.log('ITEM', item);
 
-  // useEffect(() => {
-  //   setFavListState(favList)
-  // }, [favList])
+  // console.log(item);
+  // console.log(items);
 
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
@@ -89,6 +86,8 @@ const CatalogCard = ({
 
               setItems(newItems)
 
+              // setItems({...items, results: newItems})
+
            
 
             })
@@ -104,7 +103,8 @@ const CatalogCard = ({
                   return existingItem;
               });
           
-              setItems(updatedItems);
+              // setItems({...items, results: updatedItems})
+              setItems(updatedItems)
           });
           }
 

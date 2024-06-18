@@ -14,6 +14,7 @@ const CatalogPage = () => {
 
   console.log(catalog);
 
+
   const { currentToken } = useAuth();
 
   const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
@@ -26,7 +27,6 @@ const CatalogPage = () => {
       });
       const data = await response.json();
       setCatalog(data);
-      console.log(data);
     } catch (error) {
       console.log(error.message);
     }
@@ -44,7 +44,6 @@ const CatalogPage = () => {
     try {
       const response = await fetch(`${URL}/api/categories/`);
       const data = await response.json();
-      console.log(data);
       if (data) {
         setCategories(data);
       }
@@ -55,10 +54,10 @@ const CatalogPage = () => {
   };
 
   const filterCatalog = async (id) => {
-    console.log(id);
+
     const response = await fetch(`${URL}/api/catalog/?categories=${id}`)
     const data = await response.json()
-    console.log(data);
+
   }
 
   useEffect(() => {
