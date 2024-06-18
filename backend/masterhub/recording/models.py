@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import ProfileMaster, CustomUser, Specialist
+from service.models import Service
 
 
 # Create your models here.
@@ -7,8 +8,17 @@ class WorkTime(models.Model):
     profile = models.ForeignKey(
         ProfileMaster,
         on_delete=models.CASCADE,
-        verbose_name='профиль'
+        verbose_name='профиль',
+         blank=True,
+        null=True
     )
+    specialist = models.ForeignKey(
+        Specialist,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+
     monday = models.CharField(
         max_length=255,
         blank=True,
@@ -58,10 +68,18 @@ class Recording(models.Model):
     profile_master = models.ForeignKey(
         ProfileMaster,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True
 
     )
     specialist = models.ForeignKey(
         Specialist,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    service = models.ForeignKey(
+        Service,
         on_delete=models.CASCADE,
         blank=True,
         null=True

@@ -8,8 +8,8 @@ import { useSelector } from "react-redux";
 const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
-  const favList = useSelector(state => state.fav.favList)
-  console.log(favList);
+  // const favList = useSelector(state => state.fav.favList)
+  // console.log(favList);
   console.log(catalogItems);
 
   const getCatalogItem = async () => {
@@ -39,13 +39,15 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
         <></>
 
         <div className="cards grid gap-6 grid-cols-12">
-          {catalogItems.map((catalogItem) => (
+          {catalogItems?.map((catalogItem) => (
             <CatalogCard
               key={catalogItem.id}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
               token={currentToken}
               item={catalogItem}
+              items={catalogItems}
+              setItems={setCatalogItems}
   
             />
           ))}

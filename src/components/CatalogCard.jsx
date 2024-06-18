@@ -10,17 +10,19 @@ const CatalogCard = ({
   isModalOpen,
   setIsModalOpen,
   token,
-  item
+  item,
+  items,
+  setItems
 }) => {
-  const favList = useSelector(state => state.fav.favList)
-  const [favListState, setFavListState] = useState([])
+  // const favList = useSelector(state => state.fav.favList)
+  // const [favListState, setFavListState] = useState([])
   const { currentToken } = useAuth();
   const dispatch = useDispatch()
   // console.log('ITEM', item);
 
-  useEffect(() => {
-    setFavListState(favList)
-  }, [favList])
+  // useEffect(() => {
+  //   setFavListState(favList)
+  // }, [favList])
 
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
@@ -70,15 +72,43 @@ const CatalogCard = ({
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
           if (item.is_favorite) {
-            dispatch(deleteFromFav({currentToken, id: item.id}))
+            dispatch(deleteFromFav({currentToken, id: item.id})).then(data => {
+              // 1st way, but I'm not working with data, It's just view
+              const newItem = {
+                ...item,
+                is_favorite: !item.is_favorite
+              }
+
+              const newItems = items.map(el => {
+                if(el.id === item.id) {
+                  return newItem
+                }
+
+                return el
+              })
+
+              setItems(newItems)
+
+           
+
+            })
             
+          } else {
+            dispatch(addToFav({ currentToken, id: item.id })).then(data => {
+              const updatedItem = data.payload.find(favItem => favItem.id === item.id);
+          
+              const updatedItems = items.map(existingItem => {
+                  if (existingItem.id === updatedItem.id) {
+                      return updatedItem;
+                  }
+                  return existingItem;
+              });
+          
+              setItems(updatedItems);
+          });
           }
 
-          dispatch(addToFav({currentToken, id: item.id}))
-          console.log(favListState);
-          const myitem = favListState.filter(favItem => favItem.id === item.id)
-          console.log('ITEM', myitem);
-          
+         
 
         }}
       >

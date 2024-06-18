@@ -11,12 +11,19 @@ const CatalogPage = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [chosenCategories, setChosenCategories] = useState([])
-  console.log(chosenCategories);
+
+  console.log(catalog);
+
   const { currentToken } = useAuth();
 
   const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
     try {
-      const response = await fetch(`${url}`);
+      const response = await fetch(`${url}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
       const data = await response.json();
       setCatalog(data);
       console.log(data);
@@ -71,7 +78,7 @@ const CatalogPage = () => {
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
                 {catalog?.results?.map((catalogItem) => (
-                  <CatalogCard item={catalogItem} key={catalogItem.id} />
+                  <CatalogCard item={catalogItem} key={catalogItem.id} items={catalog.results} setItems={setCatalog} />
                 ))}
               </div>
 
