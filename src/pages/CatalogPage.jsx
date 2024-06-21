@@ -11,6 +11,7 @@ const CatalogPage = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [chosenCategories, setChosenCategories] = useState([])
+  const [catalogList, setCatalogList] = useState([])
 
   console.log(catalog);
 
@@ -27,6 +28,7 @@ const CatalogPage = () => {
       });
       const data = await response.json();
       setCatalog(data);
+      setCatalogList(data?.results)
     } catch (error) {
       console.log(error.message);
     }
@@ -39,6 +41,10 @@ const CatalogPage = () => {
   useEffect(() => {
     fetchCatalog();
   }, []);
+
+  // useEffect(() => {
+  //   fetchCatalog()
+  // }, [catalog])
 
   const getCategories = async () => {
     try {
@@ -76,8 +82,8 @@ const CatalogPage = () => {
             <div className="col-span-9">
               <h1 className="text-5xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
-                {catalog?.results?.map((catalogItem) => (
-                  <CatalogCard item={catalogItem} key={catalogItem.id} items={catalog.results} setItems={setCatalog} />
+                {catalogList?.map((catalogItem) => (
+                  <CatalogCard item={catalogItem} key={catalogItem.id} items={catalogList} setItems={setCatalogList} />
                 ))}
               </div>
 

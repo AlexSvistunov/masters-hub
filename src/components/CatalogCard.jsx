@@ -88,7 +88,6 @@ const CatalogCard = ({
 
               // setItems({...items, results: newItems})
 
-           
 
             })
             
