@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
+  console.log(masterData);
 
   const { currentToken } = useAuth();
 
@@ -117,8 +118,10 @@ const MasterPage = () => {
 
             <div className="mb-5">
               <CatalogCard
-                catalogItem={masterData}
+                item={masterData}
+                setItems={setMasterData}
                 token={currentToken}
+                keyword='profile'
               />
             </div>
 

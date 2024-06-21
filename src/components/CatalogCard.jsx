@@ -19,8 +19,6 @@ const CatalogCard = ({
   const { currentToken } = useAuth();
   const dispatch = useDispatch()
 
-  // console.log(item);
-  // console.log(items);
 
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
@@ -28,15 +26,15 @@ const CatalogCard = ({
 
   return (
     <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
-      <Link className="absolute inset-0" to={`/profile/${item.id}`} />
+      <Link className="absolute inset-0" to={`/profile/${item?.id}`} />
       <div className="flex items-center gap-5 mb-5">
         <img
           className="w-16 h-16 rounded-lg"
-          src={`/backend/masterhub${item.photo}`}
+          src={`/backend/masterhub${item?.photo}`}
         ></img>
         <div className="flex flex-col gap-1">
-          <span className="text-xl">{item.name}</span>
-          <span>{item.address}</span>
+          <span className="text-xl">{item?.name}</span>
+          <span>{item?.address}</span>
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
@@ -69,21 +67,21 @@ const CatalogCard = ({
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          if (item.is_favorite) {
+          if (item?.is_favorite) {
             if(keyword === 'fav') {
-              dispatch(deleteFromFav({currentToken, id: item.id})).then(data => {
+              dispatch(deleteFromFav({currentToken, id: item?.id})).then(data => {
                 setItems(data.payload)
               })
             } else {
-              dispatch(deleteFromFav({currentToken, id: item.id})).then(data => {
+              dispatch(deleteFromFav({currentToken, id: item?.id})).then(data => {
                 // 1st way, but I'm not working with data, It's just view
                 const newItem = {
                   ...item,
-                  is_favorite: !item.is_favorite
+                  is_favorite: !item?.is_favorite
                 }
   
                 const newItems = items.map(el => {
-                  if(el.id === item.id) {
+                  if(el.id === item?.id) {
                     return newItem
                   }
   
@@ -99,12 +97,20 @@ const CatalogCard = ({
           } else {
             if(keyword === 'fav') {
               return
-            } else {
-              dispatch(addToFav({ currentToken, id: item.id })).then(data => {
-                const updatedItem = data.payload.find(favItem => favItem.id === item.id);
+            } 
+            if(keyword === 'profile') {
+              dispatch(addToFav({currentToken, id: item?.id})).then(data => {
+                const updatedItem = data.payload.find(profileItem => profileItem?.id === item?.id);
+               
+                setItems(updatedItem)
+              })
+            }
+            else {
+              dispatch(addToFav({ currentToken, id: item?.id })).then(data => {
+                const updatedItem = data.payload.find(favItem => favItem?.id === item?.id);
             
                 const updatedItems = items.map(existingItem => {
-                    if (existingItem.id === updatedItem.id) {
+                    if (existingItem?.id === updatedItem?.id) {
                         return updatedItem;
                     }
                     return existingItem;
@@ -123,10 +129,10 @@ const CatalogCard = ({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill={item.is_favorite ? "rgb(99, 111, 228)" : "transparent"}
+          fill={item?.is_favorite ? "rgb(99, 111, 228)" : "transparent"}
           viewBox="0 0 24 24"
           stroke={
-            item.is_favorite ? "rgb(99, 111, 228)" : "currentColor"
+            item?.is_favorite ? "rgb(99, 111, 228)" : "currentColor"
           }
         >
           <path

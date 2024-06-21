@@ -42,9 +42,6 @@ const CatalogPage = () => {
     fetchCatalog();
   }, []);
 
-  // useEffect(() => {
-  //   fetchCatalog()
-  // }, [catalog])
 
   const getCategories = async () => {
     try {
