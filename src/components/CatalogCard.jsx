@@ -12,7 +12,8 @@ const CatalogCard = ({
   token,
   item,
   items,
-  setItems
+  setItems,
+  keyword
 }) => {
 
   const { currentToken } = useAuth();
@@ -69,42 +70,50 @@ const CatalogCard = ({
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
           if (item.is_favorite) {
-            dispatch(deleteFromFav({currentToken, id: item.id})).then(data => {
-              // 1st way, but I'm not working with data, It's just view
-              const newItem = {
-                ...item,
-                is_favorite: !item.is_favorite
-              }
-
-              const newItems = items.map(el => {
-                if(el.id === item.id) {
-                  return newItem
-                }
-
-                return el
+            if(keyword === 'fav') {
+              dispatch(deleteFromFav({currentToken, id: item.id})).then(data => {
+                setItems(data.payload)
               })
-
-              setItems(newItems)
-
-              // setItems({...items, results: newItems})
-
-
-            })
-            
-          } else {
-            dispatch(addToFav({ currentToken, id: item.id })).then(data => {
-              const updatedItem = data.payload.find(favItem => favItem.id === item.id);
-          
-              const updatedItems = items.map(existingItem => {
-                  if (existingItem.id === updatedItem.id) {
-                      return updatedItem;
+            } else {
+              dispatch(deleteFromFav({currentToken, id: item.id})).then(data => {
+                // 1st way, but I'm not working with data, It's just view
+                const newItem = {
+                  ...item,
+                  is_favorite: !item.is_favorite
+                }
+  
+                const newItems = items.map(el => {
+                  if(el.id === item.id) {
+                    return newItem
                   }
-                  return existingItem;
-              });
+  
+                  return el
+                })
+  
+                setItems(newItems)
+  
+              })
+              
+            }
           
-              // setItems({...items, results: updatedItems})
-              setItems(updatedItems)
-          });
+          } else {
+            if(keyword === 'fav') {
+              return
+            } else {
+              dispatch(addToFav({ currentToken, id: item.id })).then(data => {
+                const updatedItem = data.payload.find(favItem => favItem.id === item.id);
+            
+                const updatedItems = items.map(existingItem => {
+                    if (existingItem.id === updatedItem.id) {
+                        return updatedItem;
+                    }
+                    return existingItem;
+                });
+            
+                setItems(updatedItems)
+            });
+            }
+           
           }
 
          

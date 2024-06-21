@@ -50,7 +50,7 @@ const FavoritesPage = () => {
           <div className="p-10 flex flex-col gap-4">
             {favList.length ? (
               favList.map((favEl) => (
-                <CatalogCard item={favEl} favList={favList} setFavList={setFavList} key={favEl.id} />
+                <CatalogCard item={favEl} items={favList} setItems={setFavList} key={favEl.id} keyword='fav' />
               ))
             ) : (
               <div className="text-4xl text-center">
