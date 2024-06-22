@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import ChooseService from "./ChooseService";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../store/slices/modalSlice";
 
-const EnrollModal = ({ setIsModalOpen, isModalOpen, id }) => {
+const EnrollModal = () => {
+  const dispatch = useDispatch()
+
+  const isModalOpen = useSelector(state => state.enrollModal.isModalOpen)
   const { currentToken } = useAuth();
   const array = [
     "Новая запись",
@@ -46,7 +51,8 @@ const EnrollModal = ({ setIsModalOpen, isModalOpen, id }) => {
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => {
-                    setIsModalOpen(false);
+                    dispatch(openModal())
+
                   }}
                 >
                   <svg
@@ -80,7 +86,6 @@ const EnrollModal = ({ setIsModalOpen, isModalOpen, id }) => {
                 step={step}
                 setStep={setStep}
                 nextStep={nextStep}
-                id={id}
               />
             </>
           )}

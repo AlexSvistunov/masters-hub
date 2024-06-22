@@ -5,7 +5,7 @@ import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
 
-const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
+const MiniCatalog = () => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
 
@@ -39,8 +39,8 @@ const MiniCatalog = ({ isModalOpen, setIsModalOpen, setId }) => {
           {catalogItems?.map((catalogItem) => (
             <CatalogCard
               key={catalogItem.id}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
+              // isModalOpen={isModalOpen}
+              // setIsModalOpen={setIsModalOpen}
               token={currentToken}
               item={catalogItem}
               items={catalogItems}

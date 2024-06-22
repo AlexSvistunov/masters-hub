@@ -11,6 +11,10 @@ const MasterPage = () => {
 
   const { currentToken } = useAuth();
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
 
   const averageRating = masterData?.reviews?.average_rating;
   const formattedRating =

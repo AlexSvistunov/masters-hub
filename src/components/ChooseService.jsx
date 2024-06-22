@@ -7,10 +7,11 @@ const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
   const [enrollServices, setEnrollServices] = useState([]);
   const { currentToken } = useAuth();
+  console.log(props);
 
   const getEnrollServices = async () => {
     try {
-      const response = await fetch(`${URL}/api/recording/${props.id}/`, {
+      const response = await fetch(`${URL}/api/recording/7/`, {
         method: "GET",
         headers: {
           Authorization: `Token ${currentToken}`,

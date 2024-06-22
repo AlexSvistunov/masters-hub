@@ -5,10 +5,9 @@ import { URL } from "../utils/backend-url";
 import { addToFav } from "../store/slices/favSlice";
 import { deleteFromFav } from "../store/slices/favSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../store/slices/modalSlice";
 
 const CatalogCard = ({
-  isModalOpen,
-  setIsModalOpen,
   token,
   item,
   items,
@@ -57,7 +56,8 @@ const CatalogCard = ({
         <button
           className="btn btn-primary relataive z-10"
           onClick={() => {
-            setIsModalOpen(true);
+            // setIsModalOpen(true);
+            dispatch(openModal())
           }}
         >
           Записаться

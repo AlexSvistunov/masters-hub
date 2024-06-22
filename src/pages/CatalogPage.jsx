@@ -74,10 +74,10 @@ const CatalogPage = () => {
 
       <div className="">
         <Tabs />
-        <section className="">
+        <section className="p-7">
           <div className="container mx-auto grid grid-cols-12 gap-8">
             <div className="col-span-9">
-              <h1 className="text-5xl mb-5">Каталог</h1>
+              <h1 className="text-4xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
                 {catalogList?.map((catalogItem) => (
                   <CatalogCard item={catalogItem} key={catalogItem.id} items={catalogList} setItems={setCatalogList} />
