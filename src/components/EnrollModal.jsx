@@ -3,12 +3,14 @@ import ChooseService from "./ChooseService";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../store/slices/modalSlice";
+import { closeModal, openModal } from "../store/slices/modalSlice";
 
 const EnrollModal = () => {
   const dispatch = useDispatch()
 
   const isModalOpen = useSelector(state => state.enrollModal.isModalOpen)
+  const id = useSelector(state => state.enrollModal.modalId)
+
   const { currentToken } = useAuth();
   const array = [
     "Новая запись",
@@ -25,7 +27,7 @@ const EnrollModal = () => {
 
   const fetchRecording = async () => {
     try {
-      const response = await fetch(`${URL}/api/recording/1/`, {
+      const response = await fetch(`${URL}/api/recording/${id}/`, {
         method: "GET",
         headers: {
           Authorization: `Token ${currentToken}`,
@@ -38,10 +40,6 @@ const EnrollModal = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchRecording();
-  // }, [isModalOpen]);
-
   return (
     <>
       <div className="enroll-modal" open={isModalOpen ? true : false}>
@@ -51,7 +49,7 @@ const EnrollModal = () => {
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => {
-                    dispatch(openModal())
+                    dispatch(closeModal())
 
                   }}
                 >
@@ -86,6 +84,7 @@ const EnrollModal = () => {
                 step={step}
                 setStep={setStep}
                 nextStep={nextStep}
+                id={id}
               />
             </>
           )}

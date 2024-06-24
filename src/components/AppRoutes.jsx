@@ -8,6 +8,7 @@ import FavoritesPage from "../pages/FavoritesPage"
 import NotesPage from "../pages/NotesPage"
 import BusinessPage from "../pages/BusinessPage"
 import BusinessProfilePage from "../pages/BusinessProfilePage"
+import TestPage from "../pages/TestPage"
 
 
 const AppRoutes = () => {
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Route path="/business" element={<BusinessPage/>}></Route>
         <Route path="/business/profile" element={<BusinessProfilePage/>}></Route>
         <Route path="/business/projects" element={<BusinessProfilePage/>}></Route>
+        <Route path="/test" element={<TestPage/>}></Route>
       </Routes>
     </div>
   )

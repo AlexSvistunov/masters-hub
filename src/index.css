@@ -70,3 +70,8 @@
   max-width: 750px;
   width: 100%;
 }
+
+
+  button, a {
+    @apply no-animation
+  }

@@ -11,7 +11,7 @@ const ChooseService = (props) => {
 
   const getEnrollServices = async () => {
     try {
-      const response = await fetch(`${URL}/api/recording/7/`, {
+      const response = await fetch(`${URL}/api/recording/${props.id}/`, {
         method: "GET",
         headers: {
           Authorization: `Token ${currentToken}`,

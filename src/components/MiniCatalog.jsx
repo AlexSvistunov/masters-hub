@@ -26,7 +26,9 @@ const MiniCatalog = () => {
     }
   };
   useEffect(() => {
-    getCatalogItem();
+    setTimeout(() => {
+      getCatalogItem();
+    }, 0);
   }, []);
 
   return (
@@ -36,18 +38,45 @@ const MiniCatalog = () => {
         <></>
 
         <div className="cards grid gap-6 grid-cols-12">
-          {catalogItems?.map((catalogItem) => (
-            <CatalogCard
-              key={catalogItem.id}
-              // isModalOpen={isModalOpen}
-              // setIsModalOpen={setIsModalOpen}
-              token={currentToken}
-              item={catalogItem}
-              items={catalogItems}
-              setItems={setCatalogItems}
-  
-            />
-          ))}
+          {catalogItems.length ? (
+            catalogItems?.map((catalogItem) => (
+              <>
+                <CatalogCard
+                  key={catalogItem.id}
+                  // isModalOpen={isModalOpen}
+                  // setIsModalOpen={setIsModalOpen}
+                  token={currentToken}
+                  item={catalogItem}
+                  items={catalogItems}
+                  setItems={setCatalogItems}
+                />
+               
+              </>
+            ))
+          ) : (
+            <>
+              <div className="flex flex-col gap-4 col-span-4 p-4 rounded-xl">
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+
+              <div className="flex flex-col gap-4 col-span-4 p-4 rounded-xl">
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+
+              <div className="flex flex-col gap-4 col-span-4 p-4 rounded-xl">
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="flex justify-center">
