@@ -100,7 +100,9 @@ const CatalogCard = ({
             } 
             if(keyword === 'profile') {
               dispatch(addToFav({currentToken, id: item?.id})).then(data => {
-                const updatedItem = data.payload.find(profileItem => profileItem?.id === item?.id);
+                console.log('FROM PROFILE');
+                console.log('DATA!!!', data);
+                const updatedItem = data?.payload?.find(profileItem => profileItem?.id === item?.id);
                
                 setItems(updatedItem)
               })

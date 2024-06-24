@@ -8,7 +8,7 @@ import EnrollModal from "../components/EnrollModal";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
-  
+
   const { currentToken } = useAuth();
 
   useEffect(() => {
@@ -381,7 +381,7 @@ const MasterPage = () => {
                   </div> */}
                 </div>
                 <div className="user-reviews max-w-150 w-full">
-                  {masterData?.reviews?.detail.map((review) => (
+                  {masterData?.reviews?.detail?.map((review) => (
                     <article className="w-full mb-5" key={review.id}>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center mb-4">
