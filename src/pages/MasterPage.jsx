@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import CatalogCard from "../components/CatalogCard";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
-import { register } from "swiper/element/bundle";
+import { Swiper, SwiperSlide } from "swiper/react";
+import '../App.css'
+import "swiper/css";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
@@ -16,7 +18,6 @@ const MasterPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    register();
   }, []);
 
   const averageRating = masterData?.reviews?.average_rating;
@@ -101,25 +102,16 @@ const MasterPage = () => {
                 </span>
               </div>
 
-              <div className="flex gap-4 items-center justify-center">
-                {/* <swiper-container slides-per-view="3" speed="500" loop="true" css-mode="true">
-                  {masterData?.images_work?.map((workImage) => (
-                   <swiper-slide>
-                     <img
-                      className="rounded-lg w-40 h-40 object-cover"
-                      src={`/backend/masterhub${workImage.image}`}
-                      key={workImage.image}
-                    ></img>
-                   </swiper-slide>
+              <div className="">
+                <Swiper slidesPerView={"auto"} spaceBetween={30}>
+                  {masterData?.images_work?.map((workImage, index) => (
+                    <div>
+                      <SwiperSlide className="myCard">
+                      fdsdfsdffsdsfd
+                      </SwiperSlide>
+                    </div>
                   ))}
-                </swiper-container> */}
-
-                <swiper-container slides-per-view="3" >
-                  <swiper-slide>Slide 1</swiper-slide>
-                  <swiper-slide>Slide 2</swiper-slide>
-                  <swiper-slide>Slide 3</swiper-slide>
-                  ...
-                </swiper-container>
+                </Swiper>
               </div>
             </div>
 
