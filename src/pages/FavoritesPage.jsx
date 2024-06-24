@@ -5,9 +5,11 @@ import useAuth from "../hooks/useAuth";
 import CatalogCard from "../components/CatalogCard";
 import { useEffect, useState } from "react";
 import { URL } from "../utils/backend-url";
+import { MoonLoader } from "react-spinners";
 
 const FavoritesPage = () => {
   const [favList, setFavList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   const { currentToken } = useAuth();
 
   const { token } = useAuth();
@@ -22,15 +24,17 @@ const FavoritesPage = () => {
 
       const data = await response.json();
       setFavList(data);
+      setIsLoading(false)
     } catch (error) {
       console.log(error.message);
+      setIsLoading(false)
     }
   };
 
   useEffect(() => {
     setTimeout(() => {
       getFav();
-    }, 2000)
+    }, 1000)
   }, []);
 
   console.log(favList);
@@ -42,14 +46,15 @@ const FavoritesPage = () => {
       <div className="container mx-auto">
         <Tabs />
 
-        <div>
+        <div className="">
           {!token && (
             <div className="text-4xl text-center py-10">
               Авторизируйтесь, чтобы посмотреть избранное
             </div>
           )}
 
-          <div className="p-10 flex flex-col gap-4">
+          {isLoading ? <div className="flex items-center justify-center p-10"><MoonLoader color="#6a5bff" size={75}></MoonLoader></div>: (
+            <div className="p-10 flex flex-col gap-4">
             
             {favList.length ? (
               favList.map((favEl) => (
@@ -61,6 +66,9 @@ const FavoritesPage = () => {
               </div>
             )}
           </div>
+          )}
+
+          
         </div>
       </div>
     </div>
