@@ -40,87 +40,7 @@ const MasterPage = () => {
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
-            {/* <div className="p-5 rounded-2xl min-h-32 bg-base-200 relative mb-4">
-              <div className="flex justify-between">
-                <div className="flex flex-col gap-4">
-                  <div className="flex gap-3">
-                    <img
-                      className="h-12 w-12 rounded-lg"
-                      src={`/backend/masterhub${masterData.photo}`}
-                      alt=""
-                    />
-                    <div className="flex flex-col">
-                      <span className="text-2xl">{masterData.name}</span>
-                      <span>{masterData.address}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex g-2">
-                    <span></span>
-                    <span>{masterData.phone}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-5xl">
-                      {formattedRating}
-                    </span>
-                    <div className="flex flex-col">
-                      <div className="rating">
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                        />
-                        <input
-                          type="radio"
-                          name="rating-2"
-                          className="mask mask-star-2 bg-orange-400"
-                        />
-                      </div>
-
-                      <span>{masterData.reviews?.count} оценок</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-end">
-                  <button className="btn btn-primary">Записаться</button>
-                </div>
-              </div>
-
-              <button className="absolute top-5 right-5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-              </button>
-            </div> */}
-
+  
             <div className="mb-5">
               <CatalogCard
                 item={masterData}
@@ -201,53 +121,7 @@ const MasterPage = () => {
 
               <div className="flex">
                 <div className="block max-w-lg w-full">
-                  {/* <div className="flex items-center">
-              <svg
-                className="w-4 h-4 text-yellow-300 ms-1"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 20"
-              >
-                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg
-                className="w-4 h-4 text-yellow-300 ms-1"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 20"
-              >
-                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg
-                className="w-4 h-4 text-yellow-300 ms-1"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 20"
-              >
-                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg
-                className="w-4 h-4 text-yellow-300 ms-1"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 20"
-              >
-                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg
-                className="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 20"
-              >
-                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-            </div> */}
+          
 
                   <div className="flex items-center mb-2">
                     <svg
@@ -305,80 +179,7 @@ const MasterPage = () => {
                       5
                     </p>
                   </div>
-                  {/* <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    1,745 global ratings
-                  </p> */}
-
-                  {/* <div className="flex items-center mt-4">
-                    <a href="#" className="text-sm font-mediu">
-                      5 star
-                    </a>
-                    <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div
-                        className="h-5 bg-yellow-300 rounded"
-                        style={{ width: "70%" }}
-                      ></div>
-                    </div>
-                    <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      70%
-                    </span>
-                  </div>
-                  <div className="flex items-center mt-4">
-                    <a href="#" className="text-sm font-medium">
-                      4 star
-                    </a>
-                    <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div
-                        className="h-5 bg-yellow-300 rounded"
-                        style={{ width: "17%" }}
-                      ></div>
-                    </div>
-                    <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      17%
-                    </span>
-                  </div>
-                  <div className="flex items-center mt-4">
-                    <a href="#" className="text-sm font-medium">
-                      3 star
-                    </a>
-                    <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div
-                        className="h-5 bg-yellow-300 rounded"
-                        style={{ width: "8%" }}
-                      ></div>
-                    </div>
-                    <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      8%
-                    </span>
-                  </div>
-                  <div className="flex items-center mt-4">
-                    <a href="#" className="text-sm font-medium">
-                      2 star
-                    </a>
-                    <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div
-                        className="h-5 bg-yellow-300 rounded"
-                        style={{ width: "4%" }}
-                      ></div>
-                    </div>
-                    <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      4%
-                    </span>
-                  </div>
-                  <div className="flex items-center mt-4">
-                    <a href="#" className="text-sm font-medium">
-                      1 star
-                    </a>
-                    <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div
-                        className="h-5 bg-yellow-300 rounded"
-                        style={{ width: "1%" }}
-                      ></div>
-                    </div>
-                    <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      1%
-                    </span>
-                  </div> */}
+                 
                 </div>
                 <div className="user-reviews max-w-150 w-full">
                   {masterData?.reviews?.detail?.map((review) => (
