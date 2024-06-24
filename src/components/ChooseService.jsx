@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 import ServiceItem from "./ServiceItem";
+import { MoonLoader } from "react-spinners";
 
 const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
   const [enrollServices, setEnrollServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { currentToken } = useAuth();
-  console.log(props);
 
   const getEnrollServices = async () => {
     try {
@@ -20,6 +21,7 @@ const ChooseService = (props) => {
 
       const data = await response.json();
       setEnrollServices(data);
+      setIsLoading(false);
       console.log(data);
       return data;
     } catch (error) {
@@ -28,7 +30,9 @@ const ChooseService = (props) => {
   };
 
   useEffect(() => {
-    getEnrollServices();
+    setTimeout(() => {
+      getEnrollServices();
+    }, 500);
   }, []);
 
   // if(!enrollServices.length) {
@@ -67,8 +71,9 @@ const ChooseService = (props) => {
         </button> */}
       </div>
 
-      {enrollServices.length ? (
-        <div>
+     
+
+      <div>
         <div className="py-5">
           <label className="input input-bordered flex items-center gap-2">
             <input type="text" className="grow" placeholder="Search" />
@@ -87,41 +92,50 @@ const ChooseService = (props) => {
           </label>
         </div>
 
-        <div className="flex items-center gap-4 my-4">
-          {enrollServices.map((service, index) => (
-            <button className="btn btn-primary" key={index}>
-              {Object.keys(service)}
-            </button>
-          ))}
+        {isLoading && (
+        <div className="flex items-center justify-center py-10">
+          <MoonLoader color="#6a5bff" size={75}></MoonLoader>
         </div>
+      )}
 
-        <div className="list flex flex-col gap-5">
-          {enrollServices.map((enrollService, index) => (
-            <div className="flex flex-col gap-3" key={index}>
-              {Object.values(enrollService).map(
-                (enrollServiceArray, innerIndex) => (
-                  <div key={innerIndex}>
-                    <h3 className="text-3xl mb-2">
-                      {Object.keys(enrollService)}
-                    </h3>
-                    <div className="flex flex-col gap-3">
-                      {enrollServiceArray.map((enService, innerInnerIndex) => (
-                        <ServiceItem
-                          enService={enService}
-                          key={innerInnerIndex}
-                          step={props.step}
-                          setStep={props.setStep}
-                        />
-                      ))}
+        <div className="share">
+        <div className="flex items-center gap-4 my-4">
+            {enrollServices.map((service, index) => (
+              <button className="btn btn-primary" key={index}>
+                {Object.keys(service)}
+              </button>
+            ))}
+          </div>
+
+          <div className="list flex flex-col gap-5">
+            {enrollServices.map((enrollService, index) => (
+              <div className="flex flex-col gap-3" key={index}>
+                {Object.values(enrollService).map(
+                  (enrollServiceArray, innerIndex) => (
+                    <div key={innerIndex}>
+                      <h3 className="text-3xl mb-2">
+                        {Object.keys(enrollService)}
+                      </h3>
+                      <div className="flex flex-col gap-3">
+                        {enrollServiceArray.map(
+                          (enService, innerInnerIndex) => (
+                            <ServiceItem
+                              enService={enService}
+                              key={innerInnerIndex}
+                              step={props.step}
+                              setStep={props.setStep}
+                            />
+                          )
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )
-              )}
-            </div>
-          ))}
+                  )
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      ) : <div className="flex justify-center items-center text-3xl w-full h-full text-center">Ничего не найдено! Иван посмотри других мастеров или салоны, возможно там что-то есть. А ВООБЩЕ СДЕЛАЙ НОРМАЛЬНУЮ БД СУКА</div>}
     </>
   );
 };

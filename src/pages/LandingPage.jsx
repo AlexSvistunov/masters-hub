@@ -10,9 +10,6 @@ import Tabs from "../components/Tabs"
 
 const LandingPage = () => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
-
   return (
     <>  
         <Header/>

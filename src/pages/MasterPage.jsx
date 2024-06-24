@@ -4,11 +4,11 @@ import { URL } from "../utils/backend-url";
 import { useEffect, useState } from "react";
 import CatalogCard from "../components/CatalogCard";
 import useAuth from "../hooks/useAuth";
+import EnrollModal from "../components/EnrollModal";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
-  console.log(masterData);
-
+  
   const { currentToken } = useAuth();
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const MasterPage = () => {
   return (
     <>
       <Header />
+      <EnrollModal />
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
