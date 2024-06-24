@@ -28,7 +28,9 @@ const FavoritesPage = () => {
   };
 
   useEffect(() => {
-    getFav();
+    setTimeout(() => {
+      getFav();
+    }, 2000)
   }, []);
 
   console.log(favList);
@@ -48,6 +50,7 @@ const FavoritesPage = () => {
           )}
 
           <div className="p-10 flex flex-col gap-4">
+            
             {favList.length ? (
               favList.map((favEl) => (
                 <CatalogCard item={favEl} items={favList} setItems={setFavList} key={favEl.id} keyword='fav' />

@@ -10,11 +10,10 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [chosenCategories, setChosenCategories] = useState([])
-  const [catalogList, setCatalogList] = useState([])
+  const [chosenCategories, setChosenCategories] = useState([]);
+  const [catalogList, setCatalogList] = useState([]);
 
   console.log(catalog);
-
 
   const { currentToken } = useAuth();
 
@@ -28,7 +27,7 @@ const CatalogPage = () => {
       });
       const data = await response.json();
       setCatalog(data);
-      setCatalogList(data?.results)
+      setCatalogList(data?.results);
     } catch (error) {
       console.log(error.message);
     }
@@ -39,9 +38,10 @@ const CatalogPage = () => {
   };
 
   useEffect(() => {
-    fetchCatalog();
+    setTimeout(() => {
+      fetchCatalog();
+    }, 1000)
   }, []);
-
 
   const getCategories = async () => {
     try {
@@ -57,11 +57,9 @@ const CatalogPage = () => {
   };
 
   const filterCatalog = async (id) => {
-
-    const response = await fetch(`${URL}/api/catalog/?categories=${id}`)
-    const data = await response.json()
-
-  }
+    const response = await fetch(`${URL}/api/catalog/?categories=${id}`);
+    const data = await response.json();
+  };
 
   useEffect(() => {
     getCategories();
@@ -79,9 +77,69 @@ const CatalogPage = () => {
             <div className="col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
-                {catalogList?.map((catalogItem) => (
-                  <CatalogCard item={catalogItem} key={catalogItem.id} items={catalogList} setItems={setCatalogList} />
-                ))}
+                {catalogList.length ? (
+                  catalogList?.map((catalogItem) => (
+                    <CatalogCard
+                      item={catalogItem}
+                      key={catalogItem.id}
+                      items={catalogList}
+                      setItems={setCatalogList}
+                    />
+                  ))
+                ) : (
+                  <>
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52">
+                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                        <div className="flex items-center gap-5 mb-5 w-full">
+                          <div className="skeleton h-16 w-16"></div>
+                          <div className="flex flex-col gap-1">
+                            <div className="skeleton w-40 h-5"></div>
+                            <div className="skeleton w-40 h-5"></div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full mt-auto">
+                          <div className="skeleton w-20 h-10"></div>
+                          <div className="skeleton w-20 h-10"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52">
+                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                        <div className="flex items-center gap-5 mb-5 w-full">
+                          <div className="skeleton h-16 w-16"></div>
+                          <div className="flex flex-col gap-1">
+                            <div className="skeleton w-40 h-5"></div>
+                            <div className="skeleton w-40 h-5"></div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full mt-auto">
+                          <div className="skeleton w-20 h-10"></div>
+                          <div className="skeleton w-20 h-10"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52">
+                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                        <div className="flex items-center gap-5 mb-5 w-full">
+                          <div className="skeleton h-16 w-16"></div>
+                          <div className="flex flex-col gap-1">
+                            <div className="skeleton w-40 h-5"></div>
+                            <div className="skeleton w-40 h-5"></div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full mt-auto">
+                          <div className="skeleton w-20 h-10"></div>
+                          <div className="skeleton w-20 h-10"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="flex justify-center p-5">
@@ -111,9 +169,12 @@ const CatalogPage = () => {
               <div className="py-5">
                 <h3>Категория</h3>
 
-                <button className="btn btn-primary my-2" onClick={() => {
-                  setIsCategoryModalOpen(true)
-                }}>
+                <button
+                  className="btn btn-primary my-2"
+                  onClick={() => {
+                    setIsCategoryModalOpen(true);
+                  }}
+                >
                   Выбрать категорию
                 </button>
                 {/* <details className="dropdown">
@@ -150,25 +211,32 @@ const CatalogPage = () => {
             </aside>
           </div>
         </section>
-        <div
-          className="enroll-modal"
-          open={isCategoryModalOpen ? true : false}
-        >
+        <div className="enroll-modal" open={isCategoryModalOpen ? true : false}>
           <div className="enroll-modal__box">
             <div className="flex flex-col gap-2 py-10">
-              {categories.map(category => 
+              {categories.map((category) => (
                 <label key={category.id} className="flex items-center gap-3">
-                  <input className="w-4 h-4" type="checkbox" onChange={() => setChosenCategories([...chosenCategories, category.id])}></input>
+                  <input
+                    className="w-4 h-4"
+                    type="checkbox"
+                    onChange={() =>
+                      setChosenCategories([...chosenCategories, category.id])
+                    }
+                  ></input>
                   <span className="text-2xl">{category.title}</span>
                 </label>
-              )}
+              ))}
             </div>
 
-            <button className="btn btn-primary absolute bottom-10 right-10" onClick={() => {
-              setIsCategoryModalOpen(false)
-              filterCatalog(chosenCategories[0])
-
-            }}>Применить</button>
+            <button
+              className="btn btn-primary absolute bottom-10 right-10"
+              onClick={() => {
+                setIsCategoryModalOpen(false);
+                filterCatalog(chosenCategories[0]);
+              }}
+            >
+              Применить
+            </button>
           </div>
         </div>
       </div>
