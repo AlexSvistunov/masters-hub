@@ -5,16 +5,19 @@ import { useEffect, useState } from "react";
 import CatalogCard from "../components/CatalogCard";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
+import { register } from "swiper/element/bundle";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
 
+  console.log(masterData);
+
   const { currentToken } = useAuth();
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
+    window.scrollTo(0, 0);
+    register();
+  }, []);
 
   const averageRating = masterData?.reviews?.average_rating;
   const formattedRating =
@@ -40,13 +43,12 @@ const MasterPage = () => {
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
-  
             <div className="mb-5">
               <CatalogCard
                 item={masterData}
                 setItems={setMasterData}
                 token={currentToken}
-                keyword='profile'
+                keyword="profile"
               />
             </div>
 
@@ -100,13 +102,24 @@ const MasterPage = () => {
               </div>
 
               <div className="flex gap-4 items-center justify-center">
-                {masterData?.images_work?.map((workImage) => (
-                  <img
-                    className="rounded-lg w-40 h-40 object-cover"
-                    src={`/backend/masterhub${workImage.image}`}
-                    key={workImage.image}
-                  ></img>
-                ))}
+                {/* <swiper-container slides-per-view="3" speed="500" loop="true" css-mode="true">
+                  {masterData?.images_work?.map((workImage) => (
+                   <swiper-slide>
+                     <img
+                      className="rounded-lg w-40 h-40 object-cover"
+                      src={`/backend/masterhub${workImage.image}`}
+                      key={workImage.image}
+                    ></img>
+                   </swiper-slide>
+                  ))}
+                </swiper-container> */}
+
+                <swiper-container slides-per-view="3" >
+                  <swiper-slide>Slide 1</swiper-slide>
+                  <swiper-slide>Slide 2</swiper-slide>
+                  <swiper-slide>Slide 3</swiper-slide>
+                  ...
+                </swiper-container>
               </div>
             </div>
 
@@ -114,15 +127,16 @@ const MasterPage = () => {
               <div className="flex justify-between">
                 <h3 className="text-3xl mb-2">Отзывы</h3>
                 {/* <button>Оставить отзыв</button> */}
-                <div className="lg:tooltip" data-tip="Отзыв можно оставить только после визита">
+                <div
+                  className="lg:tooltip"
+                  data-tip="Отзыв можно оставить только после визита"
+                >
                   <button className="btn">Оставить отзыв</button>
                 </div>
               </div>
 
               <div className="flex">
                 <div className="block max-w-lg w-full">
-          
-
                   <div className="flex items-center mb-2">
                     <svg
                       className="w-4 h-4 text-yellow-300 me-1"
@@ -179,7 +193,6 @@ const MasterPage = () => {
                       5
                     </p>
                   </div>
-                 
                 </div>
                 <div className="user-reviews max-w-150 w-full">
                   {masterData?.reviews?.detail?.map((review) => (
