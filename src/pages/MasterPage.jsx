@@ -211,12 +211,12 @@ const MasterPage = () => {
                       {masterData?.reviews?.average_rating}
                     </p>
                     <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
-                    <a
+                    <span
                       href="#"
                       className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
                     >
-                      {masterData?.reviews?.count} reviews
-                    </a>
+                      {masterData?.reviews?.count} отзыва
+                    </span>
                   </div>
                 </div>
                 <div className="user-reviews max-w-150 w-full">

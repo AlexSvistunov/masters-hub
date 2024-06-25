@@ -33,3 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // just state 
 // catalogcard .?
 
+// склонения
+// посмотреть все
+
+

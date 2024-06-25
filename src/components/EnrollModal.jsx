@@ -4,12 +4,18 @@ import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
+import DateTime from "./DateTime";
 
 const EnrollModal = () => {
   const dispatch = useDispatch()
 
   const isModalOpen = useSelector(state => state.enrollModal.isModalOpen)
   const id = useSelector(state => state.enrollModal.modalId)
+
+  const [enrollServices, setEnrollServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  console.log(enrollServices);
 
   const { currentToken } = useAuth();
   const array = [
@@ -25,6 +31,10 @@ const EnrollModal = () => {
     setStep((prev) => prev + 1);
   };
 
+  useEffect(() => {
+    
+  }, [])
+
   const fetchRecording = async () => {
     try {
       const response = await fetch(`${URL}/api/recording/${id}/`, {
@@ -35,6 +45,25 @@ const EnrollModal = () => {
       });
       const data = await response.json();
       console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getEnrollServices = async () => {
+    try {
+      const response = await fetch(`${URL}/api/recording/${id}/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+
+      const data = await response.json();
+      setEnrollServices(data);
+      setIsLoading(false);
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error.message);
     }
@@ -85,33 +114,18 @@ const EnrollModal = () => {
                 setStep={setStep}
                 nextStep={nextStep}
                 id={id}
+                getEnrollServices={getEnrollServices}
+                enrollServices={enrollServices}
+                isLoading={isLoading}
+
               />
             </>
           )}
 
           {step === 2 && (
             <>
-              <div className="flex justify-between items-center">
-                <button
-                  onClick={() => {
-                    setStep(step - 1);
-                  }}
-                >
-                  <svg
-                    className="h-6 w-6 fill-current md:h-8 md:w-8"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
-                  </svg>
-                </button>
+              <DateTime setStep={setStep} step={step}/>
 
-                <span className="block mx-auto">Дата и время</span>
-              </div>
-
-              
             </>
           )}
         </div>

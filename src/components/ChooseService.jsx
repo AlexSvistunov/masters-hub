@@ -3,35 +3,34 @@ import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 import ServiceItem from "./ServiceItem";
 import { MoonLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
-  const [enrollServices, setEnrollServices] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { currentToken } = useAuth();
 
-  const getEnrollServices = async () => {
+
+  const { currentToken } = useAuth();
+  const id = useSelector(state => state.enrollModal.modalId)
+
+  const recordingTest = async (masterId) => {
     try {
-      const response = await fetch(`${URL}/api/recording/${props.id}/`, {
+      const response = await fetch(`${URL}/api/recording/${id}/${masterId}/`, {
         method: "GET",
         headers: {
           Authorization: `Token ${currentToken}`,
         },
       });
-
       const data = await response.json();
-      setEnrollServices(data);
-      setIsLoading(false);
-      console.log(data);
-      return data;
+      console.log('RECODRING TEST', data);
     } catch (error) {
       console.log(error.message);
     }
   };
 
+
   useEffect(() => {
     setTimeout(() => {
-      getEnrollServices();
+      props.getEnrollServices();
     }, 500);
   }, []);
 
@@ -92,7 +91,7 @@ const ChooseService = (props) => {
           </label>
         </div>
 
-        {isLoading && (
+        {props.isLoading && (
         <div className="flex items-center justify-center py-10">
           <MoonLoader color="#6a5bff" size={75}></MoonLoader>
         </div>
@@ -100,7 +99,7 @@ const ChooseService = (props) => {
 
         <div className="share">
         <div className="flex items-center gap-4 my-4">
-            {enrollServices.map((service, index) => (
+            {props.enrollServices.map((service, index) => (
               <button className="btn btn-primary" key={index}>
                 {Object.keys(service)}
               </button>
@@ -108,7 +107,7 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-            {enrollServices.map((enrollService, index) => (
+            {props.enrollServices.map((enrollService, index) => (
               <div className="flex flex-col gap-3" key={index}>
                 {Object.values(enrollService).map(
                   (enrollServiceArray, innerIndex) => (
@@ -124,6 +123,7 @@ const ChooseService = (props) => {
                               key={innerInnerIndex}
                               step={props.step}
                               setStep={props.setStep}
+                              recordingTest={recordingTest}
                             />
                           )
                         )}
