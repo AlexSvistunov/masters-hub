@@ -36,14 +36,18 @@ const ChooseService = (props) => {
     const searchedList = [];
 
     props.enrollServices.forEach((service) => {
-        Object.values(service).forEach((innerService) => {
-            const searchResults = innerService.filter((el) => el.title.toLowerCase().includes(e.target.value.toLowerCase()));
-            searchedList.push(...searchResults);
-        });
+      Object.values(service).forEach((innerService) => {
+        const searchResults = innerService.filter((el) =>
+          el.title.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        searchedList.push(...searchResults);
+      });
     });
 
+    console.log("searchedlist", searchedList);
+
     setSearchedServices(searchedList);
-};
+  };
 
   //   const onSearchHandler = (e) => {
   //     setInputValue(e.target.value)
@@ -141,8 +145,7 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-            {searchedServices.length
-              ? searchedServices.map((enrollService, index) => (
+            {/* {searchedServices.length && searchedServices.map((enrollService, index) => (
                   <div className="flex flex-col gap-3" key={index}>
                     {searchedServices.map((searchedService, index) => (
                       <ServiceItem
@@ -154,6 +157,18 @@ const ChooseService = (props) => {
                       />
                     ))}
                   </div>
+                ))
+              } */}
+
+            {searchedServices.length
+              ? searchedServices.map((searchedService, index) => (
+                  <ServiceItem
+                    enService={searchedService}
+                    key={index}
+                    step={props.step}
+                    setStep={props.setStep}
+                    recordingTest={recordingTest}
+                  />
                 ))
               : props.enrollServices.map((enrollService, index) => (
                   <div className="flex flex-col gap-3" key={index}>
