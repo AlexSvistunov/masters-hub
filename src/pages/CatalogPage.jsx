@@ -5,6 +5,7 @@ import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
+import EnrollModal from "../components/EnrollModal";
 
 const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
@@ -69,6 +70,7 @@ const CatalogPage = () => {
     <>
       <Header />
       <Hero />
+      <EnrollModal/>
 
       <div className="">
         <Tabs />

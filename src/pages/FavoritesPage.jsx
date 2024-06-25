@@ -6,6 +6,7 @@ import CatalogCard from "../components/CatalogCard";
 import { useEffect, useState } from "react";
 import { URL } from "../utils/backend-url";
 import { MoonLoader } from "react-spinners";
+import EnrollModal from "../components/EnrollModal";
 
 const FavoritesPage = () => {
   const [favList, setFavList] = useState([]);
@@ -43,6 +44,7 @@ const FavoritesPage = () => {
     <div>
       <Header />
       <Hero />
+      <EnrollModal/>
       <div className="container mx-auto">
         <Tabs />
 
