@@ -145,21 +145,7 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-            {/* {searchedServices.length && searchedServices.map((enrollService, index) => (
-                  <div className="flex flex-col gap-3" key={index}>
-                    {searchedServices.map((searchedService, index) => (
-                      <ServiceItem
-                        enService={searchedService}
-                        key={index}
-                        step={props.step}
-                        setStep={props.setStep}
-                        recordingTest={recordingTest}
-                      />
-                    ))}
-                  </div>
-                ))
-              } */}
-
+   
             {searchedServices.length
               ? searchedServices.map((searchedService, index) => (
                   <ServiceItem
