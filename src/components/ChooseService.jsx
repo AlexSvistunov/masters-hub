@@ -32,26 +32,18 @@ const ChooseService = (props) => {
 
   const onSearchHandler = (e) => {
     setInputValue(e.target.value);
-    console.log("ITEMS", props.enrollServices);
-    // const items = props.enrollServices.forEach((service) => {
-    //   Object.values(service).forEach((serviceArray) => {
-    //     console.log(serviceArray);
-    //     // const searchedList = serviceArray.filter(el => el.title.includes(e.target.value))
-    //     // console.log(searchedList);
-        
-    //   });
-    // });
 
-    const searched = props.enrollServices.forEach((service) => {
-      console.log(Object.values(service).forEach(innerService => {
-        const searchedList = innerService.filter(el => el.title.includes(e.target.value))
-        console.log(searchedList);
-      }));
-    })
+    const searchedList = [];
 
-    // the most interesting problem ever
-    
-  };
+    props.enrollServices.forEach((service) => {
+        Object.values(service).forEach((innerService) => {
+            const searchResults = innerService.filter((el) => el.title.toLowerCase().includes(e.target.value.toLowerCase()));
+            searchedList.push(...searchResults);
+        });
+    });
+
+    setSearchedServices(searchedList);
+};
 
   //   const onSearchHandler = (e) => {
   //     setInputValue(e.target.value)
