@@ -1,3 +1,17 @@
 .myCard {
     width: auto !important;
 }
+
+
+
+.swiper .swiper-button-next {
+    @apply text-primary
+}
+
+.swiper .swiper-button-prev {
+    @apply text-primary
+}
+
+.swiper .swiper-pagination-bullet-active {
+    @apply bg-primary
+}

@@ -6,8 +6,13 @@ import CatalogCard from "../components/CatalogCard";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
 import { Swiper, SwiperSlide } from "swiper/react";
-import '../App.css'
+import { Pagination, Navigation, Scrollbar } from "swiper/modules";
+
+import "../App.css";
 import "swiper/css";
+import 'swiper/css/pagination';
+import 'swiper/css/navigation'
+
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
@@ -102,15 +107,21 @@ const MasterPage = () => {
                 </span>
               </div>
 
-              <div className="">
-                <Swiper slidesPerView={"auto"} spaceBetween={30}>
+              <div className="flex justify-center w-full">
+                <Swiper  modules={[Navigation, Pagination]} slidesPerView={"auto"} spaceBetween={30}  pagination={{ clickable: true }} navigation >
                   {masterData?.images_work?.map((workImage, index) => (
-                    <div>
+                    <div  key={workImage.image}>
                       <SwiperSlide className="myCard">
-                      fdsdfsdffsdsfd
+                        <img
+                          className="rounded-lg w-40 h-40 object-cover"
+                          src={`/backend/masterhub${workImage.image}`}
+                        
+                        ></img>
                       </SwiperSlide>
                     </div>
                   ))}
+
+             
                 </Swiper>
               </div>
             </div>
