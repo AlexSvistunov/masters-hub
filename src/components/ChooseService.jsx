@@ -7,11 +7,13 @@ import { useSelector } from "react-redux";
 
 const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
-  const [inputValue, setInputValue] = useState('')
-  const [searchedServices, setSearchedServices] = useState([])
+  const [inputValue, setInputValue] = useState("");
+  const [searchedServices, setSearchedServices] = useState([]);
+
+  console.log(searchedServices);
 
   const { currentToken } = useAuth();
-  const id = useSelector(state => state.enrollModal.modalId)
+  const id = useSelector((state) => state.enrollModal.modalId);
 
   const recordingTest = async (masterId) => {
     try {
@@ -22,46 +24,47 @@ const ChooseService = (props) => {
         },
       });
       const data = await response.json();
-      console.log('RECODRING TEST', data);
+      console.log("RECODRING TEST", data);
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const onSearchHandler = (e) => {
-    setInputValue(e.target.value)
-    console.log('ITEMS', props.enrollServices);
-    const items = props.enrollServices.forEach(service => {
-      // console.log(Object.values(Object.keys(service)));
-      // console.log(Object.keys(service));
-      // console.log(Object.values(service));
-      Object.values(service).forEach(serviceItem => {
-        console.log(serviceItem);
-        if(serviceItem?.title?.includes(e.target.value)) {
-          console.log('MYITEM', serviceItem);
-          setSearchedServices([...searchedServices, serviceItem])
-        } else {
-          console.log('нЕТ!!');
-        }
-      })
+    setInputValue(e.target.value);
+    console.log("ITEMS", props.enrollServices);
+    // const items = props.enrollServices.forEach((service) => {
+    //   Object.values(service).forEach((serviceArray) => {
+    //     console.log(serviceArray);
+    //     // const searchedList = serviceArray.filter(el => el.title.includes(e.target.value))
+    //     // console.log(searchedList);
+        
+    //   });
+    // });
+
+    const searched = props.enrollServices.forEach((service) => {
+      console.log(Object.values(service).forEach(innerService => {
+        const searchedList = innerService.filter(el => el.title.includes(e.target.value))
+        console.log(searchedList);
+      }));
     })
-    console.log('ITEMS', items);
 
-
-  }
-
-//   const onSearchHandler = (e) => {
-//     setInputValue(e.target.value)
-//     console.log('ITEMS', props.enrollServices);
-//     const searchedItems = props.enrollServices.filter(service => {
-//         return Object.values(service).some(serviceItem => {
-//             return serviceItem?.title?.includes(e.target.value);
-//         });
-//     });
+    // the most interesting problem ever
     
-//     console.log('SEARCHED ITEMS', searchedItems);
-//     setSearchedServices(searchedItems);
-// }
+  };
+
+  //   const onSearchHandler = (e) => {
+  //     setInputValue(e.target.value)
+  //     console.log('ITEMS', props.enrollServices);
+  //     const searchedItems = props.enrollServices.filter(service => {
+  //         return Object.values(service).some(serviceItem => {
+  //             return serviceItem?.title?.includes(e.target.value);
+  //         });
+  //     });
+
+  //     console.log('SEARCHED ITEMS', searchedItems);
+  //     setSearchedServices(searchedItems);
+  // }
 
   useEffect(() => {
     setTimeout(() => {
@@ -105,12 +108,16 @@ const ChooseService = (props) => {
         </button> */}
       </div>
 
-     
-
       <div>
         <div className="py-5">
           <label className="input input-bordered flex items-center gap-2">
-            <input type="text" className="grow" placeholder="Search" value={inputValue} onChange={onSearchHandler} />
+            <input
+              type="text"
+              className="grow"
+              placeholder="Search"
+              value={inputValue}
+              onChange={onSearchHandler}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -127,13 +134,13 @@ const ChooseService = (props) => {
         </div>
 
         {props.isLoading && (
-        <div className="flex items-center justify-center py-10">
-          <MoonLoader color="#6a5bff" size={75}></MoonLoader>
-        </div>
-      )}
+          <div className="flex items-center justify-center py-10">
+            <MoonLoader color="#6a5bff" size={75}></MoonLoader>
+          </div>
+        )}
 
         <div className="share">
-        <div className="flex items-center gap-4 my-4">
+          <div className="flex items-center gap-4 my-4">
             {props.enrollServices.map((service, index) => (
               <button className="btn btn-primary" key={index}>
                 {Object.keys(service)}
@@ -142,58 +149,46 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-            {searchedServices.length ? searchedServices.map((searchedServices, index) => (
-              <div className="flex flex-col gap-3" key={index}>
-                {Object.values(searchedServices).map(
-                  (enrollServiceArray, innerIndex) => (
-                    <div key={innerIndex}>
-                      <h3 className="text-3xl mb-2">
-                        {Object.keys(searchedServices)}
-                      </h3>
-                      <div className="flex flex-col gap-3">
-                        {enrollServiceArray.map(
-                          (enService, innerInnerIndex) => (
-                            <ServiceItem
-                              enService={enService}
-                              key={innerInnerIndex}
-                              step={props.step}
-                              setStep={props.setStep}
-                              recordingTest={recordingTest}
-                            />
-                          )
-                        )}
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            )) : props.enrollServices.map((enrollService, index) => (
-              <div className="flex flex-col gap-3" key={index}>
-                {Object.values(enrollService).map(
-                  (enrollServiceArray, innerIndex) => (
-                    <div key={innerIndex}>
-                      <h3 className="text-3xl mb-2">
-                        {Object.keys(enrollService)}
-                      </h3>
-                      <div className="flex flex-col gap-3">
-                        {enrollServiceArray.map(
-                          (enService, innerInnerIndex) => (
-                            <ServiceItem
-                              enService={enService}
-                              key={innerInnerIndex}
-                              step={props.step}
-                              setStep={props.setStep}
-                              recordingTest={recordingTest}
-                            />
-                          )
-                        )}
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            ))}
-            
+            {searchedServices.length
+              ? searchedServices.map((enrollService, index) => (
+                  <div className="flex flex-col gap-3" key={index}>
+                    {searchedServices.map((searchedService, index) => (
+                      <ServiceItem
+                        enService={searchedService}
+                        key={index}
+                        step={props.step}
+                        setStep={props.setStep}
+                        recordingTest={recordingTest}
+                      />
+                    ))}
+                  </div>
+                ))
+              : props.enrollServices.map((enrollService, index) => (
+                  <div className="flex flex-col gap-3" key={index}>
+                    {Object.values(enrollService).map(
+                      (enrollServiceArray, innerIndex) => (
+                        <div key={innerIndex}>
+                          <h3 className="text-3xl mb-2">
+                            {Object.keys(enrollService)}
+                          </h3>
+                          <div className="flex flex-col gap-3">
+                            {enrollServiceArray.map(
+                              (enService, innerInnerIndex) => (
+                                <ServiceItem
+                                  enService={enService}
+                                  key={innerInnerIndex}
+                                  step={props.step}
+                                  setStep={props.setStep}
+                                  recordingTest={recordingTest}
+                                />
+                              )
+                            )}
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                ))}
           </div>
         </div>
       </div>
