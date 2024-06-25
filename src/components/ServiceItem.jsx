@@ -1,5 +1,5 @@
 const ServiceItem = ({ enService, step, setStep, recordingTest }) => {
-  console.log(enService);
+  // console.log(enService);
   return (
     <div className="item rounded-lg bg-base-300 p-3">
       <div className="flex gap-6 items-center mb-2">

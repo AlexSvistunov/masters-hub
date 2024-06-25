@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 
 const ChooseService = (props) => {
   const [isChosen, setIsChosen] = useState(false);
-
+  const [inputValue, setInputValue] = useState('')
+  const [searchedServices, setSearchedServices] = useState([])
 
   const { currentToken } = useAuth();
   const id = useSelector(state => state.enrollModal.modalId)
@@ -27,6 +28,40 @@ const ChooseService = (props) => {
     }
   };
 
+  const onSearchHandler = (e) => {
+    setInputValue(e.target.value)
+    console.log('ITEMS', props.enrollServices);
+    const items = props.enrollServices.forEach(service => {
+      // console.log(Object.values(Object.keys(service)));
+      // console.log(Object.keys(service));
+      // console.log(Object.values(service));
+      Object.values(service).forEach(serviceItem => {
+        console.log(serviceItem);
+        if(serviceItem?.title?.includes(e.target.value)) {
+          console.log('MYITEM', serviceItem);
+          setSearchedServices([...searchedServices, serviceItem])
+        } else {
+          console.log('нЕТ!!');
+        }
+      })
+    })
+    console.log('ITEMS', items);
+
+
+  }
+
+//   const onSearchHandler = (e) => {
+//     setInputValue(e.target.value)
+//     console.log('ITEMS', props.enrollServices);
+//     const searchedItems = props.enrollServices.filter(service => {
+//         return Object.values(service).some(serviceItem => {
+//             return serviceItem?.title?.includes(e.target.value);
+//         });
+//     });
+    
+//     console.log('SEARCHED ITEMS', searchedItems);
+//     setSearchedServices(searchedItems);
+// }
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,7 +110,7 @@ const ChooseService = (props) => {
       <div>
         <div className="py-5">
           <label className="input input-bordered flex items-center gap-2">
-            <input type="text" className="grow" placeholder="Search" />
+            <input type="text" className="grow" placeholder="Search" value={inputValue} onChange={onSearchHandler} />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -107,7 +142,32 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-            {props.enrollServices.map((enrollService, index) => (
+            {searchedServices.length ? searchedServices.map((searchedServices, index) => (
+              <div className="flex flex-col gap-3" key={index}>
+                {Object.values(searchedServices).map(
+                  (enrollServiceArray, innerIndex) => (
+                    <div key={innerIndex}>
+                      <h3 className="text-3xl mb-2">
+                        {Object.keys(searchedServices)}
+                      </h3>
+                      <div className="flex flex-col gap-3">
+                        {enrollServiceArray.map(
+                          (enService, innerInnerIndex) => (
+                            <ServiceItem
+                              enService={enService}
+                              key={innerInnerIndex}
+                              step={props.step}
+                              setStep={props.setStep}
+                              recordingTest={recordingTest}
+                            />
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            )) : props.enrollServices.map((enrollService, index) => (
               <div className="flex flex-col gap-3" key={index}>
                 {Object.values(enrollService).map(
                   (enrollServiceArray, innerIndex) => (
@@ -133,6 +193,7 @@ const ChooseService = (props) => {
                 )}
               </div>
             ))}
+            
           </div>
         </div>
       </div>
