@@ -11,11 +11,12 @@ const MiniCatalog = () => {
 
   const getCatalogItem = async () => {
     try {
+      const headers = {}
       const reponse = await fetch(`${URL}/api/catalog/`, {
         method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
+        if (token) {
+          headers.Authorization = `Token ${token}`;
+        }
       });
       const data = await reponse.json();
       console.log(data);
@@ -38,7 +39,7 @@ const MiniCatalog = () => {
         <></>
 
         <div className="cards grid gap-6 grid-cols-12">
-          {catalogItems?.length ? (
+          {catalogItems.length ? (
             catalogItems?.map((catalogItem, index) => (
               <CatalogCard
                 key={catalogItem.id}

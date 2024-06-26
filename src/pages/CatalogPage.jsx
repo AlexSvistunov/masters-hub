@@ -20,11 +20,12 @@ const CatalogPage = () => {
 
   const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
     try {
+      const headers = {}
       const response = await fetch(`${url}`, {
         method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
+        if (token) {
+          headers.Authorization = `Token ${token}`;
+        }
       });
       const data = await response.json();
       setCatalog(data);
