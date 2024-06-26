@@ -38,7 +38,7 @@ const MiniCatalog = () => {
         <></>
 
         <div className="cards grid gap-6 grid-cols-12">
-          {catalogItems.length ? (
+          {catalogItems?.length ? (
             catalogItems?.map((catalogItem, index) => (
               <CatalogCard
                 key={catalogItem.id}
