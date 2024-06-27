@@ -12,11 +12,12 @@ const MiniCatalog = () => {
   const getCatalogItem = async () => {
     try {
       const headers = {};
+      if(currentToken) {
+        headers.Authorization = `Token ${currentToken}`
+      }
       const reponse = await fetch(`${URL}/api/catalog/`, {
         method: "GET",
-        if(token) {
-          headers.Authorization = `Token ${token}`;
-        },
+       headers
       });
       const data = await reponse.json();
       console.log(data);

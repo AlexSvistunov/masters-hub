@@ -7,20 +7,12 @@ import { deleteFromFav } from "../store/slices/favSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, setId } from "../store/slices/modalSlice";
 
-const CatalogCard = ({
-  token,
-  item,
-  items,
-  setItems,
-  keyword
-}) => {
-
+const CatalogCard = ({ token, item, items, setItems, keyword }) => {
   const { currentToken } = useAuth();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   console.log(item);
   console.log(currentToken);
-
 
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
@@ -59,8 +51,8 @@ const CatalogCard = ({
         <button
           className="btn btn-primary relataive z-10"
           onClick={() => {
-            dispatch(openModal())
-            dispatch(setId({id: item?.id}))
+            dispatch(openModal());
+            dispatch(setId({ id: item?.id }));
           }}
         >
           Записаться
@@ -70,73 +62,86 @@ const CatalogCard = ({
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          if (item?.is_favorite) {
-            if(keyword === 'fav') {
-              dispatch(deleteFromFav({currentToken, id: item?.id})).then(data => {
-                setItems(data.payload)
-              })
-            } else {
-              dispatch(deleteFromFav({currentToken, id: item?.id})).then(data => {
-                // 1st way, but I'm not working with data, It's just view
-                const newItem = {
-                  ...item,
-                  is_favorite: !item?.is_favorite
+          console.log(keyword);
+          if(item?.is_favorite) {
+            if (keyword === "fav") {
+              dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
+                (data) => {
+                  setItems(data.payload);
                 }
-  
-                const newItems = items.map(el => {
-                  if(el.id === item?.id) {
-                    return newItem
-                  }
-  
-                  return el
-                })
-  
-                setItems(newItems)
-  
-              })
-              
+              );
             }
-          
+
+            if(!keyword) {
+              dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
+                (data) => {
+                  // 1st way, but I'm not working with data, It's just view
+                  const newItem = {
+                    ...item,
+                    is_favorite: !item?.is_favorite,
+                  };
+        
+                  const newItems = items.map((el) => {
+                    if (el.id === item?.id) {
+                      return newItem;
+                    }
+        
+                    return el;
+                  });
+        
+                  setItems(newItems);
+                }
+              );
+            }
           } else {
-            if(keyword === 'fav') {
-              return
+            if (keyword === "profile") {
+              dispatch(addToFav({ currentToken, id: item?.id })).then(
+                (data) => {
+                  console.log("FROM PROFILE");
+                  console.log("DATA!!!", data);
+                  const updatedItem = data?.payload?.find(
+                    (profileItem) => profileItem?.id === item?.id
+                  );
+        
+                  setItems(updatedItem);
+                }
+              );
             } 
-            if(keyword === 'profile') {
-              dispatch(addToFav({currentToken, id: item?.id})).then(data => {
-                console.log('FROM PROFILE');
-                console.log('DATA!!!', data);
-                const updatedItem = data?.payload?.find(profileItem => profileItem?.id === item?.id);
-               
-                setItems(updatedItem)
-              })
-            }
-            else {
-              dispatch(addToFav({ currentToken, id: item?.id })).then(data => {
-                const updatedItem = data.payload.find(favItem => favItem?.id === item?.id);
             
-                const updatedItems = items.map(existingItem => {
+            if(!keyword) {
+              dispatch(addToFav({ currentToken, id: item?.id })).then(
+                (data) => {
+                  const updatedItem = data.payload.find(
+                    (favItem) => favItem?.id === item?.id
+                  );
+        
+                  const updatedItems = items.map((existingItem) => {
                     if (existingItem?.id === updatedItem?.id) {
-                        return updatedItem;
+                      return updatedItem;
                     }
                     return existingItem;
-                });
-            
-                setItems(updatedItems)
-            });
+                  });
+        
+                  setItems(updatedItems);
+                }
+              );
             }
-           
           }
-
-
         }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill={item?.is_favorite || item?.is_favorites ? "rgb(99, 111, 228)" : "transparent"}
+          fill={
+            item?.is_favorite || item?.is_favorites
+              ? "rgb(99, 111, 228)"
+              : "transparent"
+          }
           viewBox="0 0 24 24"
           stroke={
-            item?.is_favorite || item?.is_favorites ? "rgb(99, 111, 228)" : "currentColor"
+            item?.is_favorite || item?.is_favorites
+              ? "rgb(99, 111, 228)"
+              : "currentColor"
           }
         >
           <path
