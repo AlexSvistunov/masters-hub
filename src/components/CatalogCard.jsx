@@ -133,10 +133,10 @@ const CatalogCard = ({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill={item?.is_favorite ? "rgb(99, 111, 228)" : "transparent"}
+          fill={item?.is_favorite || item?.is_favorites ? "rgb(99, 111, 228)" : "transparent"}
           viewBox="0 0 24 24"
           stroke={
-            item?.is_favorite ? "rgb(99, 111, 228)" : "currentColor"
+            item?.is_favorite || item?.is_favorites ? "rgb(99, 111, 228)" : "currentColor"
           }
         >
           <path
