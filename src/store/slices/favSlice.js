@@ -4,6 +4,7 @@ import { URL } from "../../utils/backend-url";
 export const addToFav = createAsyncThunk(
   "fav/addToFav",
   async function ({ currentToken, id }) {
+   
     try {
       const response = await fetch(`${URL}/api/favorites/?id=${id}`, {
         method: "POST",

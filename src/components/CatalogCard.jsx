@@ -18,6 +18,9 @@ const CatalogCard = ({
   const { currentToken } = useAuth();
   const dispatch = useDispatch()
 
+  console.log(item);
+  console.log(currentToken);
+
 
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
@@ -124,7 +127,6 @@ const CatalogCard = ({
            
           }
 
-         
 
         }}
       >
