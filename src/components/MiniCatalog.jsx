@@ -9,6 +9,7 @@ const MiniCatalog = () => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
 
+
   const getCatalogItem = async () => {
     try {
       const headers = {};
@@ -38,7 +39,7 @@ const MiniCatalog = () => {
         <></>
 
         <div className="cards grid gap-6 grid-cols-12">
-          {catalogItems.length ? (
+          {catalogItems?.length ? (
             catalogItems?.map((catalogItem, index) => (
               <CatalogCard
                 key={catalogItem.id}

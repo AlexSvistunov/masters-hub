@@ -79,7 +79,7 @@ const CatalogPage = () => {
             <div className="col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-8 gap-4">
-                {catalogList.length ? (
+                {catalogList?.length ? (
                   catalogList?.map((catalogItem) => (
                     <CatalogCard
                       item={catalogItem}

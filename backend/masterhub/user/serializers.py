@@ -38,6 +38,7 @@ class SpecialistSerializer(serializers.ModelSerializer):
 class ReviewsSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source='user.id')
     user_name = serializers.CharField(source='user.username')
+    data_create = serializers.DateTimeField(format='%Y-%m-%d %H:%M')
 
     class Meta:
         model = Reviews
@@ -50,9 +51,9 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
     specialists = serializers.SerializerMethodField()
     reviews = serializers.SerializerMethodField()
     photo = serializers.SerializerMethodField()
-    is_favorites = serializers.SerializerMethodField()
+    is_favorite = serializers.SerializerMethodField()
 
-    def get_is_favorites(self, ob):
+    def get_is_favorite(self, ob):
         user = self.context.get('request').user
         if not user.is_authenticated:
             return False
@@ -121,7 +122,7 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
             'link_vk',
             'link_tg',
             'description',
-            'is_favorites',
+            'is_favorite',
             'specialists',
             'images_work',
             'services',

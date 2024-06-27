@@ -16,6 +16,7 @@ const ChooseService = (props) => {
   const id = useSelector((state) => state.enrollModal.modalId);
 
   const recordingTest = async (masterId) => {
+    console.log(masterId);
     try {
       const response = await fetch(`${URL}/api/recording/${id}/${masterId}/`, {
         method: "GET",

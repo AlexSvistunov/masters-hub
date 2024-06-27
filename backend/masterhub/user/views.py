@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import CustomUserSerializer, ProfileMasterSerializer, FavoritesSerializer, FeedbackSerializer
+from .serializers import CustomUserSerializer, ProfileMasterSerializer, FavoritesSerializer, FeedbackSerializer, \
+    ReviewsSerializer, ServiceSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.viewsets import ModelViewSet, ViewSet, GenericViewSet
 from .models import CustomUser, ProfileMaster, ProfileImages
+from service.models import Service
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, RetrieveModelMixin, ListModelMixin, \
     DestroyModelMixin
@@ -15,6 +17,7 @@ from service.serializers import ProfileCatalogSerialize
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from recording.serializers import ServicesSerializer
 
 
 # Create your views here.
@@ -33,7 +36,6 @@ class UsersViewSet(GenericViewSet, RetrieveModelMixin):
 
     # def retrieve(self, request, pk):
     #     return Response({'a': 'wd'})
-
     def get_serializer_class(self):
         if self.action == 'create':
             return CustomUserSerializer
@@ -76,6 +78,7 @@ class FavoritesViewSet(GenericViewSet, ListModelMixin, DestroyModelMixin):
 
 class FeedbackAPIView(GenericAPIView):
     serializer_class = FeedbackSerializer
+
     def post(self, request, pk):
         profile = get_object_or_404(ProfileMaster, pk=pk)
         data = request.data
@@ -84,6 +87,18 @@ class FeedbackAPIView(GenericAPIView):
             serializer.save(user=request.user, profile=profile)
             return Response({'detail': 'comment created'}, status=status.HTTP_201_CREATED)
         return Response({'detail': 'error'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ServicesProfileAPIView(GenericAPIView, ListModelMixin):
+    serializer_class = ServicesSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        return Service.objects.all()
+
+    def get(self, request, pk):
+        return  self.list(request)
+
 
 # class Test(APIView):
 #     def post(self, request):

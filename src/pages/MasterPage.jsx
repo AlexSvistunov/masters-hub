@@ -18,6 +18,8 @@ const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
   const { currentToken } = useAuth();
 
+  console.log(masterData);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -30,10 +32,10 @@ const MasterPage = () => {
 
   const fetchMasterProfile = async () => {
     const response = await fetch(`${URL}/api/users/${id}/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: `Token ${currentToken}`
-      }
+        Authorization: `Token ${currentToken}`,
+      },
     });
     const data = await response.json();
     console.log(data);
@@ -63,7 +65,9 @@ const MasterPage = () => {
 
             <div className="bg-base-200 p-5 rounded-2xl mb-5">
               <h3 className="text-3xl mb-3">Описание</h3>
-              <p>{masterData.description}</p>
+              <pre className="whitespace-pre-wrap">
+                <p className="max-w-full w-full">{masterData.description}</p>
+              </pre>
             </div>
 
             <div className="bg-base-200 p-5 rounded-2xl min-h-64 flex flex-col mb-5">

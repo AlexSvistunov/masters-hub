@@ -16,6 +16,7 @@ from service.models import Service, Categories
 from .serializers import ServicesSerializer, ServicesRecordingSerializer, WorkTimeSerializer
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
 from datetime import timedelta, date
+from rest_framework import status
 
 
 # Create your views here.
@@ -46,10 +47,11 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        # data {
-        # 'profile' : id профиля,
-        # 'service' : id услуги,
-        # 'time':'',
+        # {
+        #     "profile": id профиля,
+        #     "time": "08:00",
+        #     "date": "2024-05-12",
+        #     "service": id услуги
         # }
         data = request.data
         service = Service.objects.get(id=data['service'])
@@ -67,14 +69,13 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         recording.date = timezone.now()
         recording.time_start = str(time_start)
         recording.time_end = str(time_end)
-        if request.GET.get('master'):
-            profile = ProfileMaster.objects.get(id=data['id'])
-            recording.profile_master = profile
-        else:
-            spec = Specialist.objects.get(id=data['id'])
+        profile = service.profile
+        recording.profile_master = profile
+        if service.profile.specialization == 'studio':
+            spec = service.specialist
             recording.specialist = spec
         recording.save()
-        return Response({'a': 'wdwdwd'})
+        return Response(status=status.HTTP_201_CREATED)
 
     # @action(methods=['get'], detail=True, url_path='(?P<id_specialist>[^/.]+)')
     # def recording(self, request, *args, **kwargs):
@@ -94,7 +95,7 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         '''если профиль мастера то передать параметром specialization'''
         pk_service = kwargs.get('id_services')
         pk_profile = kwargs.get('pk')
-        service = Service.objects.get(id=pk_service).select_related('specialist')
+        service = Service.objects.get(id=pk_service)
         param = service.profile.specialization
         if param == 'master':
             profile_work_time = WorkTime.objects.get(profile__pk=pk_profile)
@@ -110,22 +111,3 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
                                             'param': param
                                         })
         return Response(serializer.data)
-
-    # @action(methods=['get'], detail=True)
-    # def services(self, request, *args, **kwargs):
-    #     pk = kwargs.get('pk')
-    #     queryset = []
-    #     profile = ProfileMaster.objects.get(id=pk)
-    #     if profile.specialization == 'master':
-    #         services = Service.objects.filter(profile=profile)
-    #     else:
-    #         services = Service.objects.none()
-    #         specialists = profile.profile_specialist.all()
-    #         for i in specialists:
-    #             services = services.union(i.specialist_services.all())
-    #     for i in services:
-    #         if i.category not in queryset:
-    #             queryset.append(i.category)
-    #     # serializer = ServicesSerializer(services, many=True)
-    #     serializer = ServicesRecordingSerializer(queryset, many=True, context={'services': services})
-    #     return Response(serializer.data)
