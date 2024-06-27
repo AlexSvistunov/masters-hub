@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         'black-rgba': 'rgba(0, 0, 0, 0.5)',
+        'gray-border': '#E1EAF5',
       }
     },
   },
