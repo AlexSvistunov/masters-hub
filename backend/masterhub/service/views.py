@@ -9,6 +9,7 @@ from user.models import ProfileMaster
 from django_filters.rest_framework import DjangoFilterBackend
 from user.filter import ProfileFilter
 from user.pagination import CatalogPagination
+from rest_framework import permissions
 
 
 # Create your views here.
@@ -25,6 +26,7 @@ class CategoriesAPIView(GenericAPIView, ListModelMixin):
 
 
 class CatalogAPIView(GenericAPIView, ListModelMixin):
+    permission_classes = [permissions.AllowAny]
     serializer_class = ProfileCatalogSerialize
     queryset = ProfileMaster.objects.all()
     filter_backends = [DjangoFilterBackend]

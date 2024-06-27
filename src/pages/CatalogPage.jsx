@@ -20,12 +20,12 @@ const CatalogPage = () => {
 
   const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
     try {
-      const headers = {}
+      const headers = {};
       const response = await fetch(`${url}`, {
         method: "GET",
-        if (token) {
+        if(token) {
           headers.Authorization = `Token ${token}`;
-        }
+        },
       });
       const data = await response.json();
       setCatalog(data);
@@ -40,9 +40,7 @@ const CatalogPage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchCatalog();
-    }, 1000)
+    fetchCatalog();
   }, []);
 
   const getCategories = async () => {
@@ -71,7 +69,7 @@ const CatalogPage = () => {
     <>
       <Header />
       <Hero />
-      <EnrollModal/>
+      <EnrollModal />
 
       <div className="">
         <Tabs />

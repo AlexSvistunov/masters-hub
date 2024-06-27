@@ -11,12 +11,12 @@ const MiniCatalog = () => {
 
   const getCatalogItem = async () => {
     try {
-      const headers = {}
+      const headers = {};
       const reponse = await fetch(`${URL}/api/catalog/`, {
         method: "GET",
-        if (token) {
+        if(token) {
           headers.Authorization = `Token ${token}`;
-        }
+        },
       });
       const data = await reponse.json();
       console.log(data);
@@ -27,9 +27,7 @@ const MiniCatalog = () => {
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      getCatalogItem();
-    }, 500);
+    getCatalogItem();
   }, []);
 
   return (

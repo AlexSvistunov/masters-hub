@@ -17,9 +17,9 @@ const NotesPage = () => {
             <div className="text-center text-4xl">Авторизируйтесь чтобы посмотреть ваши записи</div>
           )}
 
-          <div className="p-5">
+          {token && <div className="p-5">
             <span className="text-3xl text-center">У вас нет текущих записей! Запишитесь к мастеру или к специалисту</span>
-          </div>
+          </div>}
         </div>
       </div>
     </div>

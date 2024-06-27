@@ -10,10 +10,11 @@ import EnrollModal from "../components/EnrollModal";
 
 const FavoritesPage = () => {
   const [favList, setFavList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const { currentToken } = useAuth();
 
   const { token } = useAuth();
+  console.log(token);
   const getFav = async () => {
     try {
       const response = await fetch(`${URL}/api/favorites/`, {
@@ -25,17 +26,15 @@ const FavoritesPage = () => {
 
       const data = await response.json();
       setFavList(data);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      getFav();
-    }, 1000)
+    getFav();
   }, []);
 
   console.log(favList);
@@ -44,7 +43,7 @@ const FavoritesPage = () => {
     <div>
       <Header />
       <Hero />
-      <EnrollModal/>
+      <EnrollModal />
       <div className="container mx-auto">
         <Tabs />
 
@@ -55,22 +54,33 @@ const FavoritesPage = () => {
             </div>
           )}
 
-          {isLoading ? <div className="flex items-center justify-center p-10"><MoonLoader color="#6a5bff" size={75}></MoonLoader></div>: (
+          {token && (
             <div className="p-10 flex flex-col gap-4">
-            
-            {favList.length ? (
-              favList.map((favEl) => (
-                <CatalogCard item={favEl} items={favList} setItems={setFavList} key={favEl.id} keyword='fav' />
-              ))
-            ) : (
-              <div className="text-4xl text-center">
-                Ваше избранное пусто!
-              </div>
-            )}
-          </div>
+              {isLoading ? (
+                <div className="flex items-center justify-center p-10">
+                  <MoonLoader color="#6a5bff" size={75}></MoonLoader>
+                </div>
+              ) : (
+                <>
+                  {favList.length ? (
+                    favList.map((favEl) => (
+                      <CatalogCard
+                        item={favEl}
+                        items={favList}
+                        setItems={setFavList}
+                        key={favEl.id}
+                        keyword="fav"
+                      />
+                    ))
+                  ) : (
+                    <div className="text-4xl text-center">
+                      Ваше избранное пусто!
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           )}
-
-          
         </div>
       </div>
     </div>

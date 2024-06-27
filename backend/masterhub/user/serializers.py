@@ -50,6 +50,13 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
     specialists = serializers.SerializerMethodField()
     reviews = serializers.SerializerMethodField()
     photo = serializers.SerializerMethodField()
+    is_favorites = serializers.SerializerMethodField()
+
+    def get_is_favorites(self, ob):
+        user = self.context.get('request').user
+        if not user.is_authenticated:
+            return False
+        return user.favorites_user.filter(profile=ob).exists()
 
     def get_images_work(self, obj):
         specialization = obj.specialization
@@ -114,6 +121,7 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
             'link_vk',
             'link_tg',
             'description',
+            'is_favorites',
             'specialists',
             'images_work',
             'services',

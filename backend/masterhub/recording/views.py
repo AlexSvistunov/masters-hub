@@ -21,9 +21,12 @@ from datetime import timedelta, date
 # Create your views here.
 
 class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+
+    queryset = []
 
     def retrieve(self, request, *args, **kwargs):
+        # pk профиля
         pk = kwargs.get('pk')
         queryset = []
         profile = ProfileMaster.objects.get(id=pk)
@@ -34,7 +37,7 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         #     specialists = profile.profile_specialist.all()
         #     for i in specialists:
         #         services = services.union(i.specialist_services.all())
-        services = Service.objects.filter(profile=profile)
+        services = Service.objects.filter(profile=profile).select_related('category').select_related('specialist')
         for i in services:
             if i.category not in queryset:
                 queryset.append(i.category)
@@ -43,9 +46,14 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
+        # data {
+        # 'profile' : id профиля,
+        # 'service' : id услуги,
+        # 'time':'',
+        # }
         data = request.data
         service = Service.objects.get(id=data['service'])
-        time_start_request = data['time_start'].split(':')
+        time_start_request = data['time'].split(':')
         time_start = timedelta(
             hours=int(time_start_request[0]),
             minutes=int(time_start_request[1])
@@ -68,18 +76,39 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         recording.save()
         return Response({'a': 'wdwdwd'})
 
-    @action(methods=['get'], detail=True, url_path='(?P<id_specialist>[^/.]+)')
+    # @action(methods=['get'], detail=True, url_path='(?P<id_specialist>[^/.]+)')
+    # def recording(self, request, *args, **kwargs):
+    #     '''если профиль мастера то передать параметром specialization'''
+    #     pk = kwargs.get('id_specialist')
+    #     param = request.GET.get('specialization', None)
+    #     if param:
+    #         profile_work_time = WorkTime.objects.get(profile__pk=pk)
+    #     else:
+    #         profile_work_time = WorkTime.objects.get(specialist__pk=pk)
+    #     # services_time
+    #
+    #     serializer = WorkTimeSerializer(profile_work_time, context={'request': request, 'kwargs': kwargs})
+    #     return Response(serializer.data)
+    @action(methods=['get'], detail=True, url_path='(?P<id_services>[^/.]+)')
     def recording(self, request, *args, **kwargs):
         '''если профиль мастера то передать параметром specialization'''
-        pk = kwargs.get('id_specialist')
-        param = request.GET.get('specialization', None)
-        if param:
-            profile_work_time = WorkTime.objects.get(profile__pk=pk)
+        pk_service = kwargs.get('id_services')
+        pk_profile = kwargs.get('pk')
+        service = Service.objects.get(id=pk_service).select_related('specialist')
+        param = service.profile.specialization
+        if param == 'master':
+            profile_work_time = WorkTime.objects.get(profile__pk=pk_profile)
         else:
-            profile_work_time = WorkTime.objects.get(specialist__pk=pk)
+            profile_work_time = WorkTime.objects.get(specialist__pk=service.specialist.pk)
         # services_time
 
-        serializer = WorkTimeSerializer(profile_work_time, context={'request': request, 'kwargs': kwargs})
+        serializer = WorkTimeSerializer(profile_work_time,
+                                        context={
+                                            'request': request,
+                                            'kwargs': kwargs,
+                                            'service': service,
+                                            'param': param
+                                        })
         return Response(serializer.data)
 
     # @action(methods=['get'], detail=True)

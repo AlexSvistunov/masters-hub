@@ -75,10 +75,11 @@ class FavoritesViewSet(GenericViewSet, ListModelMixin, DestroyModelMixin):
 
 
 class FeedbackAPIView(GenericAPIView):
+    serializer_class = FeedbackSerializer
     def post(self, request, pk):
         profile = get_object_or_404(ProfileMaster, pk=pk)
         data = request.data
-        serializer = FeedbackSerializer(data=data)
+        serializer = self.get_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, profile=profile)
             return Response({'detail': 'comment created'}, status=status.HTTP_201_CREATED)
