@@ -62,8 +62,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          console.log(keyword);
-          if(item?.is_favorite) {
+          if(item?.is_favorite || item?.is_favorites) {
             if (keyword === "fav") {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
@@ -72,10 +71,13 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
               );
             }
 
+            if(keyword === 'profile') {
+              console.log('write code here');
+            }
+
             if(!keyword) {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  // 1st way, but I'm not working with data, It's just view
                   const newItem = {
                     ...item,
                     is_favorite: !item?.is_favorite,
@@ -95,6 +97,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             }
           } else {
             if (keyword === "profile") {
+              console.log('FIX CODE HERE');
               dispatch(addToFav({ currentToken, id: item?.id })).then(
                 (data) => {
                   console.log("FROM PROFILE");
@@ -102,6 +105,8 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
                   const updatedItem = data?.payload?.find(
                     (profileItem) => profileItem?.id === item?.id
                   );
+
+                  console.log('ITEM', updatedItem);
         
                   setItems(updatedItem);
                 }
