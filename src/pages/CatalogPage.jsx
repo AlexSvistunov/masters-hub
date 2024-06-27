@@ -78,7 +78,7 @@ const CatalogPage = () => {
           <div className="container mx-auto grid grid-cols-12 gap-8">
             <div className="col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
-              <div className="list grid grid-cols-8 gap-4">
+              <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
                 {catalogList?.length ? (
                   catalogList?.map((catalogItem) => (
                     <CatalogCard

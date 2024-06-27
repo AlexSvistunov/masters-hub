@@ -38,7 +38,7 @@ const MiniCatalog = () => {
         <h2 className="text-4xl mb-5">Каталог</h2>
         <></>
 
-        <div className="cards grid gap-6 grid-cols-12">
+        <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
           {catalogItems?.length ? (
             catalogItems?.map((catalogItem, index) => (
               <CatalogCard

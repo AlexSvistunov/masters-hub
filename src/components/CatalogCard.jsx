@@ -17,7 +17,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
   return (
-    <div className="col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
+    <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
       <Link className="absolute inset-0" to={`/profile/${item?.id}`} />
       <div className="flex items-center gap-5 mb-5">
         <img
