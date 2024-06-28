@@ -29,5 +29,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 // склонения
 // посмотреть все
-// check last commit title
+// adaptive cards
 
