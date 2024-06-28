@@ -54,7 +54,7 @@ const MiniCatalog = () => {
               {[...Array(3)].map((_, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52"
+                  className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44"
                 >
                   <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
                     <div className="flex items-center gap-5 mb-5 w-full">

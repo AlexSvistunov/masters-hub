@@ -17,7 +17,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
   return (
-    <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative">
+    <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative min-h-44">
       <Link className="absolute inset-0" to={`/profile/${item?.id}`} />
       <div className="flex items-center gap-5 mb-5">
         <img
@@ -26,7 +26,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
         ></img>
         <div className="flex flex-col gap-1">
           <span className="tablet:text-xl">{item?.name}</span>
-          <span className="text-xs tablet:text-base">{item?.address}</span>
+          <span className="text-xs tablet:text-base">{item?.address?.length > 20 ? item?.address?.slice(0, 20) + '...' : item?.address}</span>
         </div>
       </div>
       <footer className="flex justify-between mt-auto">

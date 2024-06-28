@@ -41,7 +41,9 @@ const CatalogPage = () => {
   };
 
   useEffect(() => {
-    fetchCatalog();
+    
+      fetchCatalog();
+    
   }, []);
 
   const getCategories = async () => {
@@ -90,7 +92,7 @@ const CatalogPage = () => {
                   ))
                 ) : (
                   <>
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52">
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
                       <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
                         <div className="flex items-center gap-5 mb-5 w-full">
                           <div className="skeleton h-16 w-16"></div>
@@ -107,7 +109,7 @@ const CatalogPage = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52">
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
                       <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
                         <div className="flex items-center gap-5 mb-5 w-full">
                           <div className="skeleton h-16 w-16"></div>
@@ -124,7 +126,7 @@ const CatalogPage = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-52">
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
                       <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
                         <div className="flex items-center gap-5 mb-5 w-full">
                           <div className="skeleton h-16 w-16"></div>
