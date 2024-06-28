@@ -42,13 +42,13 @@ const Header = () => {
     >
       <Link
         to={"/"}
-        className="font-bold text-3xl tracking-widest block flex items-center gap-1"
+        className="font-bold text-xl tablet:text-3xl tracking-widest block flex items-center gap-1"
         href=""
       >
         MASTERS <span className="text-primary">HUB</span>
       </Link>
 
-      <div className="flex items-center gap-8">
+      <div className="flex items-center tablet:gap-8">
         <div className="flex gap-5">
           {!token ? (
             <>

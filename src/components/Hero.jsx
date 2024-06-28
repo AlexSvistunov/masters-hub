@@ -4,7 +4,7 @@ const Hero = () => {
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content text-center">
         <div className="max-w-3xl">
-          <h1 className="text-7xl font-bold">
+          <h1 className="tablet:text-4xl laptop:text-5xl desktop:text-7xl text-3xl font-bold">
             Masters Hub – один сервис, много возможностей.
           </h1>
           <p className="py-6">

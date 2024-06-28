@@ -26,7 +26,7 @@ const MiniCategories = () => {
     <section className="p-7">
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Категории</h2>
-        <div className="flex gap-4">
+        <div className="flex gap-4 tablet:flex-row flex-col">
           {categories.length ? (
             categories.map((category) => (
               <CategoryCard key={category.id} category={category} />

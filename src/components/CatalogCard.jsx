@@ -21,12 +21,12 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
       <Link className="absolute inset-0" to={`/profile/${item?.id}`} />
       <div className="flex items-center gap-5 mb-5">
         <img
-          className="w-16 h-16 rounded-lg"
+          className="w-12 h-12 tablet:w-16 tablet:h-16 rounded-lg"
           src={`/backend/masterhub${item?.photo}`}
         ></img>
         <div className="flex flex-col gap-1">
-          <span className="text-xl">{item?.name}</span>
-          <span>{item?.address}</span>
+          <span className="tablet:text-xl">{item?.name}</span>
+          <span className="text-xs tablet:text-base">{item?.address}</span>
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
