@@ -34,9 +34,9 @@ const MiniCategories = () => {
           ) : (
             <>
     
-              <div className="skeleton w-2/6 max-h-60 rounded-lg min-h-52 min-h-52"></div>
-              <div className="skeleton w-2/6 max-h-60 rounded-lg min-h-52 min-h-52"></div>
-              <div className="skeleton w-2/6 max-h-60 rounded-lg min-h-52 min-h-52"></div>
+              <div className="skeleton tablet:w-2/6 w-full max-h-60 rounded-lg min-h-52 min-h-52"></div>
+              <div className="skeleton tablet:w-2/6 w-full max-h-60 rounded-lg min-h-52 min-h-52"></div>
+              <div className="skeleton tablet:w-2/6 w-full max-h-60 rounded-lg min-h-52 min-h-52"></div>
 
             </>
           )}
