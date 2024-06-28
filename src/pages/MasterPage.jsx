@@ -80,22 +80,24 @@ const MasterPage = () => {
 
               <div className="flex flex-col gap-4">
                 {masterData?.services?.map((service) => (
-                  <div className="flex my-5" key={service.title}>
+                  <div className="flex my-5 flex-col tablet:flex-row" key={service.title}>
+                    <div className="flex items-center">
                     <img
                       className="block mr-4 rounded-md h-12 w-12"
                       src={`/backend/masterhub${service.photo}`}
                     ></img>
 
                     <div className="flex flex-col">
-                      <span>{service.title}</span>
-                      <span>Брови</span>
+                      <span className="text-2xl">{service.title}</span>
+                      <span className="text-gray-500 text-xl">{service.description}</span>
+                    </div>
                     </div>
 
-                    <div className="ml-auto flex gap-10 items-center">
-                      <div className="">{service.price} RUB</div>
-                      <span>1 час</span>
+                    <div className="mt-3 tablet:mt-0 tablet:ml-auto flex  gap-10 items-center">
+                      <div className="text-gray-500">{service.price} RUB</div>
+                      <span className="text-gray-500">{service.time}</span>
 
-                      <div className="btn btn-primary">Записаться</div>
+                      <div className="ml-auto tablet:ml-0 btn btn-primary">Записаться</div>
                     </div>
                   </div>
                 ))}
@@ -140,7 +142,7 @@ const MasterPage = () => {
               <div className="bg-base-200 p-5 rounded-2xl mb-5">
                 <h3 className="text-3xl mb-2">Специалисты</h3>
 
-                <div className="flex items-center gap-4 my-4">
+                <div className="flex flex-wrap tablet:flex-nowrap items-center gap-4 my-4">
                   {masterData?.specialists?.map((specialist) => (
                     <div
                       className="flex flex-col items-center border border-gray-700 rounded-lg p-3 min-h-20 min-w-40"
@@ -173,16 +175,11 @@ const MasterPage = () => {
             <div className="bg-base-200 p-5 rounded-2xl mb-5 min-h-40">
               <div className="flex justify-between">
                 <h3 className="text-3xl mb-2">Отзывы</h3>
-                {/* <button>Оставить отзыв</button> */}
-                <div
-                  className="tooltip"
-                  data-tip="Отзыв можно оставить только после визита"
-                >
-                  <button className="btn btn-ghost">Оставить отзыв</button>
-                </div>
+              
+                <button className="btn btn-ghost">Оставить отзыв</button>
               </div>
 
-              <div className="flex">
+              <div className="flex flex-col gap-5 tablet:flex-row">
                 <div className="block w-full max-w-60">
                   {/* <div className="flex items-center mb-2">
                     <svg
@@ -263,10 +260,10 @@ const MasterPage = () => {
                     ) : null}
                   </div>
                 </div>
-                <div className="user-reviews max-w-150 w-full">
+                <div className="user-reviews max-w-150 w-full mt-4 tablet:mt-0">
                   {masterData?.reviews?.detail?.map((review) => (
                     <article className="w-full mb-5" key={review.id}>
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-start tablet:items-center flex-col tablet:flex-row">
                         <div className="flex items-center mb-4">
                           <img
                             className="w-10 h-10 me-4 rounded-full"
