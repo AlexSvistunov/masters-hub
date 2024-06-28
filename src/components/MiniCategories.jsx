@@ -34,9 +34,10 @@ const MiniCategories = () => {
           ) : (
             <>
     
-              <div className="skeleton tablet:w-2/6 w-full max-h-60 rounded-lg min-h-52 min-h-52"></div>
-              <div className="skeleton tablet:w-2/6 w-full max-h-60 rounded-lg min-h-52 min-h-52"></div>
-              <div className="skeleton tablet:w-2/6 w-full max-h-60 rounded-lg min-h-52 min-h-52"></div>
+              <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
+              <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
+              <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
+              <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
 
             </>
           )}

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 // src="/backend/master-hub_API/masterhub/static/media/categories/brows.jpg"
 const CategoryCard = ({category}) => {
   return (
-    <Link className="block w-full tablet:w-2/6 relative category-card overflow-hidden before:block before:absolute before:inset-0 before:bg-black-rgba min-h-40 max-h-40 rounded-lg">
+    <Link className="block w-full tablet:w-2/6 relative category-card  before:block before:absolute before:inset-0 before:bg-black-rgba rounded-lg tablet:min-h-52 h-40 tablet:h-auto">
       <img
-        className="w-full h-full rounded-lg object-cover min-h-52"
+        className="w-full h-full rounded-lg object-cover"
         src={`/backend/masterhub${category.photo}`}
       ></img>
 
