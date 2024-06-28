@@ -26,7 +26,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
         ></img>
         <div className="flex flex-col gap-1">
           <span className="tablet:text-xl">{item?.name}</span>
-          <span className="text-xs tablet:text-base">{item?.address?.length > 20 ? item?.address?.slice(0, 20) + '...' : item?.address}</span>
+          <span className="text-xs tablet:text-base">{item?.address?.length > 20 && keyword !== 'profile'  ? item?.address?.slice(0, 20) + '...' : item?.address}</span>
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
