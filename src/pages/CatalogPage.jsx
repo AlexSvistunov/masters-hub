@@ -74,9 +74,9 @@ const CatalogPage = () => {
 
       <div className="">
         <Tabs />
-        <section className="p-7">
+        <section className="p-2 tablet:p-7">
           <div className="container mx-auto grid grid-cols-12 gap-8">
-            <div className="col-span-9">
+            <div className="col-span-12 laptop:col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
                 {catalogList?.length ? (
@@ -151,7 +151,7 @@ const CatalogPage = () => {
               </div>
             </div>
 
-            <aside className="col-start-10 col-end-13 p-5 rounded-xl bg-base-200 max-w-64 ml-auto">
+            <aside className="laptop:block hidden col-start-10 col-end-13 p-5 rounded-xl bg-base-200 max-w-64 ml-auto">
               <label className="input flex items-center gap-2">
                 <input type="text" className="grow" placeholder="Search" />
                 <svg
