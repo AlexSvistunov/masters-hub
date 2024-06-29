@@ -14,14 +14,18 @@ const CatalogPage = () => {
   const [chosenCategories, setChosenCategories] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
 
+  const [chosenSpec, setChosenSpec] = useState('all')
+  console.log(chosenSpec);
+
   console.log(catalog);
+  console.log(catalogList);
 
   const { currentToken } = useAuth();
 
   const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
     try {
       const headers = {};
-      if(currentToken) {
+      if (currentToken) {
         headers.Authorization = `Token ${currentToken}`;
       }
       const response = await fetch(`${url}`, {
@@ -40,10 +44,28 @@ const CatalogPage = () => {
     fetchCatalog(catalog.next);
   };
 
+  const catalogFilter = async (newSpec) => {
+    console.log(chosenSpec);
+    try {
+      const response = await fetch(`${URL}/api/catalog/?specialization=${newSpec}`);
+      const data = await response.json();
+      console.log(data);
+      setCatalog(data);
+      setCatalogList(data?.results);
+      // if all!!!
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const onChangeSpecHandler = (e) => {
+    setChosenSpec(e.target.value)
+    catalogFilter(e.target.value)
+  }
+
   useEffect(() => {
-    
-      fetchCatalog();
-    
+    fetchCatalog();
   }, []);
 
   const getCategories = async () => {
@@ -198,17 +220,17 @@ const CatalogPage = () => {
 
               <div className="flex flex-col gap-2">
                 <label className="flex items-center gap-2">
-                  <input type="radio" name="type"></input>
+                  <input type="radio" name="type" value='all' onChange={onChangeSpecHandler} checked={chosenSpec === 'all'}></input>
                   <span>Все</span>
                 </label>
 
                 <label className="flex items-center gap-2">
-                  <input type="radio" name="type"></input>
-                  <span>Только компании</span>
+                  <input type="radio" name="type" value='studio' onChange={onChangeSpecHandler} checked={chosenSpec === 'studio'}></input>
+                  <span>Только студии</span>
                 </label>
 
                 <label className="flex items-center gap-2">
-                  <input type="radio" name="type"></input>
+                  <input type="radio" name="type" value='master' onChange={onChangeSpecHandler} checked={chosenSpec === 'master'}></input>
                   <span>Только мастера</span>
                 </label>
               </div>
