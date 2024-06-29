@@ -30,19 +30,28 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 
 class SpecialistSerializer(serializers.ModelSerializer):
+    photo = serializers.SerializerMethodField()
+
+    def get_photo(self, obj):
+        return obj.photo.url
+
     class Meta:
         model = Specialist
-        fields = ['id', 'name', 'job', 'description']
+        fields = ['id', 'name', 'job', 'description', 'photo']
 
 
 class ReviewsSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source='user.id')
     user_name = serializers.CharField(source='user.username')
     data_create = serializers.DateTimeField(format='%Y-%m-%d %H:%M')
+    photo = serializers.SerializerMethodField()
+
+    def get_photo(self, obj):
+        return obj.user.photo.url
 
     class Meta:
         model = Reviews
-        fields = ['id', 'user_id', 'user_name', 'rating_star', 'data_create', 'description']
+        fields = ['id', 'user_id', 'user_name', 'rating_star', 'data_create', 'description', 'photo']
 
 
 class ProfileMasterSerializer(serializers.ModelSerializer):
@@ -145,3 +154,20 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'rating_star': {'required': True},
             'user': {'required': False}
         }
+
+
+class SpecialistDetailSerializer(serializers.ModelSerializer):
+    photo = serializers.SerializerMethodField()
+    services = serializers.SerializerMethodField()
+
+    def get_photo(self, obj):
+        return obj.photo.url
+
+    def get_services(self, obj):
+        services = obj.specialist_services.all()
+        serializer = ServiceSerializer(services, many=True)
+        return serializer.data
+
+    class Meta:
+        model = Specialist
+        fields = ['id', 'name', 'job', 'description', 'photo', 'services']

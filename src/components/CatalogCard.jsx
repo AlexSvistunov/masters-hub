@@ -70,12 +70,18 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             }
 
             if(keyword === 'profile') {
-              console.log('write code here');
+              dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
+                (data) => {
+                  console.log(data);
+                  setItems(data.payload);
+                }
+              );
             }
 
             if(!keyword) {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
+                  console.log(data);
                   const newItem = {
                     ...item,
                     is_favorite: !item?.is_favorite,
@@ -114,9 +120,8 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             if(!keyword) {
               dispatch(addToFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  const updatedItem = data.payload.find(
-                    (favItem) => favItem?.id === item?.id
-                  );
+                  console.log(data);
+                  const updatedItem = data.payload
         
                   const updatedItems = items.map((existingItem) => {
                     if (existingItem?.id === updatedItem?.id) {

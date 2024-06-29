@@ -1,13 +1,9 @@
-from django.shortcuts import render
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from .serializers import CategoriesSerializer, ProfileCatalogSerialize
-from .models import Service, Categories
+from .models import Categories
 from rest_framework.mixins import ListModelMixin
 from user.models import ProfileMaster
 from django_filters.rest_framework import DjangoFilterBackend
-from user.filter import ProfileFilter
 from user.pagination import CatalogPagination
 from rest_framework import permissions
 
@@ -31,10 +27,8 @@ class CatalogAPIView(GenericAPIView, ListModelMixin):
     queryset = ProfileMaster.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['categories', 'specialization']
-    # filterset_class = ProfileFilter
     pagination_class = CatalogPagination
 
     def get(self, request):
         return self.list(request)
 
-    # def get_queryset(self):

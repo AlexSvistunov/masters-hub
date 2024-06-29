@@ -1,4 +1,3 @@
-from .models import Service
 from user.models import Categories, Favorites
 from rest_framework import serializers
 from user.models import ProfileMaster

@@ -1,6 +1,4 @@
 from django.db import models
-# from user.models import CustomUser
-# Create your models here.
 from django.conf import settings
 from user.models import ProfileMaster, Specialist, Categories
 

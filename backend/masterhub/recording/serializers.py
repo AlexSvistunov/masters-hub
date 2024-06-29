@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from user.models import ProfileMaster, Specialist
+from user.models import Specialist
 from service.models import Service
 from user.models import ProfileMaster
 from .models import WorkTime, Recording
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 
 class SpecialistSerializer(serializers.ModelSerializer):
