@@ -16,6 +16,8 @@ import Raiting from "../components/Raiting";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
+  const [moreReviews, setMoreReviews] = useState(null)
+
   const { currentToken } = useAuth();
 
   console.log(masterData);
@@ -41,6 +43,18 @@ const MasterPage = () => {
     console.log(data);
     setMasterData(data);
   };
+
+  const showMoreReviews = async () => {
+    const response = await fetch(`${URL}/api/reviews/${id}/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${currentToken}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    setMoreReviews(data)
+  }
 
   useEffect(() => {
     fetchMasterProfile();
@@ -174,7 +188,10 @@ const MasterPage = () => {
 
             <div className="bg-base-200 p-5 rounded-2xl mb-5 min-h-40">
               <div className="flex justify-between">
+                <div className="flex items-center gap-2">
                 <h3 className="text-3xl mb-2">Отзывы</h3>
+                <span className="text-2xl text-primary">{masterData?.reviews?.count}</span>
+                </div>
               
                 <button className="btn btn-ghost">Оставить отзыв</button>
               </div>
@@ -347,7 +364,7 @@ const MasterPage = () => {
               </div>
               <div className="flex justify-center">
                 {masterData?.reviews?.count > 0 ? (
-                  <button className="btn btn-ghost">Показать еще</button>
+                  <button className="btn btn-ghost" onClick={showMoreReviews}>Показать еще</button>
                 ) : null}
               </div>
             </div>

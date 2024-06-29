@@ -61,9 +61,11 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
           if(item?.is_favorite || item?.is_favorites) {
+        
             if (keyword === "fav") {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
+                  console.log(data);
                   setItems(data.payload);
                 }
               );
