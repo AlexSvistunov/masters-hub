@@ -47,12 +47,12 @@ const CatalogPage = () => {
   const catalogFilter = async (newSpec) => {
     console.log(chosenSpec);
     try {
-      const response = await fetch(`${URL}/api/catalog/?specialization=${newSpec}`);
+      const response = await fetch(newSpec === 'all' ? `${URL}/api/catalog/` : `${URL}/api/catalog/?specialization=${newSpec}`);
       const data = await response.json();
       console.log(data);
       setCatalog(data);
       setCatalogList(data?.results);
-      // if all!!!
+     
       return data;
     } catch (error) {
       console.log(error.message);
