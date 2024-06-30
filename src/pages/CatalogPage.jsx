@@ -15,6 +15,8 @@ const CatalogPage = () => {
   const [catalogList, setCatalogList] = useState([]);
   const [chosenSpec, setChosenSpec] = useState("all");
 
+  console.log(chosenCategories);
+
   const [searchQuery, setSearchQuery] = useState({
     specialization: "all",
     categories: [],
@@ -29,6 +31,8 @@ const CatalogPage = () => {
 
 
   const catalogFilter = async (item = searchQuery, url = `${URL}/api/catalog/`) => {
+    console.log(searchQuery);
+    console.log(item);
 
     let queryString = "";
 
@@ -44,7 +48,7 @@ const CatalogPage = () => {
           if(index === 0) {
             return `?categories=${el}`
           } else {
-            `&categories=${el}`
+            return `&categories=${el}`
           }
         })
         .join("");
@@ -54,7 +58,7 @@ const CatalogPage = () => {
     }
 
     try {
-   
+     
       const response = await fetch(`${url}${queryString}`);
       const data = await response.json();
       console.log(data);
@@ -327,5 +331,7 @@ const CatalogPage = () => {
     </>
   );
 };
+
+// если не найдено, то просто будет скелетон
 
 export default CatalogPage;
