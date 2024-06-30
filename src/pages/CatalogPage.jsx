@@ -15,10 +15,16 @@ const CatalogPage = () => {
   const [catalogList, setCatalogList] = useState([]);
   const [chosenSpec, setChosenSpec] = useState("all");
 
-  console.log(chosenSpec);
-  console.log(catalog);
-  console.log(catalogList);
-  console.log(chosenCategories);
+  const [searchQuery, setSearchQuery] = useState({
+    specialization: 'all',
+    categories: []
+  })
+
+  // console.log(chosenSpec);
+  // console.log(catalog);
+  // console.log(catalogList);
+  // console.log(chosenCategories);
+  console.log(searchQuery);
 
   const { currentToken } = useAuth();
 
@@ -44,33 +50,14 @@ const CatalogPage = () => {
     fetchCatalog(catalog.next);
   };
 
-  const catalogFilter = async (newSpec) => {
-    
-    const categoriesStringQuery = chosenCategories.map(category => {
-      return `&category=${category}`
-    }).join('')
-
-    const searchQuery = {
-      spec: newSpec,
-      categories: categoriesStringQuery
-    }
-
-    console.log(categoriesStringQuery);
+  const catalogFilter = async (newSpec = '') => {
+    const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('')
+    console.log(categoriesString);
+    const queryString = `?specialization=${searchQuery.specialization}${categoriesString ? categoriesString : ''}`
+    console.log(queryString);
 
     try {
-      const headers = {};
-      if (currentToken) {
-        headers.Authorization = `Token ${currentToken}`;
-      }
-      const response = await fetch(
-        newSpec === "all"
-          ? `${URL}/api/catalog/`
-          : `${URL}/api/catalog/?specialization=${searchQuery.spec}${searchQuery.categories}`,
-        {
-          method: "GET",
-          headers,
-        }
-      );
+      const response = await fetch(queryString);
       const data = await response.json();
       console.log(data);
       setCatalog(data);
@@ -82,9 +69,14 @@ const CatalogPage = () => {
     }
   };
 
+
   const onChangeSpecHandler = (e) => {
     setChosenSpec(e.target.value);
     catalogFilter(e.target.value);
+    setSearchQuery({
+      ...searchQuery,
+      specialization: e.target.value
+    })
   };
 
   const onChangeCategoriesHandler = (id) => {
@@ -92,8 +84,16 @@ const CatalogPage = () => {
     if(isInArray) {
       const itemsFilter = chosenCategories.filter(el => el !== id)
       setChosenCategories(itemsFilter)
+      setSearchQuery({
+        ...searchQuery,
+        categories: itemsFilter
+      })
     } else {
       setChosenCategories([...chosenCategories, id])
+      setSearchQuery({
+        ...searchQuery,
+        categories: [...searchQuery.categories, id]
+      })
     }
   }
 
@@ -114,14 +114,18 @@ const CatalogPage = () => {
     }
   };
 
-  const filterCatalog = async (id) => {
-    const response = await fetch(`${URL}/api/catalog/?categories=${id}`);
-    const data = await response.json();
-  };
+  // const filterCatalog = async (id) => {
+  //   const response = await fetch(`${URL}/api/catalog/?categories=${id}`);
+  //   const data = await response.json();
+  // };
 
   useEffect(() => {
     getCategories();
   }, []);
+
+  // useEffect(() => {
+  //   catalogFilter()
+  // }, [catalogFilter])
 
   return (
     <>
@@ -296,9 +300,12 @@ const CatalogPage = () => {
                   <input
                     className="w-4 h-4"
                     type="checkbox"
-                    onChange={() =>
+                    onChange={() => {
                       // setChosenCategories([...chosenCategories, category.id])
                       onChangeCategoriesHandler(category.id)
+                      // setSearchQuery({...searchQuery, categories: })
+                    }
+                      
                     }
                   ></input>
                   <span className="text-2xl">{category.title}</span>
