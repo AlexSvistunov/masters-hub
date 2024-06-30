@@ -121,8 +121,10 @@ const CatalogPage = () => {
   // };
 
   useEffect(() => {
-    getCategories();
-  }, []);
+    if(isCategoryModalOpen) {
+      getCategories();
+    }
+  }, [isCategoryModalOpen]);
 
   // useEffect(() => {
   //   catalogFilter()
