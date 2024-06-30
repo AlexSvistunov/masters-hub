@@ -57,7 +57,7 @@ const CatalogPage = () => {
     console.log(queryString);
 
     try {
-      const response = await fetch(queryString);
+      const response = await fetch(`${URL}/api/categories/${queryString}`);
       const data = await response.json();
       console.log(data);
       setCatalog(data);
