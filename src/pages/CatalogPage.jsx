@@ -79,7 +79,13 @@ const CatalogPage = () => {
       }
     } else {
       const categoriesString = item.categories
-        .map((el) => `&categories=${el}`)
+        .map((el, index) => {
+          if(index === 0) {
+            return `?categories=${el}`
+          } else {
+            `&categories=${el}`
+          }
+        })
         .join("");
       if (categoriesString) {
         queryString += categoriesString;
