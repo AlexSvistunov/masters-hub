@@ -50,24 +50,57 @@ const CatalogPage = () => {
     fetchCatalog(catalog.next);
   };
 
-  const catalogFilter = async (newSpec = '') => {
-    const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('')
-    console.log(categoriesString);
-    const queryString = `?specialization=${searchQuery.specialization}${categoriesString ? categoriesString : ''}`
-    console.log(queryString);
+  // const catalogFilter = async (newSpec = '') => {
+  //   const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('')
+  //   console.log(categoriesString);
+  //   const queryString = `?specialization=${searchQuery.specialization}${categoriesString ? categoriesString : ''}`
+  //   console.log(queryString);
+
+  //   try {
+  //     const response = await fetch(`${URL}/api/categories/${queryString}`);
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setCatalog(data);
+  //     setCatalogList(data?.results);
+
+  //     return data;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+  const catalogFilter = async () => {
+   console.log(searchQuery);
+    let queryString = '';
+
+    if (searchQuery.specialization !== 'all') {
+        queryString = `?specialization=${searchQuery.specialization}`;
+        const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('');
+        if (categoriesString) {
+            queryString += categoriesString;
+           
+        }
+    } else {
+        const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('');
+        if (categoriesString) {
+            queryString += categoriesString;
+         
+        }
+    }
 
     try {
-      const response = await fetch(`${URL}/api/categories/${queryString}`);
-      const data = await response.json();
-      console.log(data);
-      setCatalog(data);
-      setCatalogList(data?.results);
+      console.log(queryString);
+        const response = await fetch(`${URL}/api/categories/${queryString}`);
+        const data = await response.json();
+        console.log(data);
+        setCatalog(data);
+        setCatalogList(data?.results);
 
-      return data;
+        return data;
     } catch (error) {
-      console.log(error.message);
+        console.log(error.message);
     }
-  };
+};
 
 
   const onChangeSpecHandler = (e) => {
