@@ -31,3 +31,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // посмотреть все
 // adaptive cards
 
+// а надо ли прям в браузере ?spec=master
+

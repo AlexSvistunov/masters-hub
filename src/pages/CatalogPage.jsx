@@ -13,12 +13,12 @@ const CatalogPage = () => {
   const [categories, setCategories] = useState([]);
   const [chosenCategories, setChosenCategories] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
+  const [chosenSpec, setChosenSpec] = useState("all");
 
-  const [chosenSpec, setChosenSpec] = useState('all')
   console.log(chosenSpec);
-
   console.log(catalog);
   console.log(catalogList);
+  console.log(chosenCategories);
 
   const { currentToken } = useAuth();
 
@@ -45,14 +45,37 @@ const CatalogPage = () => {
   };
 
   const catalogFilter = async (newSpec) => {
-    console.log(chosenSpec);
+    
+    const categoriesStringQuery = chosenCategories.map(category => {
+      return `&category=${category}`
+    }).join('')
+
+    const searchQuery = {
+      spec: newSpec,
+      categories: categoriesStringQuery
+    }
+
+    console.log(categoriesStringQuery);
+
     try {
-      const response = await fetch(newSpec === 'all' ? `${URL}/api/catalog/` : `${URL}/api/catalog/?specialization=${newSpec}`);
+      const headers = {};
+      if (currentToken) {
+        headers.Authorization = `Token ${currentToken}`;
+      }
+      const response = await fetch(
+        newSpec === "all"
+          ? `${URL}/api/catalog/`
+          : `${URL}/api/catalog/?specialization=${searchQuery.spec}${searchQuery.categories}`,
+        {
+          method: "GET",
+          headers,
+        }
+      );
       const data = await response.json();
       console.log(data);
       setCatalog(data);
       setCatalogList(data?.results);
-     
+
       return data;
     } catch (error) {
       console.log(error.message);
@@ -60,8 +83,18 @@ const CatalogPage = () => {
   };
 
   const onChangeSpecHandler = (e) => {
-    setChosenSpec(e.target.value)
-    catalogFilter(e.target.value)
+    setChosenSpec(e.target.value);
+    catalogFilter(e.target.value);
+  };
+
+  const onChangeCategoriesHandler = (id) => {
+    const isInArray = chosenCategories.some(el => el === id)
+    if(isInArray) {
+      const itemsFilter = chosenCategories.filter(el => el !== id)
+      setChosenCategories(itemsFilter)
+    } else {
+      setChosenCategories([...chosenCategories, id])
+    }
   }
 
   useEffect(() => {
@@ -220,18 +253,36 @@ const CatalogPage = () => {
 
               <div className="flex flex-col gap-2">
                 <label className="flex items-center gap-2">
-                  <input type="radio" name="type" value='all' onChange={onChangeSpecHandler} checked={chosenSpec === 'all'}></input>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="all"
+                    onChange={onChangeSpecHandler}
+                    checked={chosenSpec === "all"}
+                  ></input>
                   <span>Все</span>
                 </label>
 
                 <label className="flex items-center gap-2">
-                  <input type="radio" name="type" value='studio' onChange={onChangeSpecHandler} checked={chosenSpec === 'studio'}></input>
-                  <span>Только студии</span>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="master"
+                    onChange={onChangeSpecHandler}
+                    checked={chosenSpec === "master"}
+                  ></input>
+                  <span>Только мастера</span>
                 </label>
 
                 <label className="flex items-center gap-2">
-                  <input type="radio" name="type" value='master' onChange={onChangeSpecHandler} checked={chosenSpec === 'master'}></input>
-                  <span>Только мастера</span>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="studio"
+                    onChange={onChangeSpecHandler}
+                    checked={chosenSpec === "studio"}
+                  ></input>
+                  <span>Только студии</span>
                 </label>
               </div>
             </aside>
@@ -246,7 +297,8 @@ const CatalogPage = () => {
                     className="w-4 h-4"
                     type="checkbox"
                     onChange={() =>
-                      setChosenCategories([...chosenCategories, category.id])
+                      // setChosenCategories([...chosenCategories, category.id])
+                      onChangeCategoriesHandler(category.id)
                     }
                   ></input>
                   <span className="text-2xl">{category.title}</span>
@@ -258,7 +310,8 @@ const CatalogPage = () => {
               className="btn btn-primary absolute bottom-10 right-10"
               onClick={() => {
                 setIsCategoryModalOpen(false);
-                filterCatalog(chosenCategories[0]);
+                // filterCatalog(chosenCategories[0]);
+                catalogFilter()
               }}
             >
               Применить
