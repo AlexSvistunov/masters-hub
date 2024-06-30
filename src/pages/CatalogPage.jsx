@@ -16,15 +16,11 @@ const CatalogPage = () => {
   const [chosenSpec, setChosenSpec] = useState("all");
 
   const [searchQuery, setSearchQuery] = useState({
-    specialization: 'all',
-    categories: []
-  })
+    specialization: "all",
+    categories: [],
+  });
 
-  // console.log(chosenSpec);
-  // console.log(catalog);
-  // console.log(catalogList);
-  // console.log(chosenCategories);
-  console.log(searchQuery);
+
 
   const { currentToken } = useAuth();
 
@@ -69,69 +65,74 @@ const CatalogPage = () => {
   //   }
   // };
 
-  const catalogFilter = async () => {
-   console.log(searchQuery);
-    let queryString = '';
+  const catalogFilter = async (item = searchQuery) => {
 
-    if (searchQuery.specialization !== 'all') {
-        queryString = `?specialization=${searchQuery.specialization}`;
-        const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('');
-        if (categoriesString) {
-            queryString += categoriesString;
-           
-        }
+    let queryString = "";
+
+    if (item.specialization !== "all") {
+      queryString = `?specialization=${item.specialization}`;
+      const categoriesString = item.categories
+        .map((el) => `&categories=${el}`)
+        .join("");
+      if (categoriesString) {
+        queryString += categoriesString;
+      }
     } else {
-        const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('');
-        if (categoriesString) {
-            queryString += categoriesString;
-         
-        }
+      const categoriesString = item.categories
+        .map((el) => `&categories=${el}`)
+        .join("");
+      if (categoriesString) {
+        queryString += categoriesString;
+      }
     }
 
     try {
-      console.log(queryString);
-        const response = await fetch(`${URL}/api/categories/${queryString}`);
-        const data = await response.json();
-        console.log(data);
-        setCatalog(data);
-        setCatalogList(data?.results);
+   
+      const response = await fetch(`${URL}/api/categories/${queryString}`);
+      const data = await response.json();
+      console.log(data);
+      setCatalog(data);
+      setCatalogList(data?.results);
 
-        return data;
+      return data;
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
-};
-
+  };
 
   const onChangeSpecHandler = (e) => {
     setChosenSpec(e.target.value);
-    catalogFilter(e.target.value);
-    setSearchQuery({
+    const item = {
       ...searchQuery,
       specialization: e.target.value
-    })
+    }
+    setSearchQuery(item);
+
+    catalogFilter(item);
+
   };
 
   const onChangeCategoriesHandler = (id) => {
-    const isInArray = chosenCategories.some(el => el === id)
-    if(isInArray) {
-      const itemsFilter = chosenCategories.filter(el => el !== id)
-      setChosenCategories(itemsFilter)
+    const isInArray = chosenCategories.some((el) => el === id);
+    if (isInArray) {
+      const itemsFilter = chosenCategories.filter((el) => el !== id);
+      setChosenCategories(itemsFilter);
       setSearchQuery({
         ...searchQuery,
-        categories: itemsFilter
-      })
+        categories: itemsFilter,
+      });
     } else {
-      setChosenCategories([...chosenCategories, id])
+      setChosenCategories([...chosenCategories, id]);
       setSearchQuery({
         ...searchQuery,
-        categories: [...searchQuery.categories, id]
-      })
+        categories: [...searchQuery.categories, id],
+      });
     }
-  }
+  };
 
   useEffect(() => {
     fetchCatalog();
+    // catalogFilter()
   }, []);
 
   const getCategories = async () => {
@@ -334,12 +335,8 @@ const CatalogPage = () => {
                     className="w-4 h-4"
                     type="checkbox"
                     onChange={() => {
-                      // setChosenCategories([...chosenCategories, category.id])
-                      onChangeCategoriesHandler(category.id)
-                      // setSearchQuery({...searchQuery, categories: })
-                    }
-                      
-                    }
+                      onChangeCategoriesHandler(category.id);
+                    }}
                   ></input>
                   <span className="text-2xl">{category.title}</span>
                 </label>
@@ -350,8 +347,7 @@ const CatalogPage = () => {
               className="btn btn-primary absolute bottom-10 right-10"
               onClick={() => {
                 setIsCategoryModalOpen(false);
-                // filterCatalog(chosenCategories[0]);
-                catalogFilter()
+                catalogFilter();
               }}
             >
               Применить
