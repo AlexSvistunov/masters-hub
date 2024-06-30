@@ -21,51 +21,12 @@ const CatalogPage = () => {
   });
 
   console.log(catalog);
-
-
-
   const { currentToken } = useAuth();
-
-  const fetchCatalog = async (url = `${URL}/api/catalog/`) => {
-    try {
-      const headers = {};
-      if (currentToken) {
-        headers.Authorization = `Token ${currentToken}`;
-      }
-      const response = await fetch(`${url}`, {
-        method: "GET",
-        headers,
-      });
-      const data = await response.json();
-      setCatalog(data);
-      setCatalogList(data?.results);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const showMoreCatalog = async () => {
     catalogFilter(searchQuery,catalog.next);
   };
 
-  // const catalogFilter = async (newSpec = '') => {
-  //   const categoriesString = searchQuery.categories.map(el => `&categories=${el}`).join('')
-  //   console.log(categoriesString);
-  //   const queryString = `?specialization=${searchQuery.specialization}${categoriesString ? categoriesString : ''}`
-  //   console.log(queryString);
-
-  //   try {
-  //     const response = await fetch(`${URL}/api/categories/${queryString}`);
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setCatalog(data);
-  //     setCatalogList(data?.results);
-
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   const catalogFilter = async (item = searchQuery, url = `${URL}/api/catalog/`) => {
 
