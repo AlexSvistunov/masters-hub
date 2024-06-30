@@ -20,6 +20,8 @@ const CatalogPage = () => {
     categories: [],
   });
 
+  console.log(catalog);
+
 
 
   const { currentToken } = useAuth();
@@ -43,7 +45,7 @@ const CatalogPage = () => {
   };
 
   const showMoreCatalog = async () => {
-    fetchCatalog(catalog.next);
+    catalogFilter(searchQuery,catalog.next);
   };
 
   // const catalogFilter = async (newSpec = '') => {
@@ -65,15 +67,13 @@ const CatalogPage = () => {
   //   }
   // };
 
-  const catalogFilter = async (item = searchQuery) => {
+  const catalogFilter = async (item = searchQuery, url = `${URL}/api/catalog/`) => {
 
     let queryString = "";
 
     if (item.specialization !== "all") {
       queryString = `?specialization=${item.specialization}`;
-      const categoriesString = item.categories
-        .map((el) => `&categories=${el}`)
-        .join("");
+      const categoriesString = item.categories.map((el) => `&categories=${el}`)?.join("");
       if (categoriesString) {
         queryString += categoriesString;
       }
@@ -94,7 +94,7 @@ const CatalogPage = () => {
 
     try {
    
-      const response = await fetch(`${URL}/api/categories/${queryString}`);
+      const response = await fetch(`${url}${queryString}`);
       const data = await response.json();
       console.log(data);
       setCatalog(data);
@@ -137,8 +137,8 @@ const CatalogPage = () => {
   };
 
   useEffect(() => {
-    fetchCatalog();
-    // catalogFilter()
+    // fetchCatalog();
+    catalogFilter()
   }, []);
 
   const getCategories = async () => {
