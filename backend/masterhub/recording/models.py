@@ -63,6 +63,7 @@ class Recording(models.Model):
     user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
+        related_name='user_recordings'
 
     )
     profile_master = models.ForeignKey(

@@ -58,8 +58,14 @@ const CatalogPage = () => {
     }
 
     try {
-     
-      const response = await fetch(`${url}${queryString}`);
+      const headers = {};
+      if(currentToken) {
+        headers.Authorization = `Token ${currentToken}`
+      }
+      const response = await fetch(`${url}${queryString}`, {
+        method: "GET",
+        headers
+      });
       const data = await response.json();
       console.log(data);
       setCatalog(data);
@@ -333,5 +339,6 @@ const CatalogPage = () => {
 };
 
 // если не найдено, то просто будет скелетон
+// из подборки если нажимаю на item, то автоматом сортируется
 
 export default CatalogPage;

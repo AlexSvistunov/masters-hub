@@ -101,3 +101,20 @@ class WorkTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkTime
         fields = ['time']
+
+
+class RecordingSerializer(serializers.ModelSerializer):
+    profile_master = serializers.SerializerMethodField()
+    service = serializers.SerializerMethodField()
+
+    def get_profile_master(self, obj):
+        serializer = ProfileSerializer(obj.profile_master)
+        return serializer.data
+
+    def get_service(self, obj):
+        serializer = ServicesSerializer(obj.service)
+        return serializer.data
+
+    class Meta:
+        model = Recording
+        fields = ['id', 'profile_master', 'service', 'date', 'time_start', 'time_end']

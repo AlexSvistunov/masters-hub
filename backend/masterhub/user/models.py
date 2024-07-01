@@ -80,7 +80,7 @@ class ProfileMaster(models.Model):
     user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
-        blank=True
+        related_name='user_profile'
     )
     name = models.CharField(
         verbose_name='имя',
@@ -94,6 +94,7 @@ class ProfileMaster(models.Model):
     )
     photo = models.ImageField(
         upload_to=upload_photo_profile,
+        default='media/users/default.jpg'
     )
     address = models.CharField(
         verbose_name='адрес',

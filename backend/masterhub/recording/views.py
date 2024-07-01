@@ -6,18 +6,27 @@ from rest_framework.decorators import action
 from user.models import ProfileMaster
 from .models import WorkTime, Recording
 from service.models import Service
-from .serializers import ServicesRecordingSerializer, WorkTimeSerializer
-from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
+from .serializers import ServicesRecordingSerializer, WorkTimeSerializer, RecordingSerializer
+from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
 from datetime import timedelta
 from rest_framework import status
 
 
 # Create your views here.
 
-class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
+class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModelMixin, ListModelMixin):
     # permission_classes = [IsAuthenticated]
+    serializer_class = ServicesRecordingSerializer
 
-    queryset = []
+    def get_queryset(self):
+        if self.action == 'list':
+            return self.request.user.user_recordings.all()
+        return []
+
+    def list(self, request, *args, **kwargs):
+        data = request.user.user_recordings.all()
+        serializer = RecordingSerializer(data, many=True)
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         # pk профиля
