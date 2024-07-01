@@ -44,24 +44,23 @@ const CatalogPage = () => {
   };
 
   const catalogFilter = async (
-    item = searchQuery,
-    url = `${URL}/api/catalog/`
+    {f: {item: item = searchQuery, url: url = `${URL}/api/catalog/`}}
+  
   ) => {
-    console.log(searchQuery);
-    console.log(item);
+   
 
     let queryString = "";
 
     if (item.specialization !== "all") {
-      queryString = `?specialization=${item.specialization}`;
-      const categoriesString = item.categories
+      queryString = `?specialization=${f.item.specialization}`;
+      const categoriesString = f.item.categories
         .map((el) => `&categories=${el}`)
         ?.join("");
       if (categoriesString) {
         queryString += categoriesString;
       }
     } else {
-      const categoriesString = item.categories
+      const categoriesString = f.item.categories
         .map((el, index) => {
           if (index === 0) {
             return `?categories=${el}`;
