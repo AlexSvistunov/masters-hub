@@ -6,8 +6,17 @@ import Tabs from "../components/Tabs";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
+import { useLocation } from "react-router-dom";
 
 const CatalogPage = () => {
+  const {state} = useLocation()
+  let id
+  if(state) {
+    id = state.id
+  }
+  
+  console.log(state);
+
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +31,7 @@ const CatalogPage = () => {
 
   const [searchQuery, setSearchQuery] = useState({
     specialization: "all",
-    categories: [],
+    categories: state ? [id] : []
   });
 
   console.log(catalog);
@@ -224,14 +233,14 @@ const CatalogPage = () => {
                     />
                   ))
                 ) : (
-                  <div>No items</div>
+                  <h2 className="text-center col-span-12 text-4xl py-10">Нет подходящего каталога по Вашему запросу! Попробуйте изменить фильтры</h2>
                 )}
               </div>
 
               <div className="flex justify-center p-5">
-                <button onClick={showMoreCatalog} className="btn my-5">
+                {catalogList?.length ? <button onClick={showMoreCatalog} className="btn my-5">
                   Показать еще
-                </button>
+                </button> : null}
               </div>
             </div>
 
