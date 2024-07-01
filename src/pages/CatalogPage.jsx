@@ -38,7 +38,9 @@ const CatalogPage = () => {
   const { currentToken } = useAuth();
 
   const showMoreCatalog = async () => {
-    catalogFilter(searchQuery, catalog.next);
+    // catalogFilter(searchQuery, catalog.next);
+    const {next} = catalog
+    catalogFilter(_, next)
   };
 
   const catalogFilter = async (

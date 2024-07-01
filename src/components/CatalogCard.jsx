@@ -15,9 +15,6 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
   const formattedRating =
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
-  console.log("ITEMS", items);
-  console.log("ITEM", item);
-
   return (
     <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative min-h-44">
       <Link className="absolute inset-0" to={`/profile/${item?.id}`} />
@@ -70,7 +67,6 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             if (keyword === "fav") {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  console.log(data);
                   setItems(data.payload);
                 }
               );
@@ -92,7 +88,6 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             if (!keyword) {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  console.log(data);
                   const newItem = {
                     ...item,
                     is_favorite: !item?.is_favorite,
@@ -112,14 +107,9 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             }
           } else {
             if (keyword === "profile") {
-              console.log("FIX CODE HERE");
               dispatch(addToFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  console.log("FROM PROFILE");
-                  console.log("DATA!!!", data);
                   const updatedItem = data?.payload;
-
-                  console.log("ITEM", updatedItem);
 
                   setItems(updatedItem);
                 }
@@ -129,7 +119,6 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
             if (!keyword) {
               dispatch(addToFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  console.log(data);
                   const updatedItem = data.payload;
 
                   const updatedItems = items.map((existingItem) => {
