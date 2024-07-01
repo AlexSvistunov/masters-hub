@@ -21,7 +21,7 @@ const CatalogPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [categories, setCategories] = useState([]);
-  const [chosenCategories, setChosenCategories] = useState([]);
+  const [chosenCategories, setChosenCategories] = useState(state ? [id] : []);
   const [chosenSpec, setChosenSpec] = useState("all");
 
   const [catalog, setCatalog] = useState([]);
@@ -335,6 +335,7 @@ const CatalogPage = () => {
                     onChange={() => {
                       onChangeCategoriesHandler(category.id);
                     }}
+                    checked={chosenCategories.some(el => el === category.id)}
                   ></input>
                   <span className="text-2xl">{category.title}</span>
                 </label>
