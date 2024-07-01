@@ -9,13 +9,12 @@ import EnrollModal from "../components/EnrollModal";
 
 const CatalogPage = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const [categories, setCategories] = useState([]);
   const [chosenCategories, setChosenCategories] = useState([]);
   const [chosenSpec, setChosenSpec] = useState("all");
 
-  
   const [catalog, setCatalog] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
 
@@ -83,7 +82,7 @@ const CatalogPage = () => {
     } catch (error) {
       console.log(error.message);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -162,8 +161,8 @@ const CatalogPage = () => {
             <div className="col-span-12 laptop:col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
-
-                {isLoading &&  <>
+                {isLoading ? (
+                  <>
                     <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
                       <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
                         <div className="flex items-center gap-5 mb-5 w-full">
@@ -214,8 +213,8 @@ const CatalogPage = () => {
                         </div>
                       </div>
                     </div>
-                  </>}
-                {catalogList?.length ? (
+                  </>
+                ) : catalogList?.length ? (
                   catalogList?.map((catalogItem) => (
                     <CatalogCard
                       item={catalogItem}
@@ -225,7 +224,7 @@ const CatalogPage = () => {
                     />
                   ))
                 ) : (
-                 <div>No items</div>
+                  <div>No items</div>
                 )}
               </div>
 
