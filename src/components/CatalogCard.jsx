@@ -15,8 +15,8 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
   const formattedRating =
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
 
-    console.log('ITEMS', items);
-    console.log('ITEM', item);
+  console.log("ITEMS", items);
+  console.log("ITEM", item);
 
   return (
     <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative min-h-44">
@@ -28,7 +28,11 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
         ></img>
         <div className="flex flex-col gap-1">
           <span className="tablet:text-xl">{item?.name}</span>
-          <span className="text-xs tablet:text-base">{item?.address?.length > 20 && keyword !== 'profile'  ? item?.address?.slice(0, 20) + '...' : item?.address}</span>
+          <span className="text-xs tablet:text-base">
+            {item?.address?.length > 20 && keyword !== "profile"
+              ? item?.address?.slice(0, 20) + "..."
+              : item?.address}
+          </span>
         </div>
       </div>
       <footer className="flex justify-between mt-auto">
@@ -62,8 +66,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          if(item?.is_favorite || item?.is_favorites) {
-        
+          if (item?.is_favorite || item?.is_favorites) {
             if (keyword === "fav") {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
@@ -73,16 +76,20 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
               );
             }
 
-            if(keyword === 'profile') {
+            if (keyword === "profile") {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
-                  console.log(data);
-                  setItems(data.payload);
+                  if (!data?.payload?.find((el) => el.id === item.id)) {
+                    setItems({
+                      ...item,
+                      is_favorite: !item.is_favorite,
+                    });
+                  }
                 }
               );
             }
 
-            if(!keyword) {
+            if (!keyword) {
               dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
                 (data) => {
                   console.log(data);
@@ -90,48 +97,48 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
                     ...item,
                     is_favorite: !item?.is_favorite,
                   };
-        
+
                   const newItems = items.map((el) => {
                     if (el.id === item?.id) {
                       return newItem;
                     }
-        
+
                     return el;
                   });
-        
+
                   setItems(newItems);
                 }
               );
             }
           } else {
             if (keyword === "profile") {
-              console.log('FIX CODE HERE');
+              console.log("FIX CODE HERE");
               dispatch(addToFav({ currentToken, id: item?.id })).then(
                 (data) => {
                   console.log("FROM PROFILE");
                   console.log("DATA!!!", data);
-                  const updatedItem = data?.payload
+                  const updatedItem = data?.payload;
 
-                  console.log('ITEM', updatedItem);
-        
+                  console.log("ITEM", updatedItem);
+
                   setItems(updatedItem);
                 }
               );
-            } 
-            
-            if(!keyword) {
+            }
+
+            if (!keyword) {
               dispatch(addToFav({ currentToken, id: item?.id })).then(
                 (data) => {
                   console.log(data);
-                  const updatedItem = data.payload
-        
+                  const updatedItem = data.payload;
+
                   const updatedItems = items.map((existingItem) => {
                     if (existingItem?.id === updatedItem?.id) {
                       return updatedItem;
                     }
                     return existingItem;
                   });
-        
+
                   setItems(updatedItems);
                 }
               );
