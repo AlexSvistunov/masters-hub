@@ -37,30 +37,56 @@ const CatalogPage = () => {
   console.log(catalog);
   const { currentToken } = useAuth();
 
+  // const showMoreCatalog = async () => {
+  //   const {next} = catalog
+  //   // catalogFilter(next)
+  //   catalog(_, next)
+  // };
+
   const showMoreCatalog = async () => {
-    // catalogFilter(searchQuery, catalog.next);
-    const {next} = catalog
-    catalogFilter(_, next)
+    const { next } = catalog;
+    if (next) {
+      try {
+        const headers = {};
+        if (currentToken) {
+          headers.Authorization = `Token ${currentToken}`;
+        }
+        const response = await fetch(next, {
+          method: "GET",
+          headers,
+        });
+        const data = await response.json();
+        setCatalog({
+          ...data,
+          results: [...catalogList, ...data.results],
+        });
+        setCatalogList([...catalogList, ...data.results]);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   };
+  
 
   const catalogFilter = async (
-    {f: {item: item = searchQuery, url: url = `${URL}/api/catalog/`}}
-  
+    item = searchQuery,
+    url = `${URL}/api/catalog/`
   ) => {
-   
+    console.log(searchQuery);
+    console.log(item);
 
     let queryString = "";
 
     if (item.specialization !== "all") {
-      queryString = `?specialization=${f.item.specialization}`;
-      const categoriesString = f.item.categories
+      queryString = `?specialization=${item.specialization}`;
+      const categoriesString = item.categories
         .map((el) => `&categories=${el}`)
         ?.join("");
       if (categoriesString) {
         queryString += categoriesString;
       }
     } else {
-      const categoriesString = f.item.categories
+      const categoriesString = item.categories
         .map((el, index) => {
           if (index === 0) {
             return `?categories=${el}`;
