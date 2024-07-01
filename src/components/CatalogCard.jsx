@@ -11,10 +11,12 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
   const { currentToken } = useAuth();
   const dispatch = useDispatch();
 
-
   const averageRating = item?.reviews?.average_rating;
   const formattedRating =
     averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
+
+    console.log('ITEMS', items);
+    console.log('ITEM', item);
 
   return (
     <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative min-h-44">
@@ -108,9 +110,7 @@ const CatalogCard = ({ token, item, items, setItems, keyword }) => {
                 (data) => {
                   console.log("FROM PROFILE");
                   console.log("DATA!!!", data);
-                  const updatedItem = data?.payload?.find(
-                    (profileItem) => profileItem?.id === item?.id
-                  );
+                  const updatedItem = data?.payload
 
                   console.log('ITEM', updatedItem);
         
