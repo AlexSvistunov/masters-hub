@@ -8,12 +8,16 @@ import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
 
 const CatalogPage = () => {
-  const [catalog, setCatalog] = useState([]);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
+
   const [categories, setCategories] = useState([]);
   const [chosenCategories, setChosenCategories] = useState([]);
-  const [catalogList, setCatalogList] = useState([]);
   const [chosenSpec, setChosenSpec] = useState("all");
+
+  
+  const [catalog, setCatalog] = useState([]);
+  const [catalogList, setCatalogList] = useState([]);
 
   console.log(chosenCategories);
 
@@ -26,11 +30,13 @@ const CatalogPage = () => {
   const { currentToken } = useAuth();
 
   const showMoreCatalog = async () => {
-    catalogFilter(searchQuery,catalog.next);
+    catalogFilter(searchQuery, catalog.next);
   };
 
-
-  const catalogFilter = async (item = searchQuery, url = `${URL}/api/catalog/`) => {
+  const catalogFilter = async (
+    item = searchQuery,
+    url = `${URL}/api/catalog/`
+  ) => {
     console.log(searchQuery);
     console.log(item);
 
@@ -38,17 +44,19 @@ const CatalogPage = () => {
 
     if (item.specialization !== "all") {
       queryString = `?specialization=${item.specialization}`;
-      const categoriesString = item.categories.map((el) => `&categories=${el}`)?.join("");
+      const categoriesString = item.categories
+        .map((el) => `&categories=${el}`)
+        ?.join("");
       if (categoriesString) {
         queryString += categoriesString;
       }
     } else {
       const categoriesString = item.categories
         .map((el, index) => {
-          if(index === 0) {
-            return `?categories=${el}`
+          if (index === 0) {
+            return `?categories=${el}`;
           } else {
-            return `&categories=${el}`
+            return `&categories=${el}`;
           }
         })
         .join("");
@@ -59,12 +67,12 @@ const CatalogPage = () => {
 
     try {
       const headers = {};
-      if(currentToken) {
-        headers.Authorization = `Token ${currentToken}`
+      if (currentToken) {
+        headers.Authorization = `Token ${currentToken}`;
       }
       const response = await fetch(`${url}${queryString}`, {
         method: "GET",
-        headers
+        headers,
       });
       const data = await response.json();
       console.log(data);
@@ -74,6 +82,8 @@ const CatalogPage = () => {
       return data;
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -81,12 +91,11 @@ const CatalogPage = () => {
     setChosenSpec(e.target.value);
     const item = {
       ...searchQuery,
-      specialization: e.target.value
-    }
+      specialization: e.target.value,
+    };
     setSearchQuery(item);
 
     catalogFilter(item);
-
   };
 
   const onChangeCategoriesHandler = (id) => {
@@ -109,7 +118,7 @@ const CatalogPage = () => {
 
   useEffect(() => {
     // fetchCatalog();
-    catalogFilter()
+    catalogFilter();
   }, []);
 
   const getCategories = async () => {
@@ -131,7 +140,7 @@ const CatalogPage = () => {
   // };
 
   useEffect(() => {
-    if(isCategoryModalOpen) {
+    if (isCategoryModalOpen) {
       getCategories();
     }
   }, [isCategoryModalOpen]);
@@ -153,6 +162,59 @@ const CatalogPage = () => {
             <div className="col-span-12 laptop:col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
               <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
+
+                {isLoading &&  <>
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
+                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                        <div className="flex items-center gap-5 mb-5 w-full">
+                          <div className="skeleton h-16 w-16"></div>
+                          <div className="flex flex-col gap-1">
+                            <div className="skeleton w-40 h-5"></div>
+                            <div className="skeleton w-40 h-5"></div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full mt-auto">
+                          <div className="skeleton w-20 h-10"></div>
+                          <div className="skeleton w-20 h-10"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
+                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                        <div className="flex items-center gap-5 mb-5 w-full">
+                          <div className="skeleton h-16 w-16"></div>
+                          <div className="flex flex-col gap-1">
+                            <div className="skeleton w-40 h-5"></div>
+                            <div className="skeleton w-40 h-5"></div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full mt-auto">
+                          <div className="skeleton w-20 h-10"></div>
+                          <div className="skeleton w-20 h-10"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
+                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                        <div className="flex items-center gap-5 mb-5 w-full">
+                          <div className="skeleton h-16 w-16"></div>
+                          <div className="flex flex-col gap-1">
+                            <div className="skeleton w-40 h-5"></div>
+                            <div className="skeleton w-40 h-5"></div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full mt-auto">
+                          <div className="skeleton w-20 h-10"></div>
+                          <div className="skeleton w-20 h-10"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </>}
                 {catalogList?.length ? (
                   catalogList?.map((catalogItem) => (
                     <CatalogCard
@@ -163,58 +225,7 @@ const CatalogPage = () => {
                     />
                   ))
                 ) : (
-                  <>
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
-                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
-                        <div className="flex items-center gap-5 mb-5 w-full">
-                          <div className="skeleton h-16 w-16"></div>
-                          <div className="flex flex-col gap-1">
-                            <div className="skeleton w-40 h-5"></div>
-                            <div className="skeleton w-40 h-5"></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <div className="skeleton w-20 h-10"></div>
-                          <div className="skeleton w-20 h-10"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
-                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
-                        <div className="flex items-center gap-5 mb-5 w-full">
-                          <div className="skeleton h-16 w-16"></div>
-                          <div className="flex flex-col gap-1">
-                            <div className="skeleton w-40 h-5"></div>
-                            <div className="skeleton w-40 h-5"></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <div className="skeleton w-20 h-10"></div>
-                          <div className="skeleton w-20 h-10"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
-                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
-                        <div className="flex items-center gap-5 mb-5 w-full">
-                          <div className="skeleton h-16 w-16"></div>
-                          <div className="flex flex-col gap-1">
-                            <div className="skeleton w-40 h-5"></div>
-                            <div className="skeleton w-40 h-5"></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <div className="skeleton w-20 h-10"></div>
-                          <div className="skeleton w-20 h-10"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
+                 <div>No items</div>
                 )}
               </div>
 
