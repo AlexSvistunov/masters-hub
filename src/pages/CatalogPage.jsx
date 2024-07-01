@@ -35,6 +35,7 @@ const CatalogPage = () => {
   });
 
   console.log(catalog);
+  console.log(catalogList);
   const { currentToken } = useAuth();
 
   // const showMoreCatalog = async () => {
@@ -56,11 +57,14 @@ const CatalogPage = () => {
           headers,
         });
         const data = await response.json();
+        console.log(data);
         setCatalog({
           ...data,
-          results: [...catalogList, ...data.results],
+          results: data.results,
         });
-        setCatalogList([...catalogList, ...data.results]);
+        setCatalogList(data.results)
+        // setCatalogList([...catalogList, ...data.results]);
+        
       } catch (error) {
         console.log(error.message);
       }
