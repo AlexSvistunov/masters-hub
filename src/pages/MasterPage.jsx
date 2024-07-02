@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { URL } from "../utils/backend-url";
 import { useEffect, useState } from "react";
@@ -13,10 +13,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Raiting from "../components/Raiting";
+import Services from "../components/Services";
 
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
-  const [moreReviews, setMoreReviews] = useState(null)
+  const [moreReviews, setMoreReviews] = useState(null);
+
+  console.log(masterData);
 
   const { currentToken } = useAuth();
 
@@ -53,8 +56,8 @@ const MasterPage = () => {
     });
     const data = await response.json();
     console.log(data);
-    setMoreReviews(data)
-  }
+    setMoreReviews(data);
+  };
 
   useEffect(() => {
     fetchMasterProfile();
@@ -84,44 +87,11 @@ const MasterPage = () => {
               </pre>
             </div>
 
-            <div className="bg-base-200 p-5 rounded-2xl min-h-64 flex flex-col mb-5">
-              <div className="flex gap-2 items-center">
-                <h3 className="text-3xl">Услуги</h3>
-                <span className="text-2xl text-primary">
-                  {masterData?.services?.length}
-                </span>
-              </div>
+            {/* услуги */}
+    
+            <Services masterData={masterData}/>
 
-              <div className="flex flex-col gap-4">
-                {masterData?.services?.map((service) => (
-                  <div className="flex my-5 flex-col tablet:flex-row" key={service.title}>
-                    <div className="flex items-center">
-                    <img
-                      className="block mr-4 rounded-md h-12 w-12"
-                      src={`/backend/masterhub${service.photo}`}
-                    ></img>
-
-                    <div className="flex flex-col">
-                      <span className="text-2xl">{service.title}</span>
-                      <span className="text-gray-500 text-xl">{service.description}</span>
-                    </div>
-                    </div>
-
-                    <div className="mt-3 tablet:mt-0 tablet:ml-auto flex  gap-10 items-center">
-                      <div className="text-gray-500">{service.price} RUB</div>
-                      <span className="text-gray-500">{service.time}</span>
-
-                      <div className="ml-auto tablet:ml-0 btn btn-primary">Записаться</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex justify-center mt-auto">
-                <button className="btn btn-ghost">Посмотреть все</button>
-              </div>
-            </div>
-
+            {/*  примеры работ*/}
             <div className="bg-base-200 p-5 rounded-2xl mb-5">
               <div className="flex gap-2 items-center mb-5">
                 <h3 className="text-3xl">Примеры работ</h3>
@@ -158,7 +128,8 @@ const MasterPage = () => {
 
                 <div className="flex flex-wrap tablet:flex-nowrap items-center gap-4 my-4">
                   {masterData?.specialists?.map((specialist) => (
-                    <div
+                    <Link
+                      to={`/profile/${id}/specialist/${specialist.id}`}
                       className="flex flex-col items-center border border-gray-700 rounded-lg p-3 min-h-20 min-w-40"
                       key={specialist.id}
                     >
@@ -180,7 +151,7 @@ const MasterPage = () => {
                       <span className=" text-gray-500 text-base">
                         {specialist.job}
                       </span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -189,10 +160,12 @@ const MasterPage = () => {
             <div className="bg-base-200 p-5 rounded-2xl mb-5 min-h-40">
               <div className="flex justify-between">
                 <div className="flex items-center gap-2">
-                <h3 className="text-3xl mb-2">Отзывы</h3>
-                <span className="text-2xl text-primary">{masterData?.reviews?.count}</span>
+                  <h3 className="text-3xl mb-2">Отзывы</h3>
+                  <span className="text-2xl text-primary">
+                    {masterData?.reviews?.count}
+                  </span>
                 </div>
-              
+
                 <button className="btn btn-ghost">Оставить отзыв</button>
               </div>
 
@@ -364,7 +337,9 @@ const MasterPage = () => {
               </div>
               <div className="flex justify-center">
                 {masterData?.reviews?.count > 0 ? (
-                  <button className="btn btn-ghost" onClick={showMoreReviews}>Показать еще</button>
+                  <button className="btn btn-ghost" onClick={showMoreReviews}>
+                    Показать еще
+                  </button>
                 ) : null}
               </div>
             </div>
