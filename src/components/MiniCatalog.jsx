@@ -9,7 +9,6 @@ const MiniCatalog = () => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
 
-
   const getCatalogItem = async () => {
     try {
       const headers = {};
@@ -21,7 +20,7 @@ const MiniCatalog = () => {
        headers
       });
       const data = await reponse.json();
-      console.log(data);
+  
       setCatalogItems(data.results);
       return data;
     } catch (error) {

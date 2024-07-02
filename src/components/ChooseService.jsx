@@ -15,22 +15,6 @@ const ChooseService = (props) => {
   const { currentToken } = useAuth();
   const id = useSelector((state) => state.enrollModal.modalId);
 
-  const recordingTest = async (masterId) => {
-    console.log(masterId);
-    try {
-      const response = await fetch(`${URL}/api/recording/${id}/${masterId}/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-      const data = await response.json();
-      console.log("RECODRING TEST", data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   const onSearchHandler = (e) => {
     setInputValue(e.target.value);
 
@@ -64,9 +48,7 @@ const ChooseService = (props) => {
   // }
 
   useEffect(() => {
-    setTimeout(() => {
-      props.getEnrollServices();
-    }, 500);
+    props.getEnrollServices();
   }, []);
 
   // if(!enrollServices.length) {
@@ -146,7 +128,6 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-   
             {searchedServices.length
               ? searchedServices.map((searchedService, index) => (
                   <ServiceItem
@@ -154,7 +135,7 @@ const ChooseService = (props) => {
                     key={index}
                     step={props.step}
                     setStep={props.setStep}
-                    recordingTest={recordingTest}
+                    recordingTest={props.recordingSlots}
                   />
                 ))
               : props.enrollServices.map((enrollService, index) => (
@@ -173,7 +154,7 @@ const ChooseService = (props) => {
                                   key={innerInnerIndex}
                                   step={props.step}
                                   setStep={props.setStep}
-                                  recordingTest={recordingTest}
+                                  recordingTest={props.recordingSlots}
                                 />
                               )
                             )}

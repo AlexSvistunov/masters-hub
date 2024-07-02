@@ -14,6 +14,12 @@ const EnrollModal = () => {
 
   const [enrollServices, setEnrollServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(isLoading);
+  
+  const [time, setTime] = useState(null)
+  console.log('time', time)
+
+  console.log('ID', id);
 
   console.log(enrollServices);
 
@@ -31,25 +37,24 @@ const EnrollModal = () => {
     setStep((prev) => prev + 1);
   };
 
-  useEffect(() => {
-    
-  }, [])
 
-  const fetchRecording = async () => {
+  const recordingSlots = async (masterId) => {
+    console.log(id)
+    console.log(masterId);
     try {
-      const response = await fetch(`${URL}/api/recording/${id}/`, {
+      const response = await fetch(`${URL}/api/recording/${id}/${masterId}/`, {
         method: "GET",
         headers: {
           Authorization: `Token ${currentToken}`,
         },
       });
       const data = await response.json();
-      console.log(data);
+      setTime(data.time)
+      console.log("RECODRING TEST", data);
     } catch (error) {
       console.log(error.message);
     }
   };
-
   const getEnrollServices = async () => {
     try {
       const response = await fetch(`${URL}/api/recording/${id}/`, {
@@ -117,6 +122,7 @@ const EnrollModal = () => {
                 getEnrollServices={getEnrollServices}
                 enrollServices={enrollServices}
                 isLoading={isLoading}
+                recordingSlots={recordingSlots}
 
               />
             </>
@@ -124,7 +130,7 @@ const EnrollModal = () => {
 
           {step === 2 && (
             <>
-              <DateTime setStep={setStep} step={step}/>
+              <DateTime setStep={setStep} step={step} time={time} setTime={setTime}/>
 
             </>
           )}

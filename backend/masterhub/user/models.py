@@ -24,7 +24,7 @@ def upload_photo_user(instance, filename):
 
 
 def upload_photo_specialist(instance, filename):
-    return f'{settings.BASE_DIR}/static/media/specialist/{instance.username}/{filename}'
+    return f'{settings.BASE_DIR}/static/media/specialist/{instance.name}/{filename}'
 
 
 class Categories(models.Model):
