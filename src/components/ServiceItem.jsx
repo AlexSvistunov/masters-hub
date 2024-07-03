@@ -1,4 +1,6 @@
-const ServiceItem = ({ enService, step, setStep, recordingTest }) => {
+const ServiceItem = ({ enService, step, setStep, recordingSlots }) => {
+
+  console.log(enService);
 
   return (
     <div className="item rounded-lg bg-base-300 p-3">
@@ -22,7 +24,7 @@ const ServiceItem = ({ enService, step, setStep, recordingTest }) => {
             className="btn btn-primary text-base"
             onClick={() => {
               setStep(step + 1);
-              recordingTest(enService?.id);
+              recordingSlots(enService?.id);
             }}
           >
             Выбрать

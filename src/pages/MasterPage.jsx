@@ -16,9 +16,18 @@ import Raiting from "../components/Raiting";
 import Services from "../components/Services";
 import WorksExample from "../components/WorksExample";
 
+import { useDispatch } from "react-redux";
+
+
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
+  const [stepProps, setStepProps] = useState(null)
+  const [time, setTime] = useState(null);
+
+  console.log(stepProps);
+
+  const dispatch = useDispatch()
 
   console.log(masterData);
 
@@ -67,7 +76,7 @@ const MasterPage = () => {
   return (
     <>
       <Header />
-      <EnrollModal />
+      <EnrollModal time={time} setTime={setTime} />
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
@@ -88,7 +97,7 @@ const MasterPage = () => {
               </pre>
             </div>
 
-            <Services masterData={masterData} />
+            <Services masterData={masterData} setStepProps={setStepProps} time={time} setTime={setTime} />
 
             <WorksExample masterData={masterData} />
 

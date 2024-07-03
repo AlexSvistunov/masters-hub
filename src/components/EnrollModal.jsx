@@ -6,22 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
-const EnrollModal = () => {
-  const dispatch = useDispatch()
+const EnrollModal = ({time, setTime}) => {
+  const dispatch = useDispatch();
 
-  const isModalOpen = useSelector(state => state.enrollModal.isModalOpen)
-  const id = useSelector(state => state.enrollModal.modalId)
+  const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
+  const id = useSelector((state) => state.enrollModal.modalId);
 
   const [enrollServices, setEnrollServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(isLoading);
-  
-  const [time, setTime] = useState(null)
-  console.log('time', time)
 
-  console.log('ID', id);
 
-  console.log(enrollServices);
 
   const { currentToken } = useAuth();
   const array = [
@@ -37,9 +31,8 @@ const EnrollModal = () => {
     setStep((prev) => prev + 1);
   };
 
-
   const recordingSlots = async (masterId) => {
-    console.log(id)
+    console.log(id);
     console.log(masterId);
     try {
       const response = await fetch(`${URL}/api/recording/${id}/${masterId}/`, {
@@ -49,7 +42,7 @@ const EnrollModal = () => {
         },
       });
       const data = await response.json();
-      setTime(data.time)
+      setTime(data.time);
       console.log("RECODRING TEST", data);
     } catch (error) {
       console.log(error.message);
@@ -83,8 +76,7 @@ const EnrollModal = () => {
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => {
-                    dispatch(closeModal())
-
+                    dispatch(closeModal());
                   }}
                 >
                   <svg
@@ -123,15 +115,19 @@ const EnrollModal = () => {
                 enrollServices={enrollServices}
                 isLoading={isLoading}
                 recordingSlots={recordingSlots}
-
+              
               />
             </>
           )}
 
           {step === 2 && (
             <>
-              <DateTime setStep={setStep} step={step} time={time} setTime={setTime}/>
-
+              <DateTime
+                setStep={setStep}
+                step={step}
+                time={time}
+                setTime={setTime}
+              />
             </>
           )}
         </div>

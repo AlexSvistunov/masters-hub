@@ -135,7 +135,7 @@ const ChooseService = (props) => {
                     key={index}
                     step={props.step}
                     setStep={props.setStep}
-                    recordingTest={props.recordingSlots}
+                    recordingSlots={props.recordingSlots}
                   />
                 ))
               : props.enrollServices.map((enrollService, index) => (
@@ -154,7 +154,7 @@ const ChooseService = (props) => {
                                   key={innerInnerIndex}
                                   step={props.step}
                                   setStep={props.setStep}
-                                  recordingTest={props.recordingSlots}
+                                  recordingSlots={props.recordingSlots}
                                 />
                               )
                             )}
