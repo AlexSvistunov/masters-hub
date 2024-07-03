@@ -18,16 +18,16 @@ import WorksExample from "../components/WorksExample";
 
 import { useDispatch } from "react-redux";
 
-
 const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
-  const [stepProps, setStepProps] = useState(null)
+  const [stepProps, setStepProps] = useState(null);
   const [time, setTime] = useState(null);
+  const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false)
 
   console.log(stepProps);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   console.log(masterData);
 
@@ -69,6 +69,26 @@ const MasterPage = () => {
     setMoreReviews(data);
   };
 
+  const sendReview = async () => {
+    const obj = {
+      raiting_star: 5,
+      user: '123123123',
+      description: '343434'
+    }
+
+    const response = await fetch(`${URL}/api/feedback/${id}/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Token ${currentToken}`,
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(obj)
+    });
+    const data = await response.json();
+    console.log(data);
+
+  }
   useEffect(() => {
     fetchMasterProfile();
   }, []);
@@ -97,7 +117,12 @@ const MasterPage = () => {
               </pre>
             </div>
 
-            <Services masterData={masterData} setStepProps={setStepProps} time={time} setTime={setTime} />
+            <Services
+              masterData={masterData}
+              setStepProps={setStepProps}
+              time={time}
+              setTime={setTime}
+            />
 
             <WorksExample masterData={masterData} />
 
@@ -137,15 +162,58 @@ const MasterPage = () => {
             ) : null}
 
             <div className="bg-base-200 p-5 rounded-2xl mb-5 min-h-40">
-              <div className="flex justify-between">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-5 tablet:flex-row">
+                <div className="flex items-center gap-2 w-full max-w-60">
                   <h3 className="text-3xl mb-2">Отзывы</h3>
                   <span className="text-2xl text-primary">
                     {masterData?.reviews?.count}
                   </span>
                 </div>
 
-                <button className="btn btn-ghost">Оставить отзыв</button>
+                <div className="flex flex-col items-start max-w-150 w-full">
+                  <button className="btn btn-ghost self-end" onClick={() => setIsLeavingCommentOpen(prev => !prev)}>Оставить отзыв</button>
+                  <div className={isLeavingCommentOpen ? "flex items-center gap-4 w-full my-4" : "hidden items-center gap-4 w-full my-4"}>
+                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500">
+                      <svg
+                        className="absolute w-12 h-12 text-gray-400 -left-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                      {/* <textarea className="textarea resize-none"></textarea>
+
+                      <button className="btn">Отправить</button> */}
+                    </div>
+
+                    <div className="p-4 bg-base-300 rounded-lg flex items-center gap-2 flex-auto">
+                      <textarea
+                        className="bg-base-200 rounded-lg py-2 px-4 flex-auto text-lg"
+                        placeholder="Your review..."
+                      ></textarea>
+
+                      <button className="inline-flex justify-center p-2 text-primary rounded-full cursor-pointer" onClick={sendReview}>
+                        <svg
+                          className="w-6 h-6 rotate-90 rtl:-rotate-90"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 18 20"
+                        >
+                          <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col gap-5 tablet:flex-row">
@@ -234,11 +302,21 @@ const MasterPage = () => {
                     <article className="w-full mb-5" key={review.id}>
                       <div className="flex justify-between items-start tablet:items-center flex-col tablet:flex-row">
                         <div className="flex items-center mb-4">
-                          <img
-                            className="w-10 h-10 me-4 rounded-full"
-                            src="/user-icon.svg"
-                            alt=""
-                          ></img>
+                        <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500 me-4">
+                      <svg
+                        className="absolute w-12 h-12 text-gray-400 -left-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                          
                           <div className="font-medium dark:text-white">
                             <p>
                               {review.user_name}
@@ -303,7 +381,7 @@ const MasterPage = () => {
                         </div>
                       </div>
 
-                      <p className="mb-2 text-gray-500 dark:text-gray-400">
+                      <p className="mb-2 text-gray-500 dark:text-gray-400 text-lg">
                         {review.description}
                       </p>
 

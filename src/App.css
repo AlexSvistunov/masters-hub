@@ -15,3 +15,18 @@
 .swiper .swiper-pagination-bullet-active {
     @apply bg-primary
 }
+/* 
+textarea {
+    outline: 1px solid transparent;
+    border: 1px solid transparent;
+}
+
+textarea:focus {
+    outline: 1px solid white;
+    border: 1px solid red;
+}
+
+textarea:active {
+    outline: 1px solid white;
+    border: 1px solid red;
+} */
