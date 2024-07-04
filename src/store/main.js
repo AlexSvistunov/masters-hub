@@ -13,3 +13,17 @@ export const store = configureStore({
   },
 });
 
+
+const catalog = [
+  {id: 1, title: 'брови'},
+  {id: 2, title: 'ресницы'},
+  {id: 3, title: 'ногти'},
+]
+
+const chosen = [2, 3]
+
+const result = chosen.map(chosenElement => {
+  return catalog.find(catalogEl => catalogEl.id === chosenElement)['title']
+})
+
+console.log(result);

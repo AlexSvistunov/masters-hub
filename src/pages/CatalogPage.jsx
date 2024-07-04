@@ -7,14 +7,15 @@ import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
 import { useLocation } from "react-router-dom";
+import { logIn } from "../store/slices/userSlice";
 
 const CatalogPage = () => {
-  const {state} = useLocation()
-  let id
-  if(state) {
-    id = state.id
+  const { state } = useLocation();
+  let id;
+  if (state) {
+    id = state.id;
   }
-  
+
   console.log(state);
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -27,11 +28,13 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
 
+  console.log(categories);
+
   console.log(chosenCategories);
 
   const [searchQuery, setSearchQuery] = useState({
     specialization: "all",
-    categories: state ? [id] : []
+    categories: state ? [id] : [],
   });
 
   console.log(catalog);
@@ -62,15 +65,13 @@ const CatalogPage = () => {
           ...data,
           results: data.results,
         });
-        setCatalogList(data.results)
+        setCatalogList(data.results);
         // setCatalogList([...catalogList, ...data.results]);
-        
       } catch (error) {
         console.log(error.message);
       }
     }
   };
-  
 
   const catalogFilter = async (
     item = searchQuery,
@@ -179,9 +180,11 @@ const CatalogPage = () => {
   // };
 
   useEffect(() => {
-    if (isCategoryModalOpen) {
-      getCategories();
-    }
+    // if (isCategoryModalOpen) {
+    //   getCategories();
+    // }
+
+    getCategories();
   }, [isCategoryModalOpen]);
 
   // useEffect(() => {
@@ -264,14 +267,19 @@ const CatalogPage = () => {
                     />
                   ))
                 ) : (
-                  <h2 className="text-center col-span-12 text-4xl py-10">Нет подходящего каталога по Вашему запросу! Попробуйте изменить фильтры</h2>
+                  <h2 className="text-center col-span-12 text-4xl py-10">
+                    Нет подходящего каталога по Вашему запросу! Попробуйте
+                    изменить фильтры
+                  </h2>
                 )}
               </div>
 
               <div className="flex justify-center p-5">
-                {catalogList?.length ? <button onClick={showMoreCatalog} className="btn my-5">
-                  Показать еще
-                </button> : null}
+                {catalogList?.length ? (
+                  <button onClick={showMoreCatalog} className="btn my-5">
+                    Показать еще
+                  </button>
+                ) : null}
               </div>
             </div>
 
@@ -294,6 +302,28 @@ const CatalogPage = () => {
 
               <div className="py-5">
                 <h3>Категория</h3>
+
+                {/* {categories?.filter((category, index) => category.id === chosenCategories[index]).map(el => (
+                  <div>{el}</div>
+                ))} */}
+
+                {/* {chosenCategories.map((chosenCategory) => (
+                  {categories.filter(el => el.id === chosenCategory)}
+                ))} */}
+
+                {/* {chosenCategories.map((chosenCategory) => categories.filter(el => el.id === chosenCategory).map(resultEl => <div>{resultEl}</div>))} */}
+
+                {/* {chosenCategories?.map(chosenCategory => 
+                 { 
+                  const element = catalog.find(catalogElement => catalogElement.id === chosenCategory)['title']
+                  return (
+                    <div>{element}</div>
+                  )
+
+                 }
+                 
+                )} */}
+                 {/* <div>{catalog?.find(catalogElement => catalogElement?.id === chosenCategory)['title']}</div> */}
 
                 <button
                   className="btn btn-primary my-2"
@@ -366,7 +396,7 @@ const CatalogPage = () => {
                     onChange={() => {
                       onChangeCategoriesHandler(category.id);
                     }}
-                    checked={chosenCategories.some(el => el === category.id)}
+                    checked={chosenCategories.some((el) => el === category.id)}
                   ></input>
                   <span className="text-2xl">{category.title}</span>
                 </label>
