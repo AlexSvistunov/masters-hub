@@ -10,6 +10,7 @@ import BusinessPage from "../pages/BusinessPage"
 import BusinessProfilePage from "../pages/BusinessProfilePage"
 import TestPage from "../pages/TestPage"
 import SpecialistPage from "../pages/SpecialistPage"
+import CreateProfile from "../pages/CreateProfile"
 
 
 const AppRoutes = () => {
@@ -27,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/business" element={<BusinessPage/>}></Route>
         <Route path="/business/profile" element={<BusinessProfilePage/>}></Route>
         <Route path="/business/projects" element={<BusinessProfilePage/>}></Route>
+        <Route path="/business/profile/creation" element={<CreateProfile/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
       </Routes>
     </div>
