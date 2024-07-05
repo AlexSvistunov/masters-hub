@@ -274,7 +274,7 @@ const CatalogPage = () => {
               </div>
 
               <div className="flex justify-center p-5">
-                {catalogList?.length ? (
+                {catalog?.next ? (
                   <button onClick={showMoreCatalog} className="btn my-5">
                     Показать еще
                   </button>
