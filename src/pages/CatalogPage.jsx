@@ -26,8 +26,10 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
 
-  console.log("CATEGORIES", categories);
-  console.log("CHOSENCATEGOTIES", chosenCategories);
+  console.log(catalog);
+  console.log(catalogList)
+
+
 
   // const myCategory = chosenCategories.forEach((el) => {
   //   const my2 = categories.find((category) => category.id === el);
@@ -300,10 +302,8 @@ const CatalogPage = () => {
               <div className="py-5">
                 <h3>Категория</h3>
 
-              
-               <div className="flex flex-wrap gap-2 my-3">
-               {chosenCategories?.length
-                  ? chosenCategories.map((chosenCategory) => {
+              {chosenCategories?.length ?  <div className="flex flex-wrap gap-2 my-3">
+               {chosenCategories?.map((chosenCategory) => {
                       const category = categories.find(
                         (category) => category.id === chosenCategory
                       );
@@ -311,8 +311,9 @@ const CatalogPage = () => {
                         <div key={category.id} className="p-2 bg-base-300 rounded-md max-w-fit font-medium">{category.title}</div>
                       ) : null;
                     })
-                  : null}
-               </div>
+                  }
+               </div> : null}
+              
 
                 <button
                   className="btn btn-primary my-2"
