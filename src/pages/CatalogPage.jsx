@@ -16,8 +16,6 @@ const CatalogPage = () => {
     id = state.id;
   }
 
-  console.log(state);
-
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,17 +26,19 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
 
-  console.log(categories);
+  console.log("CATEGORIES", categories);
+  console.log("CHOSENCATEGOTIES", chosenCategories);
 
-  console.log(chosenCategories);
+  // const myCategory = chosenCategories.forEach((el) => {
+  //   const my2 = categories.find((category) => category.id === el);
+  //   console.log("ITEM", my2["title"]);
+  // });
 
   const [searchQuery, setSearchQuery] = useState({
     specialization: "all",
     categories: state ? [id] : [],
   });
 
-  console.log(catalog);
-  console.log(catalogList);
   const { currentToken } = useAuth();
 
   // const showMoreCatalog = async () => {
@@ -60,7 +60,7 @@ const CatalogPage = () => {
           headers,
         });
         const data = await response.json();
-        console.log(data);
+
         setCatalog({
           ...data,
           results: data.results,
@@ -77,9 +77,6 @@ const CatalogPage = () => {
     item = searchQuery,
     url = `${URL}/api/catalog/`
   ) => {
-    console.log(searchQuery);
-    console.log(item);
-
     let queryString = "";
 
     if (item.specialization !== "all") {
@@ -115,7 +112,7 @@ const CatalogPage = () => {
         headers,
       });
       const data = await response.json();
-      console.log(data);
+
       setCatalog(data);
       setCatalogList(data?.results);
 
@@ -303,27 +300,19 @@ const CatalogPage = () => {
               <div className="py-5">
                 <h3>Категория</h3>
 
-                {/* {categories?.filter((category, index) => category.id === chosenCategories[index]).map(el => (
-                  <div>{el}</div>
-                ))} */}
-
-                {/* {chosenCategories.map((chosenCategory) => (
-                  {categories.filter(el => el.id === chosenCategory)}
-                ))} */}
-
-                {/* {chosenCategories.map((chosenCategory) => categories.filter(el => el.id === chosenCategory).map(resultEl => <div>{resultEl}</div>))} */}
-
-                {/* {chosenCategories?.map(chosenCategory => 
-                 { 
-                  const element = catalog.find(catalogElement => catalogElement.id === chosenCategory)['title']
-                  return (
-                    <div>{element}</div>
-                  )
-
-                 }
-                 
-                )} */}
-                 {/* <div>{catalog?.find(catalogElement => catalogElement?.id === chosenCategory)['title']}</div> */}
+              
+               <div className="flex flex-wrap gap-2 my-3">
+               {chosenCategories?.length
+                  ? chosenCategories.map((chosenCategory) => {
+                      const category = categories.find(
+                        (category) => category.id === chosenCategory
+                      );
+                      return category ? (
+                        <div key={category.id} className="p-2 bg-base-300 rounded-md max-w-fit font-medium">{category.title}</div>
+                      ) : null;
+                    })
+                  : null}
+               </div>
 
                 <button
                   className="btn btn-primary my-2"

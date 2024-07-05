@@ -10,12 +10,14 @@ from .serializers import ServicesRecordingSerializer, WorkTimeSerializer, Record
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
 from datetime import timedelta
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status, permissions
 
 
 # Create your views here.
 
 class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModelMixin, ListModelMixin):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ServicesRecordingSerializer
 
     def get_queryset(self):
@@ -73,16 +75,21 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
 
     @action(methods=['get'], detail=True, url_path='(?P<id_services>[^/.]+)')
     def recording(self, request, *args, **kwargs):
-        '''если профиль мастера то передать параметром specialization'''
         pk_service = kwargs.get('id_services')
         pk_profile = kwargs.get('pk')
         service = Service.objects.get(id=pk_service)
         param = service.profile.specialization
         if param == 'master':
-            profile_work_time = WorkTime.objects.get(profile__pk=pk_profile)
+            try:
+                profile_work_time = WorkTime.objects.get(profile__pk=pk_profile)
+            except ObjectDoesNotExist:
+                return Response({'detail': 'no masters work'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            profile_work_time = WorkTime.objects.get(specialist__pk=service.specialist.pk)
-        # services_time
+            try:
+                profile_work_time = WorkTime.objects.get(specialist__pk=service.specialist.pk)
+            except ObjectDoesNotExist:
+                return Response({'detail': 'no masters work'}, status=status.HTTP_400_BAD_REQUEST)
+            # services_time
 
         serializer = WorkTimeSerializer(profile_work_time,
                                         context={
