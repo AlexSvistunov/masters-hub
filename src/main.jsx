@@ -40,3 +40,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // сбрасывается)
 // выбранные категории
 
+// no show more if there's no more items
+// time doesn't change, error
+

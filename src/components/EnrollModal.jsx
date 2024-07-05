@@ -45,6 +45,7 @@ const EnrollModal = ({time, setTime}) => {
       setTime(data.time);
       console.log("RECODRING TEST", data);
     } catch (error) {
+      setTime(null)
       console.log(error.message);
     }
   };
