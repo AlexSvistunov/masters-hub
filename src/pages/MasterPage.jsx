@@ -19,21 +19,15 @@ import WorksExample from "../components/WorksExample";
 import { useDispatch } from "react-redux";
 
 const MasterPage = () => {
+
+  const dispatch = useDispatch();
+  const { currentToken } = useAuth();
+
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
   const [stepProps, setStepProps] = useState(null);
   const [time, setTime] = useState(null);
   const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false)
-
-  console.log(stepProps);
-
-  const dispatch = useDispatch();
-
-  console.log(masterData);
-
-  const { currentToken } = useAuth();
-
-  console.log(masterData);
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);

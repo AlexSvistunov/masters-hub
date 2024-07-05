@@ -1,6 +1,4 @@
 const DateTime = ({ setStep, step, time, setTime }) => {
-
-  console.log('time', time)
   return (
 
     <div>

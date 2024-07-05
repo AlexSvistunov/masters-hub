@@ -39,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // не туда (запрос вроде туда уходит, а вот отображение не 
 // сбрасывается)
 // выбранные категории
+// модалки закрываются 
 
 // no show more if there's no more items
 // time doesn't change, error

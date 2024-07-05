@@ -20,7 +20,7 @@ const Services = ({ masterData, setStepProps, time, setTime }) => {
         },
       });
       const data = await response.json();
-      // setTime(data.time);
+      setTime(data.time);
       console.log("RECODRING TEST", data);
     } catch (error) {
       console.log(error.message);

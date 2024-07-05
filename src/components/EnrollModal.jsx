@@ -8,16 +8,14 @@ import DateTime from "./DateTime";
 
 const EnrollModal = ({time, setTime}) => {
   const dispatch = useDispatch();
+  const { currentToken } = useAuth();
+  
+  const [enrollServices, setEnrollServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
   const id = useSelector((state) => state.enrollModal.modalId);
 
-  const [enrollServices, setEnrollServices] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-
-
-  const { currentToken } = useAuth();
   const array = [
     "Новая запись",
     "Выбор услуг",

@@ -30,7 +30,6 @@ const CatalogPage = () => {
   console.log(catalogList)
 
 
-
   // const myCategory = chosenCategories.forEach((el) => {
   //   const my2 = categories.find((category) => category.id === el);
   //   console.log("ITEM", my2["title"]);
