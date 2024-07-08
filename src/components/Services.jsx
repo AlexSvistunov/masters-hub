@@ -45,7 +45,7 @@ const Services = ({ masterData, setStepProps, time, setTime }) => {
             <div className="flex items-center">
               <img
                 className="block mr-4 rounded-md h-12 w-12"
-                src={`/backend/masterhub${service.photo}`}
+                src={`/backend/masterhub/${service.photo}`}
               ></img>
 
               <div className="flex flex-col">
