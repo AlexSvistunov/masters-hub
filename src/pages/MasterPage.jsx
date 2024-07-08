@@ -22,8 +22,7 @@ const MasterPage = () => {
 
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
-  const {isAuth} = useAuth()
-  console.log(isAuth)
+  const {token} = useAuth()
 
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
@@ -169,7 +168,7 @@ const MasterPage = () => {
                 </div>
 
                 <div className="flex flex-col items-start max-w-150 w-full">
-                  {isAuth && <button className="btn btn-ghost self-end" onClick={() => setIsLeavingCommentOpen(prev => !prev)}>Оставить отзыв</button>}
+                  {token && <button className="btn btn-ghost self-end" onClick={() => setIsLeavingCommentOpen(prev => !prev)}>Оставить отзыв</button>}
                   <div className={isLeavingCommentOpen ? "flex items-center gap-4 w-full my-4" : "hidden items-center gap-4 w-full my-4"}>
                     <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500">
                       <svg

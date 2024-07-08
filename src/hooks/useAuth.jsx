@@ -5,6 +5,7 @@ const useAuth = () => {
 
 
   return {
+    
     token: !!isToken,
     currentToken: isToken
   };
