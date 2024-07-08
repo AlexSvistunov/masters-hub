@@ -65,7 +65,7 @@ export const logOut = createAsyncThunk("user/logOut", async ({ token }) => {
 });
 
 const initialState = {
-  token: localStorage.getItem("token")?.length
+  token: localStorage.getItem("token")?.length && localStorage.getItem('token') !== 'undefined'
     ? localStorage.getItem("token")
     : null,
 };

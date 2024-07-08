@@ -40,11 +40,13 @@ const MasterPage = () => {
   const { id } = useParams();
 
   const fetchMasterProfile = async () => {
+    const headers = {};
+    if (currentToken) {
+      headers.Authorization = `Token ${currentToken}`;
+    }
     const response = await fetch(`${URL}/api/users/${id}/`, {
       method: "GET",
-      headers: {
-        Authorization: `Token ${currentToken}`,
-      },
+      headers,
     });
     const data = await response.json();
     console.log(data);
