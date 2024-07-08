@@ -44,3 +44,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // no show more if there's no more items
 // time doesn't change, error
 
+// дописать сначала плохой код
+// посмотреть как хорошо бы делать
+// подумать посидеть =)
+// изменять код, править
