@@ -4,28 +4,14 @@ import { useDispatch } from "react-redux";
 import EnrollModal from "./EnrollModal";
 import useAuth from "../hooks/useAuth";
 
-const Services = ({ masterData, setStepProps, time, setTime }) => {
+import {URL} from '../utils/backend-url.js'
+
+
+const Services = ({ masterData, setStepProps, time, setTime, recordingSlots }) => {
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
   console.log(masterData)
 
-
-  const recordingSlots = async (masterId) => {
-    console.log(masterId);
-    try {
-      const response = await fetch(`${URL}/api/recording/${masterData.id}/${masterId}/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-      const data = await response.json();
-      setTime(data.time);
-      console.log("RECODRING TEST", data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   return (
     <div className="bg-base-200 p-5 rounded-2xl min-h-64 flex flex-col mb-5">
@@ -65,7 +51,7 @@ const Services = ({ masterData, setStepProps, time, setTime }) => {
                 onClick={() => {
                   dispatch(openModal());
                   dispatch(setId({id: masterData.id}))
-                  recordingSlots(masterData.id)
+                  recordingSlots(service.id)
                   // setStepProps(masterData.specialists[0].id)
                 }}
               >

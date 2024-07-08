@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
-const EnrollModal = ({time, setTime}) => {
+const EnrollModal = ({time, setTime, step, setStep}) => {
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
   
@@ -23,7 +23,7 @@ const EnrollModal = ({time, setTime}) => {
     "Дата и время",
     "Подтверждение записи",
   ];
-  const [step, setStep] = useState(0);
+  // const [step, setStep] = useState(0);
 
   const nextStep = () => {
     setStep((prev) => prev + 1);

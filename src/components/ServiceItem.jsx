@@ -6,7 +6,7 @@ const ServiceItem = ({ enService, step, setStep, recordingSlots }) => {
     <div className="item rounded-lg bg-base-300 p-3">
       <div className="flex gap-6 items-center mb-2">
         <img
-          src={`/backend/masterhub${enService.photo}`}
+          src={`/backend/masterhub/${enService.photo}`}
           alt=""
           className="w-16 h-16 object-cover rounded-lg"
         />

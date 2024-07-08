@@ -29,10 +29,11 @@ const MasterPage = () => {
   const [stepProps, setStepProps] = useState(null);
   const [time, setTime] = useState(null);
   const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false)
+  const [step, setStep] = useState(0)
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const averageRating = masterData?.reviews?.average_rating;
   const formattedRating =
@@ -86,6 +87,24 @@ const MasterPage = () => {
     console.log(data);
 
   }
+
+  const recordingSlots = async (masterId) => {
+    console.log(masterId);
+    try {
+      const response = await fetch(`${URL}/api/recording/${masterData.id}/${masterId}/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+      const data = await response.json();
+      setStep(2)
+      setTime(data.time);
+      console.log("RECODRING TEST", data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   useEffect(() => {
     fetchMasterProfile();
   }, []);
@@ -93,7 +112,7 @@ const MasterPage = () => {
   return (
     <>
       <Header />
-      <EnrollModal time={time} setTime={setTime} />
+      <EnrollModal time={time} setTime={setTime} step={step} setStep={setStep} />
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
@@ -119,6 +138,7 @@ const MasterPage = () => {
               setStepProps={setStepProps}
               time={time}
               setTime={setTime}
+              recordingSlots={recordingSlots}
             />
 
             <WorksExample masterData={masterData} />
