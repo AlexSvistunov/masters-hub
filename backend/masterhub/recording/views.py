@@ -47,7 +47,10 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         #     "profile": id профиля,
         #     "time": "08:00",
         #     "date": "2024-05-12",
-        #     "service": id услуги
+        #     "service": id услуги,
+        #     "name": name,
+        #     "surname": surname,
+        #     "phone": phone,
         # }
         data = request.data
         service = Service.objects.get(id=data['service'])
@@ -62,7 +65,10 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         recording = Recording()
         recording.user = request.user
         recording.service = service
-        recording.date = timezone.now()
+        recording.date = date
+        recording.name = data.get('name')
+        recording.surname = data.get('surname')
+        recording.phone = data.get('phone')
         recording.time_start = str(time_start)
         recording.time_end = str(time_end)
         profile = service.profile

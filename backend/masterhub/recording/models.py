@@ -9,7 +9,7 @@ class WorkTime(models.Model):
         ProfileMaster,
         on_delete=models.CASCADE,
         verbose_name='профиль',
-         blank=True,
+        blank=True,
         null=True
     )
     specialist = models.ForeignKey(
@@ -88,6 +88,25 @@ class Recording(models.Model):
     date = models.DateField(verbose_name='дата записи')
     time_start = models.TimeField()
     time_end = models.TimeField(
+        blank=True,
+        null=True
+    )
+    name = models.CharField(
+        max_length=20,
+        verbose_name='Имя',
+        blank=True,
+        null=True
+    )
+
+    surname = models.CharField(
+        max_length=20,
+        verbose_name='Фамилия',
+        blank=True,
+        null=True
+    )
+    phone = models.CharField(
+        max_length=20,
+        verbose_name='Номер',
         blank=True,
         null=True
     )

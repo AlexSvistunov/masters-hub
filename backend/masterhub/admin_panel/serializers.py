@@ -1,13 +1,11 @@
+from recording.serializers import ProfileSerializer, ServicesSerializer
+from user.serializers import SpecialistSerializer
 from user.models import ProfileMaster
 from rest_framework import serializers
 from user.models import Favorites, Categories, Specialist
 from django.core.exceptions import ObjectDoesNotExist
-
-
-class CategoriesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Categories
-        fields = ['id', 'title']
+from service.models import Service
+from service.serializers import CategoriesSerializer
 
 
 class ProfileAdminSerializer(serializers.ModelSerializer):
@@ -84,3 +82,14 @@ class SpecialistAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialist
         fields = ['id', 'name', 'job', 'description', 'photo']
+
+
+class ServiceSpecAdminSerializer(serializers.Serializer):
+    def to_representation(self, value):
+        if self.context.get('profile'):
+            services = value.profile_services.all()
+            serializer = ServicesSerializer(services, many=True)
+        else:
+            services = value.specialist_services.all()
+            serializer = ServicesSerializer(services, many=True)
+        return {value.name: serializer.data}

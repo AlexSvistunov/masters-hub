@@ -5,6 +5,7 @@ from . import views
 router = SimpleRouter()
 router.register('admin-panel/profile', views.ProfileAdminViewSet, basename='admin_panel_profile')
 router.register('admin-panel/specialists', views.SpecialistsAdminViewSet, basename='admin_panel_specialists')
+router.register('admin-panel/services', views.ServicesAdminViewSet, basename='admin_panel_services')
 
 urlpatterns = [
     path('', include(router.urls)),

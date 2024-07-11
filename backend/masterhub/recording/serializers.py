@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from service.serializers import CategoriesSerializer
 from user.models import Specialist
 from service.models import Service
 from user.models import ProfileMaster
@@ -19,6 +21,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class ServicesSerializer(serializers.ModelSerializer):
+    photo = serializers.ImageField(use_url=False)
+
+    def __init__(self, *args, **kwargs):
+        super(ServicesSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method == 'GET':
+            self.fields['category'] = CategoriesSerializer()
+
     specialist = serializers.SerializerMethodField()
 
     def get_specialist(self, obj):
@@ -30,7 +40,7 @@ class ServicesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ['id', 'title', 'description', 'price', 'photo', 'time', 'category', 'specialist', ]
+        fields = ['id', 'title', 'description', 'price', 'photo', 'time', 'date_creation', 'category', 'specialist', ]
 
 
 class ServicesRecordingSerializer(serializers.Serializer):
@@ -51,7 +61,9 @@ class ServicesRecordingSerializer(serializers.Serializer):
 
 class TimeSerializer(serializers.Serializer):
     def to_representation(self, instance: timedelta):
-        return str(instance)
+        hour = str(instance.seconds // 3600).rjust(2, '0')
+        minute = str((instance.seconds - int(hour) * 3600) // 60).rjust(2, '0')
+        return f'{hour}:{minute}'
 
 
 class WorkTimeSerializer(serializers.ModelSerializer):

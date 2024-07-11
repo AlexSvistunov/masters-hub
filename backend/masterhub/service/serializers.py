@@ -8,6 +8,7 @@ class CategoriesSerializer(serializers.ModelSerializer):
 
     def get_photo(self, obj):
         return obj.photo.url
+
     class Meta:
         model = Categories
         fields = ['id', 'title', 'photo']

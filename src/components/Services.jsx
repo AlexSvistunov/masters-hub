@@ -18,7 +18,7 @@ const Services = ({ masterData, setStepProps, time, setTime, recordingSlots }) =
       <div className="flex gap-2 items-center">
         <h3 className="text-3xl">Услуги</h3>
         <span className="text-2xl text-primary">
-          {masterData?.services?.length}
+          {masterData?.services_count}
         </span>
       </div>
 
