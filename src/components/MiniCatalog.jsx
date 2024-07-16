@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
+import EnrollModal from "./EnrollModal";
 
 const MiniCatalog = () => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
+
+  const [step, setStep] = useState(0);
 
   const getCatalogItem = async () => {
     try {
@@ -81,6 +84,8 @@ const MiniCatalog = () => {
           </Link>
         </div>
       </div>
+
+      <EnrollModal step={step} setStep={setStep}/>
     </section>
   );
 };

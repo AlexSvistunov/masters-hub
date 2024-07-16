@@ -5,13 +5,18 @@ import EnrollModal from "./EnrollModal";
 import useAuth from "../hooks/useAuth";
 
 import {URL} from '../utils/backend-url.js'
+import { useState } from "react";
 
 
-const Services = ({ masterData, setStepProps, time, setTime, recordingSlots }) => {
+const Services = ({step, setStep, masterData, setStepProps, time, setTime, recordingSlots }) => {
+
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
-  console.log(masterData)
 
+  const [modalActive, setModalActive] = useState(false)
+  const [serviceId, setServiceId] = useState(null)
+
+  console.log(masterData)
 
   return (
     <div className="bg-base-200 p-5 rounded-2xl min-h-64 flex flex-col mb-5">
@@ -51,11 +56,18 @@ const Services = ({ masterData, setStepProps, time, setTime, recordingSlots }) =
                 onClick={() => {
                   dispatch(openModal());
                   dispatch(setId({id: masterData.id}))
-                  recordingSlots(service.id)
+                  setStep(2)
+                  setModalActive(true)
+                  setServiceId(service.id)
+                  
+                  // recordingSlots(service.id)
                   // setStepProps(masterData.specialists[0].id)
+                  // может какой-то пропс в dispatch с шагом???
                 }}
               >
                 Записаться
+
+                
               </div>
 
              
@@ -67,7 +79,12 @@ const Services = ({ masterData, setStepProps, time, setTime, recordingSlots }) =
       <div className="flex justify-center mt-auto">
         <button className="btn btn-ghost">Посмотреть все</button>
       </div>
+      <EnrollModal step={step} setStep={setStep} propWord={serviceId}/>
+  
+
+     
     </div>
+
   );
 };
 

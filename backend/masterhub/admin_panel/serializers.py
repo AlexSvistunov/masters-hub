@@ -1,11 +1,15 @@
 from recording.serializers import ProfileSerializer, ServicesSerializer
 from user.serializers import SpecialistSerializer
-from user.models import ProfileMaster
+from user.models import ProfileMaster, Reviews
 from rest_framework import serializers
 from user.models import Favorites, Categories, Specialist
 from django.core.exceptions import ObjectDoesNotExist
 from service.models import Service
 from service.serializers import CategoriesSerializer
+from recording.models import WorkTime
+from rest_framework.exceptions import ValidationError
+from datetime import datetime
+from recording.models import Recording
 
 
 class ProfileAdminSerializer(serializers.ModelSerializer):
@@ -86,10 +90,54 @@ class SpecialistAdminSerializer(serializers.ModelSerializer):
 
 class ServiceSpecAdminSerializer(serializers.Serializer):
     def to_representation(self, value):
-        if self.context.get('profile'):
+        if not hasattr(value, 'job'):
             services = value.profile_services.all()
-            serializer = ServicesSerializer(services, many=True)
         else:
             services = value.specialist_services.all()
-            serializer = ServicesSerializer(services, many=True)
+        serializer = ServicesSerializer(services, many=True)
         return {value.name: serializer.data}
+
+
+class WorkTimeAdminSerializer(serializers.ModelSerializer):
+
+    def validate(self, attrs):
+        val = list(attrs.values())[0].split('-')
+        if len(val) != 2:
+            raise ValidationError({'error': 'Не верный формат времени'})
+        for i in val:
+            try:
+                datetime.strptime(i, '%H:%M')
+            except:
+                raise ValidationError({'error': 'Не верный формат времени'})
+        return attrs
+
+    class Meta:
+        model = WorkTime
+        fields = ['id', 'monday', 'tuesday', 'wednesday', 'thursday', 'thursday', 'saturday', 'sunday']
+
+
+class ReviewsAdminSerializer(serializers.ModelSerializer):
+    user_id = serializers.CharField(source='user.id')
+    user_name = serializers.CharField(source='user.username')
+    data_create = serializers.DateTimeField(format='%Y-%m-%d %H:%M')
+    photo = serializers.SerializerMethodField()
+
+    def get_photo(self, obj):
+        return obj.user.photo.url
+
+    class Meta:
+        model = Reviews
+        fields = ['id', 'user_id', 'user_name', 'rating_star', 'data_create', 'description', 'photo', 'active']
+
+
+class RecordingAdminSerializer(serializers.ModelSerializer):
+
+    def __init__(self, *args, **kwargs):
+        super(RecordingAdminSerializer, self).__init__(*args, **kwargs)
+        if self.context.get('list'):
+            del self.fields['']
+
+    class Meta:
+        model = Recording
+        fields = ['id', 'date', 'time_start', 'time_start', 'specialist', 'service', 'name', 'surname', 'surname',
+                  'phone']

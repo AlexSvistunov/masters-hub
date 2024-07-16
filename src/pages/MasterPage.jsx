@@ -27,7 +27,6 @@ const MasterPage = () => {
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
   const [stepProps, setStepProps] = useState(null);
-  const [time, setTime] = useState(null);
   const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false)
   const [step, setStep] = useState(0)
 
@@ -99,7 +98,6 @@ const MasterPage = () => {
       });
       const data = await response.json();
       setStep(2)
-      setTime(data.time);
       console.log("RECODRING TEST", data);
     } catch (error) {
       console.log(error.message);
@@ -112,7 +110,7 @@ const MasterPage = () => {
   return (
     <>
       <Header />
-      <EnrollModal time={time} setTime={setTime} step={step} setStep={setStep} />
+      <EnrollModal  step={step} setStep={setStep} />
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
@@ -134,10 +132,10 @@ const MasterPage = () => {
             </div>
 
             <Services
+              step={step}
+              setStep={setStep}
               masterData={masterData}
               setStepProps={setStepProps}
-              time={time}
-              setTime={setTime}
               recordingSlots={recordingSlots}
             />
 

@@ -5,18 +5,20 @@ from rest_framework.decorators import action
 
 from recording.serializers import ServicesSerializer
 from .serializers import ProfileAdminSerializer, SpecialistAdminSerializer, \
-    ServiceSpecAdminSerializer
+    ServiceSpecAdminSerializer, WorkTimeAdminSerializer, ReviewsAdminSerializer, RecordingAdminSerializer
 
 from user.serializers import SpecialistDetailSerializer
 from rest_framework import permissions
 from user.serializers import ProfileMasterSerializer
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, ListModelMixin, RetrieveModelMixin
 from django.db.utils import IntegrityError
-from user.models import ProfileMaster, Specialist
+from user.models import ProfileMaster, Specialist, Reviews
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from service.models import Service
 from service.serializers import CategoriesSerializer
+from recording.models import WorkTime
+from user.serializers import ReviewsSerializer
 
 
 class ProfileAdminViewSet(GenericViewSet):
@@ -97,7 +99,10 @@ class ServicesAdminViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, C
     def get_queryset(self):
         profile = self.request.user.user_profile
         if profile.specialization == 'master':
-            return [profile]
+            res = [profile]
+            for i in profile.profile_specialist.all():
+                res.append(i)
+            return res
         specialist = profile.profile_specialist.all()
         return specialist
 
@@ -108,9 +113,6 @@ class ServicesAdminViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, C
 
     def get_serializer_context(self):
         context = super(ServicesAdminViewSet, self).get_serializer_context()
-        profile = self.request.user.user_profile
-        if profile.specialization == 'master':
-            context['profile'] = 'master'
         return context
 
     def list(self, request, *args, **kwargs):
@@ -131,11 +133,16 @@ class ServicesAdminViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, C
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        data = request.data
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         profile = request.user.user_profile
         if profile.specialization == 'master':
-            serializer.save(profile=profile)
+            specialist_id = request.data.get('specialist')
+            if specialist_id:
+                serializer.save(specialist_id=specialist_id)
+            else:
+                serializer.save(profile=profile)
         else:
             specialist_id = request.data.get('specialist')
             if specialist_id:
@@ -143,3 +150,42 @@ class ServicesAdminViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, C
             else:
                 return Response({'detail': 'ID specialist has not '}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class WorkTimeViewSet(GenericViewSet):
+    serializer_class = WorkTimeAdminSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        work_time = get_object_or_404(WorkTime, specialist__id=pk)
+        serializer = WorkTimeAdminSerializer(work_time)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        pk_specialist = data.get('id')
+        serializer = WorkTimeAdminSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        if pk_specialist:
+            spec = get_object_or_404(Specialist, id=pk_specialist)
+            serializer.save(specialist=spec)
+        else:
+            serializer.save(profile=request.user.user_profile)
+        return Response(serializer.data)
+
+
+class ReviewsViewSet(GenericViewSet, ListModelMixin):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ReviewsAdminSerializer
+
+    def get_queryset(self):
+        return self.request.user.user_profile.reviews_profile.all()
+
+
+class RecordingAdminViewSet(GenericViewSet):
+    serializer_class = RecordingAdminSerializer
+
+    def list(self, request):
+        recordings = request.user.user_profile.profile_recordings.all()
+        serializer = self.get_serializer(recordings, many=True, context={'list': True})
+        return Response(serializer.data)

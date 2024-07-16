@@ -7,7 +7,7 @@ from .models import WorkTime, Recording
 
 @admin.register(WorkTime)
 class WorkTimeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['id']
 
 
 @admin.register(Recording)

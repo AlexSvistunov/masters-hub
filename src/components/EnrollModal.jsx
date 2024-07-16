@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
-const EnrollModal = ({time, setTime, step, setStep}) => {
+const EnrollModal = ({step, setStep, propWord}) => {
+  console.log(propWord)
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
   
@@ -16,6 +17,10 @@ const EnrollModal = ({time, setTime, step, setStep}) => {
   const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
   const id = useSelector((state) => state.enrollModal.modalId);
 
+  const [time, setTime] = useState(null)
+
+  console.log(enrollServices)
+
   const array = [
     "Новая запись",
     "Выбор услуг",
@@ -23,7 +28,13 @@ const EnrollModal = ({time, setTime, step, setStep}) => {
     "Дата и время",
     "Подтверждение записи",
   ];
-  // const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if(propWord) {
+      recordingSlots(propWord)
+    }
+  }, [propWord])
+
 
   const nextStep = () => {
     setStep((prev) => prev + 1);

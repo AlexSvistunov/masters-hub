@@ -29,6 +29,8 @@ const DateTime = ({ setStep, step, time, setTime }) => {
           </div>
         ))}  
       </div> : <h3 className="text-center text-2xl">Нет окошек</h3>}
+
+      {/* bad request response instead of false!!! */}
     </div>
    
   );
