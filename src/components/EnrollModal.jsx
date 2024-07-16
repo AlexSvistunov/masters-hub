@@ -7,7 +7,6 @@ import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
 const EnrollModal = ({step, setStep, propWord}) => {
-  console.log(propWord)
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
   

@@ -26,8 +26,11 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
 
+  const [step, setStep] = useState(0);
+
   console.log(catalog);
   console.log(catalogList)
+
 
 
   // const myCategory = chosenCategories.forEach((el) => {
@@ -193,7 +196,7 @@ const CatalogPage = () => {
     <>
       <Header />
       <Hero />
-      <EnrollModal />
+      <EnrollModal step={step} setStep={setStep} />
 
       <div className="">
         <Tabs />
@@ -260,6 +263,7 @@ const CatalogPage = () => {
                     <CatalogCard
                       item={catalogItem}
                       key={catalogItem.id}
+        
                       items={catalogList}
                       setItems={setCatalogList}
                     />

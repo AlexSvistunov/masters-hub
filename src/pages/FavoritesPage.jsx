@@ -13,6 +13,8 @@ const FavoritesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { currentToken } = useAuth();
 
+  const [step, setStep] = useState(0);
+
   const { token } = useAuth();
   console.log(token);
   const getFav = async () => {
@@ -43,7 +45,7 @@ const FavoritesPage = () => {
     <div>
       <Header />
       <Hero />
-      <EnrollModal />
+      <EnrollModal step={step} setStep={setStep} />
       <div className="container mx-auto">
         <Tabs />
 
