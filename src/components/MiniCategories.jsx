@@ -17,6 +17,7 @@ const MiniCategories = () => {
       console.log(error.message);
     }
   };
+  
   useEffect(() => {
     setTimeout(() => {
       getCategories();

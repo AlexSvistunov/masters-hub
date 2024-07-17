@@ -45,7 +45,6 @@ const MiniCatalog = () => {
             catalogItems?.map((catalogItem, index) => (
               <CatalogCard
                 key={catalogItem.id}
-                token={currentToken}
                 item={catalogItem}
                 items={catalogItems}
                 setItems={setCatalogItems}

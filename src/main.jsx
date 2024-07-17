@@ -56,3 +56,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 // aside height
 // выбрать услуги шаг не нужен
+// fav loading if auth
+// в целом организовать это loading, и тд
+// categories slider

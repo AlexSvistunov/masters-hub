@@ -9,10 +9,12 @@ const themeSlice = createSlice({
   initialState,
   reducers: {
     startTheme: (state) => {
+    
       document.querySelector('html').setAttribute('data-theme', state.currentTheme)
     },
 
     changeTheme: (state) => {
+    
      const newTheme = state.currentTheme === 'dark' ? 'light' : 'dark'
      state.currentTheme = newTheme
 
