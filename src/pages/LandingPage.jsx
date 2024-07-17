@@ -17,7 +17,6 @@ const LandingPage = () => {
         <MiniCategories/>
         <Popular/>
         <MiniCatalog />
-        {/* <EnrollModal step={step} setStep={setStep} /> */}
     </>
   )
 }
