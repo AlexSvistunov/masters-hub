@@ -11,7 +11,7 @@ import { useState } from "react";
 const Services = ({step, setStep, masterData, setStepProps, time, setTime, recordingSlots }) => {
 
   const dispatch = useDispatch();
-  const { currentToken } = useAuth();
+  const { currentToken, token } = useAuth();
 
   const [modalActive, setModalActive] = useState(false)
   const [serviceId, setServiceId] = useState(null)
@@ -54,6 +54,9 @@ const Services = ({step, setStep, masterData, setStepProps, time, setTime, recor
               <div
                 className="ml-auto tablet:ml-0 btn btn-primary"
                 onClick={() => {
+                  if(!token) {
+                    return
+                  }
                   dispatch(openModal());
                   dispatch(setId({id: masterData.id}))
                   setStep(2)

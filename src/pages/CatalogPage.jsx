@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth";
 import EnrollModal from "../components/EnrollModal";
 import { useLocation } from "react-router-dom";
 import { logIn } from "../store/slices/userSlice";
+import SkeletonCatalog from "../components/SkeletonCatalog";
 
 const CatalogPage = () => {
   const { state } = useLocation();
@@ -29,9 +30,7 @@ const CatalogPage = () => {
   const [step, setStep] = useState(0);
 
   console.log(catalog);
-  console.log(catalogList)
-
-
+  console.log(catalogList);
 
   // const myCategory = chosenCategories.forEach((el) => {
   //   const my2 = categories.find((category) => category.id === el);
@@ -161,7 +160,7 @@ const CatalogPage = () => {
     // fetchCatalog();
     setTimeout(() => {
       catalogFilter();
-    }, 200)
+    }, 0);
   }, []);
 
   const getCategories = async () => {
@@ -209,63 +208,15 @@ const CatalogPage = () => {
               <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
                 {isLoading ? (
                   <>
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
-                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
-                        <div className="flex items-center gap-5 mb-5 w-full">
-                          <div className="skeleton h-16 w-16"></div>
-                          <div className="flex flex-col gap-1">
-                            <div className="skeleton w-40 h-5"></div>
-                            <div className="skeleton w-40 h-5"></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <div className="skeleton w-20 h-10"></div>
-                          <div className="skeleton w-20 h-10"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
-                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
-                        <div className="flex items-center gap-5 mb-5 w-full">
-                          <div className="skeleton h-16 w-16"></div>
-                          <div className="flex flex-col gap-1">
-                            <div className="skeleton w-40 h-5"></div>
-                            <div className="skeleton w-40 h-5"></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <div className="skeleton w-20 h-10"></div>
-                          <div className="skeleton w-20 h-10"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44">
-                      <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
-                        <div className="flex items-center gap-5 mb-5 w-full">
-                          <div className="skeleton h-16 w-16"></div>
-                          <div className="flex flex-col gap-1">
-                            <div className="skeleton w-40 h-5"></div>
-                            <div className="skeleton w-40 h-5"></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <div className="skeleton w-20 h-10"></div>
-                          <div className="skeleton w-20 h-10"></div>
-                        </div>
-                      </div>
-                    </div>
+                    {Array(3).fill(null).map((skeletonItem, index) => (
+                       <SkeletonCatalog key={index}/>
+                    ))}
                   </>
                 ) : catalogList?.length ? (
                   catalogList?.map((catalogItem) => (
                     <CatalogCard
                       item={catalogItem}
                       key={catalogItem.id}
-        
                       items={catalogList}
                       setItems={setCatalogList}
                     />
@@ -283,7 +234,9 @@ const CatalogPage = () => {
                   <button onClick={showMoreCatalog} className="btn my-5">
                     Показать еще
                   </button>
-                ) : <div className="skeleton my-5 w-32 h-12"></div>}
+                ) : (
+                  isLoading && <div className="skeleton my-5 w-32 h-12"></div>
+                )}
               </div>
             </div>
 
@@ -307,18 +260,23 @@ const CatalogPage = () => {
               <div className="py-5">
                 <h3>Категория</h3>
 
-              {chosenCategories?.length ?  <div className="flex flex-wrap gap-2 my-3">
-               {chosenCategories?.map((chosenCategory) => {
+                {chosenCategories?.length ? (
+                  <div className="flex flex-wrap gap-2 my-3">
+                    {chosenCategories?.map((chosenCategory) => {
                       const category = categories.find(
                         (category) => category.id === chosenCategory
                       );
                       return category ? (
-                        <div key={category.id} className="p-2 bg-base-300 rounded-md max-w-fit font-medium">{category.title}</div>
+                        <div
+                          key={category.id}
+                          className="p-2 bg-base-300 rounded-md max-w-fit font-medium"
+                        >
+                          {category.title}
+                        </div>
                       ) : null;
-                    })
-                  }
-               </div> : null}
-              
+                    })}
+                  </div>
+                ) : null}
 
                 <button
                   className="btn btn-primary my-2"
