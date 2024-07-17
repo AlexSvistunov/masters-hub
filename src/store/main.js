@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  themeSlice  from "./slices/ThemeSlice";
+import  themeSlice  from "./slices/themeSlice";
 import userSlice from './slices/userSlice'
 import favSlice from "./slices/favSlice";
 import modalSlice from "./slices/modalSlice";

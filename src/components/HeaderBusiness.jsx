@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTheme } from "../store/slices/ThemeSlice";
+import { changeTheme } from "../store/slices/themeSlice";
 import { logOut } from "../store/slices/userSlice";
 
 const HeaderBusiness = () => {

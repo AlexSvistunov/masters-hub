@@ -25,7 +25,7 @@ const Popular = () => {
         <h2 className="text-4xl mb-5">Популярные</h2>
 
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
-          {popularItems.length &&
+          {popularItems.length ? 
             popularItems.map((popularItem) => (
               <CatalogCard
                 key={popularItem.id}
@@ -33,7 +33,7 @@ const Popular = () => {
                 items={popularItems}
                 setItems={setPopularItems}
               />
-            ))}
+            )) : null }
         </div>
 
         {/* <div className="flex gap-4">

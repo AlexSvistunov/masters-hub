@@ -10,9 +10,10 @@ const SpecialistPage = () => {
 
   const [step, setStep] = useState(2)
 
-  const { id } = useParams();
+  const { id, specId } = useParams();
+  console.log(id, specId)
   const getSpecialistData = async () => {
-    const response = await fetch(`${URL}/api/specialist/${id}/`);
+    const response = await fetch(`${URL}/api/specialist/${specId}/`);
     const data = await response.json();
     setSpecialistData(data);
   };
