@@ -12,6 +12,7 @@ const SpecialistPage = () => {
 
   const { id, specId } = useParams();
   console.log(id, specId)
+  
   const getSpecialistData = async () => {
     const response = await fetch(`${URL}/api/specialist/${specId}/`);
     const data = await response.json();

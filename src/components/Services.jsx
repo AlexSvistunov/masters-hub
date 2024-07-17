@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 
 import {URL} from '../utils/backend-url.js'
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 
 const Services = ({step, setStep, masterData, setStepProps, time, setTime, recordingSlots }) => {
@@ -15,6 +16,11 @@ const Services = ({step, setStep, masterData, setStepProps, time, setTime, recor
 
   const [modalActive, setModalActive] = useState(false)
   const [serviceId, setServiceId] = useState(null)
+
+  // const {id} = useParams()
+  // console.log(id)
+
+  
 
   console.log(masterData)
 
@@ -58,7 +64,7 @@ const Services = ({step, setStep, masterData, setStepProps, time, setTime, recor
                     return
                   }
                   dispatch(openModal());
-                  dispatch(setId({id: masterData.id}))
+                  dispatch(setId({id: masterData?.id}))
                   setStep(2)
                   setModalActive(true)
                   setServiceId(service.id)

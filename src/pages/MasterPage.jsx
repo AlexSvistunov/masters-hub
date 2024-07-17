@@ -19,16 +19,17 @@ import WorksExample from "../components/WorksExample";
 import { useDispatch } from "react-redux";
 
 const MasterPage = () => {
-
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
-  const {token} = useAuth()
+  const { token } = useAuth();
 
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
   const [stepProps, setStepProps] = useState(null);
-  const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false)
-  const [step, setStep] = useState(0)
+  const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false);
+  const [step, setStep] = useState(0);
+
+  console.log(masterData);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -69,35 +70,37 @@ const MasterPage = () => {
   const sendReview = async () => {
     const obj = {
       raiting_star: 5,
-      user: '123123123',
-      description: '343434'
-    }
+      user: "123123123",
+      description: "343434",
+    };
 
     const response = await fetch(`${URL}/api/feedback/${id}/`, {
       method: "POST",
       headers: {
         Authorization: `Token ${currentToken}`,
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
 
-      body: JSON.stringify(obj)
+      body: JSON.stringify(obj),
     });
     const data = await response.json();
     console.log(data);
-
-  }
+  };
 
   const recordingSlots = async (masterId) => {
     console.log(masterId);
     try {
-      const response = await fetch(`${URL}/api/recording/${masterData.id}/${masterId}/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
+      const response = await fetch(
+        `${URL}/api/recording/${masterData.id}/${masterId}/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${currentToken}`,
+          },
+        }
+      );
       const data = await response.json();
-      setStep(2)
+      setStep(2);
       console.log("RECODRING TEST", data);
     } catch (error) {
       console.log(error.message);
@@ -110,7 +113,7 @@ const MasterPage = () => {
   return (
     <>
       <Header />
-      <EnrollModal  step={step} setStep={setStep} />
+      <EnrollModal step={step} setStep={setStep} />
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">
@@ -153,19 +156,12 @@ const MasterPage = () => {
                       key={specialist.id}
                     >
                       <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500">
-                        <svg
-                          className="absolute w-12 h-12 text-gray-400 -left-1"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
+                        <img
+                          className="w-full h-full"
+                          src={`/backend/masterhub/static${specialist.photo}`}
+                        ></img>
                       </div>
+
                       <h3 className="text-xl">{specialist.name}</h3>
                       <span className=" text-gray-500 text-base">
                         {specialist.job}
@@ -186,8 +182,21 @@ const MasterPage = () => {
                 </div>
 
                 <div className="flex flex-col items-start max-w-150 w-full">
-                  {token && <button className="btn btn-ghost self-end" onClick={() => setIsLeavingCommentOpen(prev => !prev)}>Оставить отзыв</button>}
-                  <div className={isLeavingCommentOpen ? "flex items-center gap-4 w-full my-4" : "hidden items-center gap-4 w-full my-4"}>
+                  {token && (
+                    <button
+                      className="btn btn-ghost self-end"
+                      onClick={() => setIsLeavingCommentOpen((prev) => !prev)}
+                    >
+                      Оставить отзыв
+                    </button>
+                  )}
+                  <div
+                    className={
+                      isLeavingCommentOpen
+                        ? "flex items-center gap-4 w-full my-4"
+                        : "hidden items-center gap-4 w-full my-4"
+                    }
+                  >
                     <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500">
                       <svg
                         className="absolute w-12 h-12 text-gray-400 -left-1"
@@ -215,7 +224,10 @@ const MasterPage = () => {
                         placeholder="Your review..."
                       ></textarea>
 
-                      <button className="inline-flex justify-center p-2 text-primary rounded-full cursor-pointer" onClick={sendReview}>
+                      <button
+                        className="inline-flex justify-center p-2 text-primary rounded-full cursor-pointer"
+                        onClick={sendReview}
+                      >
                         <svg
                           className="w-6 h-6 rotate-90 rtl:-rotate-90"
                           aria-hidden="true"
@@ -317,21 +329,12 @@ const MasterPage = () => {
                     <article className="w-full mb-5" key={review.id}>
                       <div className="flex justify-between items-start tablet:items-center flex-col tablet:flex-row">
                         <div className="flex items-center mb-4">
-                        <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500 me-4">
-                      <svg
-                        className="absolute w-12 h-12 text-gray-400 -left-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                          
+                          <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500 me-4">
+                            <img
+                              src={`/backend/masterhub/static${review.photo}`}
+                            ></img>
+                          </div>
+
                           <div className="font-medium dark:text-white">
                             <p>
                               {review.user_name}
