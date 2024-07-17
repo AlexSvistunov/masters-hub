@@ -12,7 +12,7 @@ const NotesPage = () => {
       <div className="container mx-auto">
         <Tabs />
         
-        <div className="py-5 text-center">
+        <div className="py-10 text-center">
           {!token && (
             <div className="text-center text-4xl">Авторизируйтесь чтобы посмотреть ваши записи</div>
           )}

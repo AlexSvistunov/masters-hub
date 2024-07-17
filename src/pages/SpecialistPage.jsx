@@ -8,6 +8,8 @@ const SpecialistPage = () => {
   const [specialistData, setSpecialistData] = useState({});
   console.log(specialistData);
 
+  const [step, setStep] = useState(2)
+
   const { id } = useParams();
   const getSpecialistData = async () => {
     const response = await fetch(`${URL}/api/specialist/${id}/`);
@@ -41,7 +43,7 @@ const SpecialistPage = () => {
           </div>
         </div>
 
-        <Services masterData={specialistData} />
+        <Services masterData={specialistData} step={step} setStep={setStep} />
       </div>
     </section></>
   );

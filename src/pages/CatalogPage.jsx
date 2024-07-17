@@ -159,7 +159,9 @@ const CatalogPage = () => {
 
   useEffect(() => {
     // fetchCatalog();
-    catalogFilter();
+    setTimeout(() => {
+      catalogFilter();
+    }, 200)
   }, []);
 
   const getCategories = async () => {
@@ -281,7 +283,7 @@ const CatalogPage = () => {
                   <button onClick={showMoreCatalog} className="btn my-5">
                     Показать еще
                   </button>
-                ) : null}
+                ) : <div className="skeleton my-5 w-32 h-12"></div>}
               </div>
             </div>
 
