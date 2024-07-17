@@ -17,7 +17,8 @@ const themeSlice = createSlice({
      state.currentTheme = newTheme
 
      localStorage.setItem('currentTheme', newTheme)
-     document.querySelector('html').setAttribute('data-theme', state.currentTheme)
+    //  document.querySelector('html').setAttribute('data-theme', state.currentTheme)
+    //  themeSlice.actions.startTheme()
     },
   },
 });

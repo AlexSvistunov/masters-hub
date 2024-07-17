@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // import useThemeChanger from "../hooks/useThemeChanger";
-import { changeTheme } from "../store/slices/ThemeSlice";
+import { changeTheme } from "../store/slices/themeSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -9,13 +9,13 @@ import { logOut } from "../store/slices/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
   const [visible, setVisible] = useState(true);
   const token = useSelector((state) => state.user.token);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.scrollY;
       const visible = prevScrollPos > currentScrollPos;
 
       setPrevScrollPos(currentScrollPos);

@@ -52,3 +52,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // посмотреть каждый page, каждый компонент
 // разбить на подкомпоненты
 // сделать хуки, service
+
+
+// aside height
+// выбрать услуги шаг не нужен
