@@ -65,4 +65,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // masterpage search bug
 // popular modal opens from minicatalog
 // подумать что с мастером в записи
-// не так должна выглядеть запись(календарь не там)
+// закрытие модалок
+// сменить на day picker

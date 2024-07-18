@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 
 const EnrollModal = ({ step, setStep, propWord }) => {
@@ -28,7 +28,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
   const [phone, setPhone] = useState("");
 
   const [startDate, setStartDate] = useState(new Date());
-  console.log(startDate);
 
   console.log(chosenTime);
   console.log(id);
@@ -191,22 +190,38 @@ const EnrollModal = ({ step, setStep, propWord }) => {
                 time={time}
                 setTime={setTime}
                 setChosenTime={setChosenTime}
+                startDate={startDate}
+                setStartDate={setStartDate}
               />
             </>
           )}
 
           {step === 3 && (
             <>
-              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
-                <DatePicker
-                  className="input input-bordered input-primary block w-full"
-                  selected={startDate}
-                  onChange={(date) => {
-                    setStartDate(date);
+              <div className="flex justify-between items-center mb-2">
+                <button
+                  onClick={() => {
+                    setStep(step - 1);
                   }}
-                  dateFormat="yyyy/MM/dd"
-                  minDate={startDate}
-                />
+                >
+                  <svg
+                    className="h-6 w-6 fill-current md:h-8 md:w-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
+                  </svg>
+                </button>
+
+                <span className="block mx-auto">Личные данные</span>
+              </div>
+              <form 
+                onSubmit={(e) => e.preventDefault()}
+                className="flex flex-col gap-4 my-4"
+              >
+              
                 <input
                   type="text"
                   className="input input-bordered input-primary"
@@ -229,7 +244,12 @@ const EnrollModal = ({ step, setStep, propWord }) => {
                   onChange={(e) => setPhone(e.target.value)}
                 />
 
-                <button className="btn btn-primary align-center" onClick={createEnrollment}>Записаться</button>
+                <button
+                  className="btn btn-primary align-center"
+                  onClick={createEnrollment}
+                >
+                  Записаться
+                </button>
               </form>
             </>
           )}
