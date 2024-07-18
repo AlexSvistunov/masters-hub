@@ -1,4 +1,4 @@
-const DateTime = ({ setStep, step, time, setTime }) => {
+const DateTime = ({ setStep, step, time, setTime, setChosenTime }) => {
   return (
 
     <div>
@@ -24,7 +24,11 @@ const DateTime = ({ setStep, step, time, setTime }) => {
 
       {time ? <div className="flex items-center justify-center gap-2 flex-wrap my-4">
         {time.map(timeSlot => (
-          <div className="border border-primary p-2 rounded-md cursor-pointer" key={timeSlot}>
+          <div className="border border-primary p-2 rounded-md cursor-pointer" key={timeSlot} onClick={() => {
+            setStep(step + 1)
+            setChosenTime(timeSlot)
+            
+            }}>
             {timeSlot}
           </div>
         ))}  

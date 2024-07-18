@@ -59,3 +59,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // fav loading if auth
 // в целом организовать это loading, и тд
 // categories slider
+
+
+// popular condition
+// masterpage search bug
+// popular modal opens from minicatalog
+// подумать что с мастером в записи

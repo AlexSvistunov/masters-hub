@@ -6,19 +6,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
-const EnrollModal = ({step, setStep, propWord}) => {
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const EnrollModal = ({ step, setStep, propWord }) => {
   const dispatch = useDispatch();
   const { currentToken } = useAuth();
-  
+
   const [enrollServices, setEnrollServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
   const id = useSelector((state) => state.enrollModal.modalId);
 
-  const [time, setTime] = useState(null)
+  const [time, setTime] = useState(null);
+  const [chosenTime, setChosenTime] = useState(null);
+  const [chosenService, setChosenService] = useState(null);
 
-  console.log(enrollServices)
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [startDate, setStartDate] = useState(new Date());
+  console.log(startDate);
+
+  console.log(chosenTime);
+  console.log(id);
+
+  console.log(enrollServices);
 
   const array = [
     "Новая запись",
@@ -29,11 +44,10 @@ const EnrollModal = ({step, setStep, propWord}) => {
   ];
 
   useEffect(() => {
-    if(propWord) {
-      recordingSlots(propWord)
+    if (propWord) {
+      recordingSlots(propWord);
     }
-  }, [propWord])
-
+  }, [propWord]);
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
@@ -42,6 +56,7 @@ const EnrollModal = ({step, setStep, propWord}) => {
   const recordingSlots = async (masterId) => {
     console.log(id);
     console.log(masterId);
+    setChosenService(masterId);
     try {
       const response = await fetch(`${URL}/api/recording/${id}/${masterId}/`, {
         method: "GET",
@@ -53,7 +68,7 @@ const EnrollModal = ({step, setStep, propWord}) => {
       setTime(data.time);
       console.log("RECODRING TEST", data);
     } catch (error) {
-      setTime(null)
+      setTime(null);
       console.log(error.message);
     }
   };
@@ -73,6 +88,46 @@ const EnrollModal = ({step, setStep, propWord}) => {
       return data;
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  const createEnrollment = async () => {
+    let currentDate = startDate;
+    currentDate.setDate(currentDate.getDate() - 1);
+
+    let year = currentDate.getFullYear();
+    let month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    let day = String(currentDate.getDate()).padStart(2, "0");
+
+    let formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
+
+    const obj = {
+      profile: id,
+      time: chosenTime,
+      date: formattedDate,
+      service: chosenService,
+      name: name,
+      surname: surname,
+      phone: phone,
+    };
+
+    console.log(obj);
+    try {
+      const response = await fetch(`${URL}/api/recording/`, {
+        method: "POST",
+
+        headers: {
+          Authorization: `Token ${currentToken}`,
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(obj),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("An error occurred:", error);
     }
   };
 
@@ -124,7 +179,6 @@ const EnrollModal = ({step, setStep, propWord}) => {
                 enrollServices={enrollServices}
                 isLoading={isLoading}
                 recordingSlots={recordingSlots}
-              
               />
             </>
           )}
@@ -136,7 +190,47 @@ const EnrollModal = ({step, setStep, propWord}) => {
                 step={step}
                 time={time}
                 setTime={setTime}
+                setChosenTime={setChosenTime}
               />
+            </>
+          )}
+
+          {step === 3 && (
+            <>
+              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+                <DatePicker
+                  className="input input-bordered input-primary block w-full"
+                  selected={startDate}
+                  onChange={(date) => {
+                    setStartDate(date);
+                  }}
+                  dateFormat="yyyy/MM/dd"
+                  minDate={startDate}
+                />
+                <input
+                  type="text"
+                  className="input input-bordered input-primary"
+                  placeholder="Имя"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  className="input input-bordered input-primary"
+                  placeholder="Фамилия"
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
+                />
+                <input
+                  type="text"
+                  className="input input-bordered input-primary"
+                  placeholder="Телефон"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+
+                <button className="btn btn-primary align-center" onClick={createEnrollment}>Записаться</button>
+              </form>
             </>
           )}
         </div>
