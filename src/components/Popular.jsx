@@ -8,8 +8,7 @@ const Popular = () => {
     try {
       const response = await fetch(`${URL}/api/popular/`);
       const data = await response.json();
-      setPopularItems(data.results);
-      console.log(data);
+      setPopularItems(data);
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -25,8 +24,8 @@ const Popular = () => {
         <h2 className="text-4xl mb-5">Популярные</h2>
 
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
-          {popularItems.length ? 
-            popularItems.map((popularItem) => (
+          {popularItems?.length ? 
+            popularItems?.map((popularItem) => (
               <CatalogCard
                 key={popularItem.id}
                 item={popularItem}

@@ -88,7 +88,7 @@ class ServicesProfileAPIView(GenericAPIView, ListModelMixin):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        queryset = Service.objects.filter(profile__id=pk)
+        queryset = Service.objects.filter(profile__id=pk).select_related('specialist', 'category')
         return queryset
 
     def get(self, request, pk):
@@ -101,7 +101,7 @@ class ReviewsProfileAPIView(GenericAPIView, ListModelMixin):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        queryset = Reviews.objects.filter(profile__pk=pk)
+        queryset = Reviews.objects.filter(profile__pk=pk).select_related('user')
         return queryset
 
     def get(self, request, pk):

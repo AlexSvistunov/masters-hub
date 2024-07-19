@@ -37,6 +37,7 @@ const DateTime = ({ setStep, step, time, setTime, setChosenTime, startDate, setS
           minDate={new Date()}
           icon={
             <svg className="absolute top-2 right-2"
+            
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
               height="1em"

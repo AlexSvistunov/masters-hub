@@ -6,13 +6,13 @@ from rest_framework.decorators import action
 from user.models import ProfileMaster
 from .models import WorkTime, Recording
 from service.models import Service
-from .serializers import ServicesRecordingSerializer, WorkTimeSerializer, RecordingSerializer
+from .serializers import ServicesRecordingSerializer, WorkTimeSerializer, RecordingSerializer, RecordinCreateSerializer
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
 from datetime import timedelta
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, permissions
-
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -34,8 +34,8 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         # pk профиля
         pk = kwargs.get('pk')
         queryset = []
-        profile = ProfileMaster.objects.get(id=pk)
-        services = Service.objects.filter(profile=profile).select_related('category').select_related('specialist')
+        profile = get_object_or_404(ProfileMaster, id=pk)
+        services = Service.objects.filter(profile=profile).select_related('category', 'specialist')
         for i in services:
             if i.category not in queryset:
                 queryset.append(i.category)
@@ -44,7 +44,6 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
 
     def create(self, request, *args, **kwargs):
         # {
-        #     "profile": id профиля,
         #     "time": "08:00",
         #     "date": "2024-05-12",
         #     "service": id услуги,
@@ -53,6 +52,8 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         #     "phone": phone,
         # }
         data = request.data
+        serializer = RecordinCreateSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
         service = Service.objects.get(id=data['service'])
         time_start_request = data['time'].split(':')
         time_start = timedelta(
@@ -73,21 +74,20 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
         recording.time_end = str(time_end)
         profile = service.profile
         recording.profile_master = profile
-        if service.profile.specialization == 'studio':
+        if profile.specialization == 'studio':
             spec = service.specialist
             recording.specialist = spec
         recording.save()
         return Response(status=status.HTTP_201_CREATED)
 
-    @action(methods=['get'], detail=True, url_path='(?P<id_services>[^/.]+)')
+    @action(methods=['get'], detail=True, url_path='service')
     def recording(self, request, *args, **kwargs):
-        pk_service = kwargs.get('id_services')
-        pk_profile = kwargs.get('pk')
+        pk_service = kwargs.get('pk')
         service = Service.objects.get(id=pk_service)
         param = service.profile.specialization
         if param == 'master':
             try:
-                profile_work_time = WorkTime.objects.get(profile__pk=pk_profile)
+                profile_work_time = WorkTime.objects.get(profile__pk=service.profile.pk)
             except ObjectDoesNotExist:
                 return Response({'detail': 'no masters work'}, status=status.HTTP_400_BAD_REQUEST)
         else:

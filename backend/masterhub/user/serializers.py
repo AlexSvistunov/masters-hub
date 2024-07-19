@@ -92,20 +92,20 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
             queryset = obj.profile_services.all()
         else:
             queryset = Service.objects.none()
-            for specialist in obj.profile_specialist.all():
-                services = specialist.specialist_services.all()
+            for specialist in obj.profile_specialist.all()[:5]:
+                services = specialist.specialist_services.all().select_related('category')
                 queryset = queryset.union(services)
         self.services_count = queryset.count()
         serializer = ServicesSerializer(queryset[:5], many=True)
         return serializer.data
 
     def get_specialists(self, obj):
-        queryset = obj.profile_specialist.all()
+        queryset = obj.profile_specialist.all().select_related('profile')
         serializer = SpecialistSerializer(queryset, many=True)
         return serializer.data
 
     def get_reviews(self, obj):
-        queryset = obj.reviews_profile.all()
+        queryset = obj.reviews_profile.all().select_related('user')
         len_queryset = len(queryset)
         data = {
             'count': len_queryset,

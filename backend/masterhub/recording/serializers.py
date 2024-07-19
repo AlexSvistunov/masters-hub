@@ -54,8 +54,7 @@ class ServicesRecordingSerializer(serializers.Serializer):
         if cat_id not in self.categories:
             self.categories.append(cat_id)
             services_context = self.context.get('services')
-            services = services_context.filter(category__id=cat_id).select_related('category').select_related(
-                'specialist').select_related('profile')
+            services = services_context.filter(category__id=cat_id)
             serializer = ServicesSerializer(services, many=True)
             return {instance.title: serializer.data}
 
@@ -138,3 +137,11 @@ class RecordingSerializer(serializers.ModelSerializer):
         model = Recording
         fields = ['id', 'profile_master', 'service', 'date', 'time_start', 'time_end']
 
+
+class RecordinCreateSerializer(serializers.Serializer):
+    time = serializers.TimeField(format='%H:%M')
+    date = serializers.DateField(format='%Y-%m-%d')
+    service = serializers.PrimaryKeyRelatedField(queryset=Service.objects.all())
+    name = serializers.CharField(max_length=30)
+    surname = serializers.CharField(max_length=30)
+    phone = serializers.CharField(max_length=12)

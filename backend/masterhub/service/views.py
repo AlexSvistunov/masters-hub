@@ -6,7 +6,7 @@ from user.models import ProfileMaster
 from django_filters.rest_framework import DjangoFilterBackend
 from user.pagination import CatalogPagination
 from rest_framework import permissions
-from django.db.models import Avg, Func
+from django.db.models import Avg, Func, Count
 
 
 # Create your views here.
@@ -40,13 +40,11 @@ class Round(Func):
 class PopularAPIView(GenericAPIView, ListModelMixin):
     permission_classes = [permissions.AllowAny]
     serializer_class = ProfileCatalogSerialize
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['categories', 'specialization']
-    pagination_class = CatalogPagination
 
     def get(self, request):
         return self.list(request)
 
     def get_queryset(self):
-        queryset = ProfileMaster.objects.annotate(rating=Round(Avg('reviews_profile__rating_star'))).order_by('-rating')
+        queryset = ProfileMaster.objects.annotate(rating=Round(Avg('reviews_profile__rating_star'))).annotate(
+            review_count=Count('reviews_profile')).order_by('-rating', '-review_count')
         return queryset

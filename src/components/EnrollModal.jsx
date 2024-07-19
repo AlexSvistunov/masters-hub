@@ -132,8 +132,8 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   return (
     <>
-      <div className="enroll-modal" open={isModalOpen ? true : false}>
-        <div className="enroll-modal__box">
+      <div className="enroll-modal" open={isModalOpen ? true : false} onClick={e => dispatch(closeModal())}>
+        <div className="enroll-modal__box" onClick={e => e.stopPropagation()}>
           {step === 0 && (
             <>
               <div className="flex justify-between items-center">
