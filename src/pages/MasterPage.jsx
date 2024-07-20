@@ -113,7 +113,7 @@ const MasterPage = () => {
   return (
     <>
       <Header />
-      <EnrollModal step={step} setStep={setStep} />
+      {/* <EnrollModal step={step} setStep={setStep} /> */}
       <section className="py-40">
         {masterData && (
           <div className="container mx-auto">

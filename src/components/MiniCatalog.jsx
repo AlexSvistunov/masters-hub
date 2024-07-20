@@ -86,7 +86,7 @@ const MiniCatalog = () => {
           </Link>
         </div>
       </div>
-      <EnrollModal step={step} setStep={setStep} />;
+      <EnrollModal step={step} setStep={setStep} />
     </section>
   );
 };

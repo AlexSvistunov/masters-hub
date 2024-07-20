@@ -70,3 +70,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // search update data
 // для меня mount/unmount когда открывается/закрывается
 // chooseservice не unmount, потому что модалка не анмаунт
+// поиск убавляется теги
