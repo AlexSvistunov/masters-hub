@@ -37,16 +37,6 @@ const MiniCatalog = () => {
     getCatalogItem();
   }, []);
 
-  useEffect(() => {
-    if(isModalOpen) {
-      renderModal()
-    }
-  }, [isModalOpen])
-
-  const renderModal = () => {
-    return <EnrollModal step={step} setStep={setStep} />;
-  };
-
   return (
     <section className="p-7">
       <div className="container mx-auto">
@@ -96,6 +86,7 @@ const MiniCatalog = () => {
           </Link>
         </div>
       </div>
+      <EnrollModal step={step} setStep={setStep} />;
     </section>
   );
 };

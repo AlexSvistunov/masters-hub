@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
-
 import "react-datepicker/dist/react-datepicker.css";
 
 const EnrollModal = ({ step, setStep, propWord }) => {
@@ -29,7 +28,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   const [startDate, setStartDate] = useState(new Date());
 
-
   const array = [
     "Новая запись",
     "Выбор услуг",
@@ -45,9 +43,10 @@ const EnrollModal = ({ step, setStep, propWord }) => {
   // }, [id]);
 
   useEffect(() => {
-    console.log('123')
-    getEnrollServices(id)
-  }, [])
+    if (isModalOpen) {
+      getEnrollServices(id);
+    }
+  }, [isModalOpen]);
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
@@ -133,9 +132,12 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   return (
     <>
-      <div className="enroll-modal" open={isModalOpen ? true : false} onClick={e => dispatch(closeModal())}>
-        <div className="enroll-modal__box" onClick={e => e.stopPropagation()}>
-        
+      <div
+        className="enroll-modal"
+        open={isModalOpen ? true : false}
+        onClick={(e) => dispatch(closeModal())}
+      >
+        <div className="enroll-modal__box" onClick={(e) => e.stopPropagation()}>
           {step === 0 && (
             <>
               <ChooseService
@@ -187,11 +189,10 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
                 <span className="block mx-auto">Личные данные</span>
               </div>
-              <form 
+              <form
                 onSubmit={(e) => e.preventDefault()}
                 className="flex flex-col gap-4 my-4"
               >
-              
                 <input
                   type="text"
                   className="input input-bordered input-primary"
