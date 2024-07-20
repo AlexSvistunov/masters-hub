@@ -12,18 +12,21 @@ const MiniCatalog = () => {
 
   const [step, setStep] = useState(0);
 
+  const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
+  console.log(isModalOpen);
+
   const getCatalogItem = async () => {
     try {
       const headers = {};
-      if(currentToken) {
-        headers.Authorization = `Token ${currentToken}`
+      if (currentToken) {
+        headers.Authorization = `Token ${currentToken}`;
       }
       const reponse = await fetch(`${URL}/api/catalog/`, {
         method: "GET",
-       headers
+        headers,
       });
       const data = await reponse.json();
-  
+
       setCatalogItems(data.results);
       return data;
     } catch (error) {
@@ -33,6 +36,16 @@ const MiniCatalog = () => {
   useEffect(() => {
     getCatalogItem();
   }, []);
+
+  useEffect(() => {
+    if(isModalOpen) {
+      renderModal()
+    }
+  }, [isModalOpen])
+
+  const renderModal = () => {
+    return <EnrollModal step={step} setStep={setStep} />;
+  };
 
   return (
     <section className="p-7">
@@ -83,8 +96,6 @@ const MiniCatalog = () => {
           </Link>
         </div>
       </div>
-
-      <EnrollModal step={step} setStep={setStep}/>
     </section>
   );
 };
