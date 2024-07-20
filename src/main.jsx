@@ -67,3 +67,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // подумать что с мастером в записи
 // закрытие модалок
 // сменить на day picker
+// search update data
+// для меня mount/unmount когда открывается/закрывается
+// chooseservice не unmount, потому что модалка не анмаунт

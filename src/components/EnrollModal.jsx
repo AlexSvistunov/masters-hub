@@ -46,23 +46,33 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     if (isModalOpen) {
       getEnrollServices(id);
     }
+
+    return () => {
+      setStep(0)
+      console.log('UNMOUNT')
+      // setTime(0)
+      // setChosenService(null)
+      setEnrollServices([])
+    };
   }, [isModalOpen]);
+
+
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
   };
 
-  const recordingSlots = async (masterId) => {
-    console.log(id);
-    console.log(masterId);
-    setChosenService(masterId);
+  const recordingSlots = async (serviceId) => {
     try {
-      const response = await fetch(`${URL}/api/recording/${id}/service/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
+      const response = await fetch(
+        `${URL}/api/recording/${serviceId}/service/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${currentToken}`,
+          },
+        }
+      );
       const data = await response.json();
       setTime(data.time);
       console.log("RECODRING TEST", data);

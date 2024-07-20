@@ -3,9 +3,13 @@ import useAuth from "../hooks/useAuth";
 import { URL } from "../utils/backend-url";
 import ServiceItem from "./ServiceItem";
 import { MoonLoader } from "react-spinners";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../store/slices/modalSlice";
 
 const ChooseService = (props) => {
+  console.log(props)
+  const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
+  const dispatch = useDispatch()
   const [isChosen, setIsChosen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchedServices, setSearchedServices] = useState([]);
@@ -34,6 +38,16 @@ const ChooseService = (props) => {
     setSearchedServices(searchedList);
   };
 
+
+  useEffect(() => {
+    console.log('21312312 MOUNT')
+    return () => {
+      console.log('12312312 UNMOUNT')
+      setSearchedServices([])
+      setInputValue('')
+    }
+  },[isModalOpen])
+
   //   const onSearchHandler = (e) => {
   //     setInputValue(e.target.value)
   //     console.log('ITEMS', props.enrollServices);
@@ -47,9 +61,9 @@ const ChooseService = (props) => {
   //     setSearchedServices(searchedItems);
   // }
 
-  useEffect(() => {
-    props.getEnrollServices();
-  }, []);
+  // useEffect(() => {
+  //   props.getEnrollServices();
+  // }, []);
 
   // if(!enrollServices.length) {
   //   return (
@@ -60,7 +74,7 @@ const ChooseService = (props) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <button onClick={() => props.setStep(props.step - 1)}>
+        <button onClick={() => dispatch(closeModal())}>
           <svg
             className="h-6 w-6 fill-current md:h-8 md:w-8"
             xmlns="http://www.w3.org/2000/svg"
