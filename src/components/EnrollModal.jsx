@@ -48,24 +48,35 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     }
 
     return () => {
-      setStep(0)
-      console.log('UNMOUNT')
+      setStep(0);
+      console.log("UNMOUNT");
       // setTime(0)
       // setChosenService(null)
-      setEnrollServices([])
+      setEnrollServices([]);
     };
   }, [isModalOpen]);
-
-
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
   };
 
-  const recordingSlots = async (serviceId) => {
+  const recordingSlots = async (serviceId, date) => {
+    let formattedDate;
+    if (date) {
+      let currentDate = date;
+
+      let year = currentDate.getFullYear();
+      let month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      let day = String(currentDate.getDate()).padStart(2, "0");
+
+      formattedDate = `${year}/${month}/${day}`;
+      console.log(formattedDate);
+    }
     try {
       const response = await fetch(
-        `${URL}/api/recording/${serviceId}/service/`,
+        `${URL}/api/recording/${serviceId}/service/?date=${
+          date ? formattedDate : ""
+        }`,
         {
           method: "GET",
           headers: {
@@ -139,6 +150,12 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       console.error("An error occurred:", error);
     }
   };
+
+  useEffect(() => {
+    // если отличается от текущей даты, то
+    console.log(startDate);
+    recordingSlots(id, startDate);
+  }, [startDate]);
 
   return (
     <>

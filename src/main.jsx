@@ -61,8 +61,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // categories slider
 
 
-// popular condition
-// masterpage search bug
+// popular condition + skeleton
 // popular modal opens from minicatalog
 // подумать что с мастером в записи
 // закрытие модалок
@@ -71,3 +70,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // для меня mount/unmount когда открывается/закрывается
 // chooseservice не unmount, потому что модалка не анмаунт
 // поиск убавляется теги
+// у специалиста запись
