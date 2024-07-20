@@ -69,7 +69,8 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       let month = String(currentDate.getMonth() + 1).padStart(2, "0");
       let day = String(currentDate.getDate()).padStart(2, "0");
 
-      formattedDate = `${year}/${month}/${day}`;
+      // formattedDate = `${year}/${month}/${day}`;
+      formattedDate = `${day}/${month}/${year}`;
       console.log(formattedDate);
     }
     try {
@@ -153,9 +154,11 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   useEffect(() => {
     // если отличается от текущей даты, то
-    console.log(startDate);
-    recordingSlots(id, startDate);
-  }, [startDate]);
+    if (isModalOpen) {
+      console.log(startDate);
+      recordingSlots(id, startDate);
+    }
+  }, [startDate, isModalOpen]);
 
   return (
     <>
