@@ -8,7 +8,7 @@ const Tabs = () => {
           <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/'}>Подборка</NavLink>
           <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/catalog'}>Каталог</NavLink>
           <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/favorites'}>Избранное</NavLink>
-          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/notes'}>Мои записи</NavLink>
+          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/recording'}>Мои записи</NavLink>
         </div>
       </div>
     </div>

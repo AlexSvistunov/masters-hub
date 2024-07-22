@@ -21,7 +21,10 @@ const SpecialistPage = () => {
 
   useEffect(() => {
     getSpecialistData();
+    window.scrollTo(0, 0)
   }, []);
+
+
 
   return (
     <>

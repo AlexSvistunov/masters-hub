@@ -36,12 +36,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     "Подтверждение записи",
   ];
 
-  // useEffect(() => {
-  //   if (id) {
-  //     recordingSlots(id);
-  //   }
-  // }, [id]);
-
   useEffect(() => {
     if (isModalOpen) {
       getEnrollServices(id);
@@ -56,28 +50,26 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     };
   }, [isModalOpen]);
 
+  useEffect(() => {});
+
   const nextStep = () => {
     setStep((prev) => prev + 1);
   };
 
   const recordingSlots = async (serviceId, date) => {
-    let formattedDate;
-    if (date) {
-      let currentDate = date;
+    let currentDate = date;
 
-      let year = currentDate.getFullYear();
-      let month = String(currentDate.getMonth() + 1).padStart(2, "0");
-      let day = String(currentDate.getDate()).padStart(2, "0");
+    let year = currentDate.getFullYear();
+    let month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    let day = String(currentDate.getDate()).padStart(2, "0");
 
-      // formattedDate = `${year}/${month}/${day}`;
-      formattedDate = `${day}/${month}/${year}`;
-      console.log(formattedDate);
-    }
+    let formattedDate = `${day}/${month}/${year}`;
+    console.log(formattedDate);
+
     try {
+      const currentDate = date ? `?date=${formattedDate}` : "";
       const response = await fetch(
-        `${URL}/api/recording/${serviceId}/service/?date=${
-          date ? formattedDate : ""
-        }`,
+        `${URL}/api/recording/${serviceId}/service/${currentDate}`,
         {
           method: "GET",
           headers: {
@@ -85,7 +77,9 @@ const EnrollModal = ({ step, setStep, propWord }) => {
           },
         }
       );
+
       const data = await response.json();
+      console.log("DATA", data);
       setTime(data.time);
       console.log("RECODRING TEST", data);
     } catch (error) {
@@ -112,7 +106,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     }
   };
 
-  const createEnrollment = async () => {
+  const createEnrollment = async (service) => {
     let currentDate = startDate;
     currentDate.setDate(currentDate.getDate() - 1);
 
@@ -133,7 +127,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       phone: phone,
     };
 
-    console.log(obj);
     try {
       const response = await fetch(`${URL}/api/recording/`, {
         method: "POST",
@@ -154,11 +147,11 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   useEffect(() => {
     // если отличается от текущей даты, то
-    if (isModalOpen) {
+    if (isModalOpen && chosenService) {
       console.log(startDate);
-      recordingSlots(id, startDate);
+      recordingSlots(chosenService, startDate);
     }
-  }, [startDate, isModalOpen]);
+  }, [startDate, isModalOpen, chosenService]);
 
   return (
     <>
@@ -180,6 +173,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
                 enrollServices={enrollServices}
                 isLoading={isLoading}
                 recordingSlots={recordingSlots}
+                setChosenService={setChosenService}
               />
             </>
           )}

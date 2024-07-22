@@ -5,12 +5,12 @@ import LoginPage from "../pages/LoginPage"
 import MasterPage from "../pages/MasterPage"
 import CatalogPage from "../pages/CatalogPage"
 import FavoritesPage from "../pages/FavoritesPage"
-import NotesPage from "../pages/NotesPage"
 import BusinessPage from "../pages/BusinessPage"
 import BusinessProfilePage from "../pages/BusinessProfilePage"
 import TestPage from "../pages/TestPage"
 import SpecialistPage from "../pages/SpecialistPage"
 import CreateProfile from "../pages/CreateProfile"
+import RecordingPage from "../pages/RecordingPage"
 
 
 const AppRoutes = () => {
@@ -24,7 +24,7 @@ const AppRoutes = () => {
         <Route path="/profile/:id/specialist/:specId" element={<SpecialistPage/>}></Route>
         <Route path="/catalog" element={<CatalogPage/>}></Route>
         <Route path="/favorites" element={<FavoritesPage/>}></Route>
-        <Route path="/notes" element={<NotesPage/>}></Route>
+        <Route path="/recording" element={<RecordingPage/>}></Route>
         <Route path="/business" element={<BusinessPage/>}></Route>
         <Route path="/business/profile" element={<BusinessProfilePage/>}></Route>
         <Route path="/business/projects" element={<BusinessProfilePage/>}></Route>

@@ -71,3 +71,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // chooseservice не unmount, потому что модалка не анмаунт
 // поиск убавляется теги
 // у специалиста запись
+// loading favpage, recording page

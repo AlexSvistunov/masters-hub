@@ -150,6 +150,7 @@ const ChooseService = (props) => {
                     step={props.step}
                     setStep={props.setStep}
                     recordingSlots={props.recordingSlots}
+                    setChosenService={props.setChosenService}
                   />
                 ))
               : props.enrollServices.map((enrollService, index) => (
@@ -169,6 +170,8 @@ const ChooseService = (props) => {
                                   step={props.step}
                                   setStep={props.setStep}
                                   recordingSlots={props.recordingSlots}
+                                  setChosenService={props.setChosenService}
+                                  
                                 />
                               )
                             )}

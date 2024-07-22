@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { closeModal } from "../store/slices/modalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const ServiceItem = ({ enService, step, setStep, recordingSlots }) => {
+const ServiceItem = ({ enService, step, setStep, recordingSlots, setChosenService }) => {
   console.log(enService);
   const dispatch = useDispatch()
+  const id = useSelector((state) => state.enrollModal.modalId);
   return (
     <div className="item rounded-lg bg-base-300 p-3">
       <div className="flex gap-6 items-center mb-2">
@@ -37,7 +38,8 @@ const ServiceItem = ({ enService, step, setStep, recordingSlots }) => {
             className="btn btn-primary text-base"
             onClick={() => {
               setStep(step + 1);
-              recordingSlots(enService?.id);
+              recordingSlots(enService?.id, new Date());
+              setChosenService(enService?.id)
             }}
           >
             Выбрать
