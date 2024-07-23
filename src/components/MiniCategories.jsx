@@ -17,11 +17,9 @@ const MiniCategories = () => {
       console.log(error.message);
     }
   };
-  
+
   useEffect(() => {
-    setTimeout(() => {
-      getCategories();
-    }, 0);
+    getCategories();
   }, []);
   return (
     <section className="p-7">
@@ -34,12 +32,10 @@ const MiniCategories = () => {
             ))
           ) : (
             <>
-    
               <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
               <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
               <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
               <div className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"></div>
-
             </>
           )}
         </div>

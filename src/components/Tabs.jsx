@@ -1,18 +1,26 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+import { tabsArray } from "../utils/tabs";
 
 const Tabs = () => {
   return (
     <div className="my-2">
       <div className="container mx-auto rounded-lg p-2">
         <div className="w-full flex justify-center gap-4 flex-col tablet:flex-row">
-          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/'}>Подборка</NavLink>
-          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/catalog'}>Каталог</NavLink>
-          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/favorites'}>Избранное</NavLink>
-          <NavLink className={({isActive}) => isActive ? 'btn-neutral btn' : 'btn'} to={'/recording'}>Мои записи</NavLink>
+          {tabsArray.map((tab) => (
+            <NavLink
+              key={tab.url}
+              className={({ isActive }) =>
+                isActive ? "btn-neutral btn" : "btn"
+              }
+              to={tab.url}
+            >
+              {tab.text}
+            </NavLink>
+          ))}
         </div>
       </div>
     </div>
-
   );
 };
 

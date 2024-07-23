@@ -3,7 +3,6 @@ import CatalogCard from "./CatalogCard";
 import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
-import { useSelector } from "react-redux";
 import EnrollModal from "./EnrollModal";
 
 const MiniCatalog = () => {
@@ -12,8 +11,6 @@ const MiniCatalog = () => {
 
   const [step, setStep] = useState(0);
 
-  const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
-  console.log(isModalOpen);
 
   const getCatalogItem = async () => {
     try {
@@ -45,7 +42,7 @@ const MiniCatalog = () => {
 
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
           {catalogItems?.length ? (
-            catalogItems?.map((catalogItem, index) => (
+            catalogItems?.map((catalogItem) => (
               <CatalogCard
                 key={catalogItem.id}
                 item={catalogItem}
