@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'service.apps.ServiceConfig',
     'recording.apps.RecordingConfig',
-    'admin_panel.apps.AdminPanelConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',

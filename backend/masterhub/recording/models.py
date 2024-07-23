@@ -1,63 +1,7 @@
 from django.db import models
 from user.models import ProfileMaster, CustomUser, Specialist
 from service.models import Service
-
-
-# Create your models here.
-class WorkTime(models.Model):
-    profile = models.ForeignKey(
-        ProfileMaster,
-        on_delete=models.CASCADE,
-        verbose_name='профиль',
-        blank=True,
-        null=True
-    )
-    specialist = models.ForeignKey(
-        Specialist,
-        on_delete=models.CASCADE,
-        related_name='work_time',
-        blank=True,
-        null=True
-    )
-
-    monday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-    tuesday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-    wednesday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-    thursday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-    friday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-    saturday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-    sunday = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text='время формата: 00:00-24:00'
-    )
-
-    class Meta:
-        verbose_name = 'рабочее время мастера/студии'
+from datetime import time
 
 
 class Recording(models.Model):
@@ -119,3 +63,37 @@ class Recording(models.Model):
 
     class Meta:
         verbose_name = 'запись'
+
+
+class WorkTime(models.Model):
+    profile_master = models.ForeignKey(
+        ProfileMaster,
+        verbose_name='Профиль мастера',
+        on_delete=models.CASCADE,
+        related_name='work_times',
+        blank=True,
+        null=True
+    )
+    specialist = models.ForeignKey(
+        Specialist,
+        verbose_name='Специалист',
+        on_delete=models.CASCADE,
+        related_name='work_times',
+        blank=True,
+        null=True
+    )
+    date = models.DateField(verbose_name='дата')
+    time_work = models.CharField(
+        verbose_name='рабочее время',
+        help_text='формат 00:00-24:00',
+        max_length=15
+    )
+    break_time = models.CharField(
+        verbose_name='время перерыва',
+        help_text='формат 00:00-24:00',
+        max_length=15,
+        blank=True
+    )
+
+    class Meta:
+        verbose_name = 'Рабочее время'

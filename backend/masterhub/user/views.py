@@ -111,8 +111,3 @@ class ReviewsProfileAPIView(GenericAPIView, ListModelMixin):
 class SpecialistAPIView(RetrieveAPIView):
     serializer_class = SpecialistDetailSerializer
     queryset = Specialist.objects.all()
-
-# class Test(APIView):
-#     def post(self, request):
-#         data = request.data
-#         return Response({'a':'wad'})

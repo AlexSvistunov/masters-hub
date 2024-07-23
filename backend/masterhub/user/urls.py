@@ -7,7 +7,6 @@ router.register('users', views.UsersViewSet, basename='users')
 router.register('favorites', views.FavoritesViewSet, basename='favorites')
 
 urlpatterns = [
-    # path('auth/token/login/', views.Test.as_view()),
     path('', include(router.urls)),
     path('services/<int:pk>/', views.ServicesProfileAPIView.as_view()),
     path('reviews/<int:pk>/', views.ReviewsProfileAPIView.as_view()),

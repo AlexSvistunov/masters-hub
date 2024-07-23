@@ -15,8 +15,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 
 
-// отзывы заменить цвет
-// think of redux and hooks to not repeat the logic
 
 // Additional: 
 
