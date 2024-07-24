@@ -1,8 +1,35 @@
-# React + Vite
+# **Mastershub - a two-in-one service for masters and clients**
+<h3>online records for clients. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+client management for masters and studios<h3>
 
-Currently, two official plugins are available:
+[View the project LIVE](https://masters-hub.vercel.app/): https://masters-hub.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech stack:
+Frontend: React, Redux Toolkit, tailwind, daisyUI, SCSS modules, react-router-dom, react-datepicker, swiper, vite
+
+Backend: Django
+
+## Functionality
+
++ Authentication
+
++ Catalog filtration (by categories, all | studio | master filter)
+
++ Adding to favorites
+
++ Appointment (with time, date)
+
++ Leaving a comment
+
++ Theme switcher
+
++ Viewing master | studio page
+
++ Viewing specialist page
+
+
+
+### Author: Alex Svistunov
+
+
