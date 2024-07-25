@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <div
-      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8"
+      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2"
       style={{ top: visible ? "0" : "-120px", transition: ".3s ease" }}
     >
       <Link
@@ -48,20 +48,26 @@ const Header = () => {
         MASTERS <span className="text-primary">HUB</span>
       </Link>
 
-      <div className="flex items-center tablet:gap-8">
+      <div className="flex items-center gap-4 tablet:flex-row flex-col">
         <div className="flex gap-5">
           {!token ? (
             <>
-              <Link to={"/login"} className="btn btn-primary">
-                Войти
-              </Link>
-              <Link to={"/register"} className="btn btn-primary">
-                Зарегистрироваться
-              </Link>
+              <div className="gap-3 flex flex-col tablet:flex-row">
+                <Link to={"/login"} className="btn btn-primary">
+                  Войти
+                </Link>
+                <Link to={"/register"} className="btn btn-primary">
+                  Зарегистрироваться
+                </Link>
+              </div>
+              {/* <button className="w-6 h-10 flex flex-col items-center justify-center gap-1.5">
+                <span className="w-full h-0.5 bg-current"></span>
+                <span className="w-full h-0.5 bg-current"></span>
+                <span className="w-full h-0.5 bg-current"></span>
+              </button> */}
             </>
           ) : (
             <div className="">
-              
               <details className="dropdown">
                 <summary className="m-1 btn bg-base-300 border-base-300 shadow-none">
                   <div className="avatar bg">
@@ -71,15 +77,15 @@ const Header = () => {
                   </div>
                 </summary>
                 <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                <li>
-                    <Link to='/'>Главная</Link>
+                  <li>
+                    <Link to="/">Главная</Link>
                   </li>
                   <li>
-                    <Link to='/notes'>Мои записи</Link>
+                    <Link to="/notes">Мои записи</Link>
                   </li>
 
                   <li>
-                    <Link to='/favorites'>Избранное</Link>
+                    <Link to="/favorites">Избранное</Link>
                   </li>
 
                   <li>
@@ -95,7 +101,9 @@ const Header = () => {
                   </li>
 
                   <li>
-                    <button onClick={() => dispatch(logOut({ token }))}>Выйти</button>
+                    <button onClick={() => dispatch(logOut({ token }))}>
+                      Выйти
+                    </button>
                   </li>
                 </ul>
               </details>
@@ -103,14 +111,10 @@ const Header = () => {
           )}
         </div>
 
-        <label
-          className=""
-          onClick={handleThemeChange}
-          style={{ cursor: "pointer" }}
-        >
+        <label className="cursor-pointer" onClick={handleThemeChange}>
           {stateTheme === "light" ? (
             <svg
-              className="fill-current w-10 h-10"
+              className="fill-current w-8 h-8"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -118,7 +122,7 @@ const Header = () => {
             </svg>
           ) : (
             <svg
-              className="fill-current w-10 h-10"
+              className="fill-current w-8 h-8"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >

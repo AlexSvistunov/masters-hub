@@ -8,8 +8,11 @@ export default {
   ],
   theme: {
     screens: {
+      'minimal-size': '360px',
+      
       'tablet': '640px',
       // => @media (min-width: 640px) { ... }
+      'default-tablet' : '768px',
 
       'laptop': '1024px',
       // => @media (min-width: 1024px) { ... }

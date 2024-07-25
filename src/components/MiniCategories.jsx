@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard";
 import { useFetch } from "../hooks/useFetch";
-import CategoryService from "./CategoryService";
+import CategoryService from "../service/CategoryService";
 
 const MiniCategories = () => {
   const [categories, setCategories] = useState([]);
