@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-
 import { tabsArray } from "../utils/tabs";
 
 const Tabs = () => {
