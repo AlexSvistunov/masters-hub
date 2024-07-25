@@ -34,3 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // поиск убавляется теги
 // у специалиста запись
 // loading favpage, recording page
+
+// функционал
+// фичи
+// подробнее про каждый функционал

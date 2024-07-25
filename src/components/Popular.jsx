@@ -24,15 +24,36 @@ const Popular = () => {
         <h2 className="text-4xl mb-5">Популярные</h2>
 
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
-          {popularItems?.length ? 
-            popularItems?.map((popularItem) => (
-              <CatalogCard
-                key={popularItem.id}
-                item={popularItem}
-                items={popularItems}
-                setItems={setPopularItems}
-              />
-            )) : null }
+          {popularItems?.length
+            ? popularItems?.map((popularItem) => (
+                <CatalogCard
+                  key={popularItem.id}
+                  item={popularItem}
+                  items={popularItems}
+                  setItems={setPopularItems}
+                />
+              ))
+            : [...Array(6)].map((_, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44"
+                >
+                  <div className="h-full w-full bg-base-200 p-4 flex items-center flex-col skeleton">
+                    <div className="flex items-center gap-5 mb-5 w-full">
+                      <div className="skeleton h-16 w-16"></div>
+                      <div className="flex flex-col gap-1">
+                        <div className="skeleton w-40 h-5"></div>
+                        <div className="skeleton w-40 h-5"></div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between w-full mt-auto">
+                      <div className="skeleton w-20 h-10"></div>
+                      <div className="skeleton w-20 h-10"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
     </section>
