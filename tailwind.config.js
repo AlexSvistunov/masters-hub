@@ -9,7 +9,8 @@ export default {
   theme: {
     screens: {
       'minimal-size': '360px',
-      
+      'phone': '540px',
+
       'tablet': '640px',
       // => @media (min-width: 640px) { ... }
       'default-tablet' : '768px',

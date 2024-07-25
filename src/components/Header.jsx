@@ -37,8 +37,8 @@ const Header = () => {
 
   return (
     <div
-      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2"
-      style={{ top: visible ? "0" : "-120px", transition: ".3s ease" }}
+      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2 flex-col phone:flex-row"
+      style={{ top: visible ? "0" : "-250px", transition: ".3s ease" }}
     >
       <Link
         to={"/"}
