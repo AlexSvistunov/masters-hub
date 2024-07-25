@@ -38,3 +38,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // функционал
 // фичи
 // подробнее про каждый функционал
+// menu
+// если тыкую на функцонал который только с авторизацией - то перекидывает на register + do you aleady have an account?
+// popular, minicatalog
