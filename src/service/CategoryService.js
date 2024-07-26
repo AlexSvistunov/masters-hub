@@ -7,3 +7,5 @@ export default class CategoryService {
       return data
   }
 }
+
+// token?

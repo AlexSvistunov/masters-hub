@@ -9,6 +9,8 @@ import EnrollModal from "../components/EnrollModal";
 import { useLocation } from "react-router-dom";
 import { logIn } from "../store/slices/userSlice";
 import SkeletonCatalog from "../components/SkeletonCatalog";
+import CatalogService from "../service/CatalogService";
+import axios from "axios";
 
 const CatalogPage = () => {
   const { state } = useLocation();
@@ -165,6 +167,22 @@ const CatalogPage = () => {
       getCategories();
     }
   }, [isCategoryModalOpen]);
+
+  async function getCat() {
+    const catalog = await CatalogService.getCatalog(
+      currentToken,
+      `${URL}/api/catalog/`,
+      searchQuery.specialization !== "all" ? searchQuery.specialization : null,
+      searchQuery.categories ? searchQuery.categories : null
+    );
+
+    console.log(catalog)
+
+  }
+
+  useEffect(() => {
+    getCat();
+  }, []);
 
   // const myCategory = chosenCategories.forEach((el) => {
   //   const my2 = categories.find((category) => category.id === el);
