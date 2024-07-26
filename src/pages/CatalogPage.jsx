@@ -181,7 +181,7 @@ const CatalogPage = () => {
   }
 
   useEffect(() => {
-    getCat();
+    // getCat();
   }, []);
 
   // const myCategory = chosenCategories.forEach((el) => {
