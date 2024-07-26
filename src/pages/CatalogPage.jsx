@@ -28,27 +28,12 @@ const CatalogPage = () => {
   const [catalogList, setCatalogList] = useState([]);
 
   const [step, setStep] = useState(0);
-
-  console.log(catalog);
-  console.log(catalogList);
-
-  // const myCategory = chosenCategories.forEach((el) => {
-  //   const my2 = categories.find((category) => category.id === el);
-  //   console.log("ITEM", my2["title"]);
-  // });
+  const { currentToken } = useAuth();
 
   const [searchQuery, setSearchQuery] = useState({
     specialization: "all",
     categories: state ? [id] : [],
   });
-
-  const { currentToken } = useAuth();
-
-  // const showMoreCatalog = async () => {
-  //   const {next} = catalog
-  //   // catalogFilter(next)
-  //   catalog(_, next)
-  // };
 
   const showMoreCatalog = async () => {
     const { next } = catalog;
@@ -69,7 +54,6 @@ const CatalogPage = () => {
           results: data.results,
         });
         setCatalogList(data.results);
-        // setCatalogList([...catalogList, ...data.results]);
       } catch (error) {
         console.log(error.message);
       }
@@ -156,13 +140,6 @@ const CatalogPage = () => {
     }
   };
 
-  useEffect(() => {
-    // fetchCatalog();
-    setTimeout(() => {
-      catalogFilter();
-    }, 0);
-  }, []);
-
   const getCategories = async () => {
     try {
       const response = await fetch(`${URL}/api/categories/`);
@@ -176,18 +153,33 @@ const CatalogPage = () => {
     }
   };
 
+  useEffect(() => {
+    // fetchCatalog();
+    setTimeout(() => {
+      catalogFilter();
+    }, 0);
+  }, []);
+
+  useEffect(() => {
+    if (isCategoryModalOpen) {
+      getCategories();
+    }
+  }, [isCategoryModalOpen]);
+
+  // const myCategory = chosenCategories.forEach((el) => {
+  //   const my2 = categories.find((category) => category.id === el);
+  //   console.log("ITEM", my2["title"]);
+  // });
+  // const showMoreCatalog = async () => {
+  //   const {next} = catalog
+  //   // catalogFilter(next)
+  //   catalog(_, next)
+  // };
+
   // const filterCatalog = async (id) => {
   //   const response = await fetch(`${URL}/api/catalog/?categories=${id}`);
   //   const data = await response.json();
   // };
-
-  useEffect(() => {
-    // if (isCategoryModalOpen) {
-    //   getCategories();
-    // }
-
-    getCategories();
-  }, [isCategoryModalOpen]);
 
   // useEffect(() => {
   //   catalogFilter()
@@ -208,9 +200,11 @@ const CatalogPage = () => {
               <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
                 {isLoading ? (
                   <>
-                    {Array(3).fill(null).map((skeletonItem, index) => (
-                       <SkeletonCatalog key={index}/>
-                    ))}
+                    {Array(3)
+                      .fill(null)
+                      .map((skeletonItem, index) => (
+                        <SkeletonCatalog key={index} />
+                      ))}
                   </>
                 ) : catalogList?.length ? (
                   catalogList?.map((catalogItem) => (

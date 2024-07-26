@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { URL } from "../utils/backend-url";
 import CatalogCard from "./CatalogCard";
+import { useFetch } from "../hooks/useFetch";
 
 const Popular = () => {
   const [popularItems, setPopularItems] = useState([]);
-  const getPopular = async () => {
-    try {
-      const response = await fetch(`${URL}/api/popular/`);
-      const data = await response.json();
-      setPopularItems(data);
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
+
+  const [getPopular, isLoading, error] = useFetch(async () => {
+    const response = await fetch(`${URL}/api/popular/`);
+    const data = await response.json();
+    setPopularItems(data);
+  });
 
   useEffect(() => {
     getPopular();
@@ -24,16 +22,10 @@ const Popular = () => {
         <h2 className="text-4xl mb-5">Популярные</h2>
 
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
-          {popularItems?.length
-            ? popularItems?.map((popularItem) => (
-                <CatalogCard
-                  key={popularItem.id}
-                  item={popularItem}
-                  items={popularItems}
-                  setItems={setPopularItems}
-                />
-              ))
-            : [...Array(6)].map((_, index) => (
+          {error && <h3>{error}</h3>}
+
+          {isLoading
+            ? [...Array(6)].map((_, index) => (
                 <div
                   key={index}
                   className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44"
@@ -53,6 +45,14 @@ const Popular = () => {
                     </div>
                   </div>
                 </div>
+              ))
+            : popularItems.map((popularItem) => (
+                <CatalogCard
+                  key={popularItem.id}
+                  item={popularItem}
+                  items={popularItems}
+                  setItems={setPopularItems}
+                />
               ))}
         </div>
       </div>

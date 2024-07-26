@@ -11,7 +11,6 @@ const MiniCatalog = () => {
 
   const [step, setStep] = useState(0);
 
-
   const getCatalogItem = async () => {
     try {
       const headers = {};
