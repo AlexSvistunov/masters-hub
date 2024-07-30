@@ -14,6 +14,6 @@ export const useFetch = (fetchCallback) => {
     }
   }
 
-  return [fetch, isLoading, error]
+  return [fetch, isLoading, error, fetchCallback]
 
 }

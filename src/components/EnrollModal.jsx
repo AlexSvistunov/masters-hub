@@ -38,6 +38,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   useEffect(() => {
     if (isModalOpen) {
+      console.log('modal open')
       getEnrollServices(id);
     }
 
@@ -50,7 +51,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     };
   }, [isModalOpen]);
 
-  useEffect(() => {});
 
   const nextStep = () => {
     setStep((prev) => prev + 1);

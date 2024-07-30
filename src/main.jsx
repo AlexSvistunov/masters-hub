@@ -41,3 +41,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // menu
 // если тыкую на функцонал который только с авторизацией - то перекидывает на register + do you aleady have an account?
 // popular, minicatalog
+
+// попбробовать useFetch передать колбек
