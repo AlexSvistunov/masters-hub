@@ -187,7 +187,7 @@ const CatalogPage = () => {
   // const myCategory = chosenCategories.forEach((el) => {
   //   const my2 = categories.find((category) => category.id === el);
   //   console.log("ITEM", my2["title"]);
-  // });
+  // });4
   // const showMoreCatalog = async () => {
   //   const {next} = catalog
   //   // catalogFilter(next)

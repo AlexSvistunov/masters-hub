@@ -20,4 +20,21 @@ export default class CatalogService {
 
 
   }
+
+  static async getMiniCatalog(token, urlString = `${URL}/api/catalog/`) {
+    const headers = {};
+    if (token) {
+      headers.Authorization = `Token ${token}`;
+    }
+    const response = await fetch(urlString, {
+      method: 'GET',
+      headers,
+     
+    })
+
+    return response
+  }
+
+
+  
 }

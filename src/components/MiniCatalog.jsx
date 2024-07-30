@@ -4,34 +4,22 @@ import { Link } from "react-router-dom";
 import { URL } from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "./EnrollModal";
+import { useFetch } from "../hooks/useFetch";
+import CatalogService from "../service/CatalogService";
 
 const MiniCatalog = () => {
   const [catalogItems, setCatalogItems] = useState([]);
   const { currentToken } = useAuth();
-
   const [step, setStep] = useState(0);
 
-  const getCatalogItem = async () => {
-    try {
-      const headers = {};
-      if (currentToken) {
-        headers.Authorization = `Token ${currentToken}`;
-      }
-      const reponse = await fetch(`${URL}/api/catalog/`, {
-        method: "GET",
-        headers,
-      });
-      const data = await reponse.json();
-
-      setCatalogItems(data.results);
-      return data;
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
   useEffect(() => {
-    getCatalogItem();
+    getCatalog();
   }, []);
+
+  const [getCatalog, isLoading, error] = useFetch(async () => {
+    const response = await CatalogService.getCatalog(currentToken);
+    setCatalogItems(response.data.results);
+  });
 
   return (
     <section className="p-7">
@@ -39,19 +27,10 @@ const MiniCatalog = () => {
         <h2 className="text-4xl mb-5">Каталог</h2>
         <></>
 
+        {error && <h3 className="text-center">{error}</h3>}
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
-          {catalogItems?.length ? (
-            catalogItems?.map((catalogItem) => (
-              <CatalogCard
-                key={catalogItem.id}
-                item={catalogItem}
-                items={catalogItems}
-                setItems={setCatalogItems}
-              />
-            ))
-          ) : (
-            <>
-              {[...Array(3)].map((_, index) => (
+          {isLoading
+            ? [...Array(3)].map((_, index) => (
                 <div
                   key={index}
                   className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44"
@@ -71,9 +50,15 @@ const MiniCatalog = () => {
                     </div>
                   </div>
                 </div>
+              ))
+            : catalogItems.map((catalogItem) => (
+                <CatalogCard
+                  key={catalogItem.id}
+                  item={catalogItem}
+                  items={catalogItems}
+                  setItems={setCatalogItems}
+                />
               ))}
-            </>
-          )}
         </div>
 
         <div className="flex justify-center">
