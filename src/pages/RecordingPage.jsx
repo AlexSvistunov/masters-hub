@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
-import { URL } from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import { Link } from "react-router-dom";
 
 const RecordingPage = () => {

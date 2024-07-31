@@ -1,4 +1,4 @@
-import { URL } from "../utils/backend-url";
+import  URL  from "../utils/backend-url";
 
 export default class CategoryService {
   static async getAllCategories() {

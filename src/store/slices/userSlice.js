@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { URL } from "../../utils/backend-url";
+import URL from "../../utils/backend-url";
 
 export const logIn = createAsyncThunk(
   "user/logIn",
   async ({ password, email }) => {
-
-
     try {
       const response = await fetch(`${URL}/api/auth/token/login/`, {
         method: "POST",
@@ -17,7 +15,7 @@ export const logIn = createAsyncThunk(
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       return data;
     } catch (error) {
       alert(error.message);
@@ -28,7 +26,6 @@ export const logIn = createAsyncThunk(
 export const signUp = createAsyncThunk(
   "user/signUp",
   async ({ email, username, specialization, password }) => {
-
     try {
       const response = await fetch(`${URL}/api/users/`, {
         method: "POST",
@@ -44,7 +41,7 @@ export const signUp = createAsyncThunk(
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       return data;
     } catch (error) {
       alert(error);
@@ -67,9 +64,11 @@ export const logOut = createAsyncThunk("user/logOut", async ({ token }) => {
 });
 
 const initialState = {
-  token: localStorage.getItem("token")?.length && localStorage.getItem('token') !== 'undefined'
-    ? localStorage.getItem("token")
-    : null,
+  token:
+    localStorage.getItem("token")?.length &&
+    localStorage.getItem("token") !== "undefined"
+      ? localStorage.getItem("token")
+      : null,
 };
 
 const userSlice = createSlice({
@@ -88,12 +87,10 @@ const userSlice = createSlice({
         state.token = action.payload.auth_token;
         localStorage.setItem("token", action.payload.auth_token);
       } else {
-        for(let key in action.payload) {
-          alert(`Некорректный ${key}`)
+        for (let key in action.payload) {
+          alert(`Некорректный ${key}`);
         }
       }
-
-
     });
 
     builder.addCase(logIn.fulfilled, (state, action) => {

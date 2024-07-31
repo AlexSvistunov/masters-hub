@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { URL } from "/src/utils/backend-url";
+import  URL  from "/src/utils/backend-url";
 import Services from "../components/Services";
 import Header from "../components/Header";
 

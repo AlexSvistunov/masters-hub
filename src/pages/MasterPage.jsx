@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import { URL } from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import { useEffect, useState } from "react";
 import CatalogCard from "../components/CatalogCard";
 import useAuth from "../hooks/useAuth";
@@ -82,16 +82,15 @@ const MasterPage = () => {
           Authorization: `Token ${currentToken}`,
           "Content-Type": "application/json",
         },
-  
+
         body: JSON.stringify(obj),
       });
       const data = await response.json();
-      setIsLeavingCommentOpen(false)
+      setIsLeavingCommentOpen(false);
       console.log(data);
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-    
   };
 
   const recordingSlots = async (masterId) => {
@@ -198,8 +197,12 @@ const MasterPage = () => {
                     </button>
                   )}
 
-                  {isLeavingCommentOpen && <LeavingComment isLeavingCommentOpen={isLeavingCommentOpen} sendReview={sendReview}/>}
-                  
+                  {isLeavingCommentOpen && (
+                    <LeavingComment
+                      isLeavingCommentOpen={isLeavingCommentOpen}
+                      sendReview={sendReview}
+                    />
+                  )}
                 </div>
               </div>
 

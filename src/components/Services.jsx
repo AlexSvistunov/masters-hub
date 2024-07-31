@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import EnrollModal from "./EnrollModal";
 import useAuth from "../hooks/useAuth";
 
-import {URL} from '../utils/backend-url.js'
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 

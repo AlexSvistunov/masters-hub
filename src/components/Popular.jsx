@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { URL } from "../utils/backend-url";
+import  URL  from "../utils/backend-url";
 import CatalogCard from "./CatalogCard";
 import { useFetch } from "../hooks/useFetch";
 

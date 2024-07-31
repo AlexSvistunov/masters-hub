@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CatalogCard from "./CatalogCard";
 import { Link } from "react-router-dom";
-import { URL } from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import EnrollModal from "./EnrollModal";
 import { useFetch } from "../hooks/useFetch";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ChooseService from "./ChooseService";
-import { URL } from "../utils/backend-url";
+import  URL  from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";

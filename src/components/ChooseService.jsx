@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { URL } from "../utils/backend-url";
+import  URL  from "../utils/backend-url";
 import ServiceItem from "./ServiceItem";
 import { MoonLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";

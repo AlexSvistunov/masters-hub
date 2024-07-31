@@ -1,8 +1,8 @@
 import axios from "axios";
-import { URL } from "../utils/backend-url";
+import  URL  from "../utils/backend-url";
 
 export default class CatalogService {
-  static async getCatalog(token, urlString = `${URL}/api/catalog/`, specialization = null, categories = null) {
+  static async getCatalog(token, urlString = `${URL}/api/catalog/`, specialization = null, categories = null, pageNumber = null) {
     console.log(categories)
     const headers = {};
     if (token) {
@@ -18,7 +18,8 @@ export default class CatalogService {
       headers,
       params: {
         specialization,
-        categories: categories
+        categories: categories,
+        page: pageNumber
       },
       paramsSerializer: {
         indexes: null,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { URL } from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import { addToFav } from "../store/slices/favSlice";
 import { deleteFromFav } from "../store/slices/favSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +69,7 @@ const CatalogCard = ({ item, items, setItems, keyword }) => {
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          if(!token) return
+          if (!token) return;
 
           if (item?.is_favorite || item?.is_favorites) {
             if (keyword === "fav") {

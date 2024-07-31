@@ -1,19 +1,19 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { URL } from "../utils/backend-url";
+import URL from "../utils/backend-url";
 
 const CreateProfile = () => {
   const { currentToken } = useAuth();
 
   const [profileFields, setProfileFields] = useState({
-    name: '',
-    address: '',
-    phone: '',
-    specialization: '',
-    link_vk: '',
-    link_tg: '',
-    description: '',
-  })
+    name: "",
+    address: "",
+    phone: "",
+    specialization: "",
+    link_vk: "",
+    link_tg: "",
+    description: "",
+  });
 
   console.log(profileFields);
 
@@ -26,16 +26,15 @@ const CreateProfile = () => {
   };
 
   const createProfile = async () => {
-
     const testObject = {
-      "name": "Алексей",
-      "address": "Улица Ленина, д. 12",
-      "phone": "79525941396",
-      "specialization": "master",
-      "link_vk": "vk.com/alexsvistunov",
-      "link_tg": "@alex_666",
-      "description": "крутой тип"
-  }
+      name: "Алексей",
+      address: "Улица Ленина, д. 12",
+      phone: "79525941396",
+      specialization: "master",
+      link_vk: "vk.com/alexsvistunov",
+      link_tg: "@alex_666",
+      description: "крутой тип",
+    };
 
     try {
       const response = await fetch(`${URL}/admin-panel/profile/`, {
@@ -107,7 +106,9 @@ const CreateProfile = () => {
         ></input>
       </div>
 
-      <button className="btn btn-primary my-2" onClick={createProfile}>Создать профиль</button>
+      <button className="btn btn-primary my-2" onClick={createProfile}>
+        Создать профиль
+      </button>
     </div>
   );
 };

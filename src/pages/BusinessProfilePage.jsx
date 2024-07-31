@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { URL } from "../utils/backend-url";
+import  URL  from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 

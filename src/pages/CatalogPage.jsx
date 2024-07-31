@@ -10,7 +10,7 @@ import SkeletonCatalog from "../components/SkeletonCatalog";
 import CatalogService from "../service/CatalogService";
 import CatalogCard from "../components/CatalogCard";
 import CategoryService from "../service/CategoryService";
-import { URL } from "../utils/backend-url";
+import serverURL from "../utils/backend-url";
 
 const CatalogPage = () => {
   const { currentToken } = useAuth();
@@ -18,6 +18,10 @@ const CatalogPage = () => {
   const [catalog, setCatalog] = useState([]);
   const [catalogList, setCatalogList] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [pageNumber, setPageNumber] = useState(null);
+
+  console.log("catalog", catalog);
+  console.log("catalogList", catalogList);
 
   const [sort, setSort] = useState({
     specialization: "all",
@@ -31,9 +35,10 @@ const CatalogPage = () => {
   async function getCatalogCallback() {
     const response = await CatalogService.getCatalog(
       currentToken,
-      `${URL}/api/catalog/`,
+      `${serverURL}/api/catalog/`,
       sort.specialization,
-      sort.categories
+      sort.categories,
+      pageNumber
     );
     setCatalog(response.data);
     setCatalogList(response.data.results);
@@ -52,7 +57,7 @@ const CatalogPage = () => {
     if (!isCategoryModalOpen) {
       getCatalog();
     }
-  }, [sort, isCategoryModalOpen]);
+  }, [sort, isCategoryModalOpen, pageNumber]);
 
   useEffect(() => {
     if (isCategoryModalOpen) {
@@ -101,7 +106,19 @@ const CatalogPage = () => {
 
               <div className="flex justify-center p-5">
                 {catalog?.next ? (
-                  <button onClick={() => {}} className="btn my-5">
+                  <button
+                    onClick={() => {
+                      const nextString = catalog?.next
+                      const url = new URL(nextString);
+
+                      const pageNum = url.searchParams.get("page")
+                        ? url.searchParams.get("page")
+                        : null;
+
+                        setPageNumber(pageNum)
+                    }}
+                    className="btn my-5"
+                  >
                     Показать еще
                   </button>
                 ) : (
