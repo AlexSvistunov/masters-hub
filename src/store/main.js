@@ -13,3 +13,5 @@ export const store = configureStore({
   },
 });
 
+
+// console.log([10, 0].map(el => `&categories=${el}`).join(''))

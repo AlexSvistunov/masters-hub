@@ -10,6 +10,7 @@ import SkeletonCatalog from "../components/SkeletonCatalog";
 import CatalogService from "../service/CatalogService";
 import CatalogCard from "../components/CatalogCard";
 import CategoryService from "../service/CategoryService";
+import { URL } from "../utils/backend-url";
 
 const CatalogPage = () => {
   const { currentToken } = useAuth();
@@ -27,14 +28,13 @@ const CatalogPage = () => {
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
-  async function getCatalogCallback(string) {
-    console.log(string)
-    const response = await CatalogService.getCatalog(currentToken);
+  async function getCatalogCallback() {
+    const response = await CatalogService.getCatalog(currentToken, `${URL}/api/catalog/`, sort.specialization, sort.categories);
     setCatalog(response.data);
     setCatalogList(response.data.results);
   }
 
-  const [getCatalog, isLoading, error, callback] = useFetch(getCatalogCallback);
+  const [getCatalog, isLoading, error] = useFetch(getCatalogCallback);
 
   const [getCategories, isCategoriesLoading, categoriesError] = useFetch(
     async () => {
@@ -44,9 +44,9 @@ const CatalogPage = () => {
   );
 
   useEffect(() => {
-    getCatalog();
-    callback('CALLBACK')
-  }, []);
+    getCatalog('123');
+  }, [sort]);
+
 
   useEffect(() => {
     if (isCategoryModalOpen) {
@@ -209,8 +209,11 @@ const CatalogPage = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col gap-2 py-10">
+              {categoriesError && (
+                <h3 className="text-center text-2xl">{categoriesError}</h3>
+              )}
               {isCategoriesLoading ? (
-                <h3>Loading...</h3>
+                <h3 className="text-center text-2xl">Loading...</h3>
               ) : (
                 categories.map((category) => (
                   <label key={category.id} className="flex items-center gap-3">
