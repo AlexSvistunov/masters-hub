@@ -57,6 +57,7 @@ const CatalogPage = () => {
     if (!isCategoryModalOpen) {
       getCatalog();
     }
+
   }, [sort, isCategoryModalOpen, pageNumber]);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const CatalogPage = () => {
   }, [isCategoryModalOpen]);
 
   const onChangeCategoriesHandler = (id) => {
+    setPageNumber(null)
     const isExist = sort.categories.some((category) => category === id);
 
     if (isExist) {
@@ -182,7 +184,10 @@ const CatalogPage = () => {
                     name="type"
                     value="all"
                     onChange={(e) =>
+                    {
+                      setPageNumber(null)
                       setSort({ ...sort, specialization: e.target.value })
+                    }
                     }
                     checked={sort.specialization === "all"}
                   ></input>
@@ -195,7 +200,10 @@ const CatalogPage = () => {
                     name="type"
                     value="master"
                     onChange={(e) =>
+                     {
+                      setPageNumber(null)
                       setSort({ ...sort, specialization: e.target.value })
+                     }
                     }
                     checked={sort.specialization === "master"}
                   ></input>
@@ -207,8 +215,11 @@ const CatalogPage = () => {
                     type="radio"
                     name="type"
                     value="studio"
-                    onChange={(e) =>
+                    onChange={(e) =>{
+                      setPageNumber(null)
                       setSort({ ...sort, specialization: e.target.value })
+                    }
+                      
                     }
                     checked={sort.specialization === "studio"}
                   ></input>
