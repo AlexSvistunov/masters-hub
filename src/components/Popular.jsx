@@ -2,13 +2,24 @@ import { useEffect, useState } from "react";
 import  URL  from "../utils/backend-url";
 import CatalogCard from "./CatalogCard";
 import { useFetch } from "../hooks/useFetch";
+import useAuth from "../hooks/useAuth";
 
 const Popular = () => {
   const [popularItems, setPopularItems] = useState([]);
+  const {currentToken} = useAuth()
 
   const [getPopular, isLoading, error] = useFetch(async () => {
-    const response = await fetch(`${URL}/api/popular/`);
+    const headers = {};
+    if (currentToken) {
+      headers.Authorization = `Token ${currentToken}`;
+    }
+
+    const response = await fetch(`${URL}/api/popular/`, {
+      method: 'GET',
+      headers
+    });
     const data = await response.json();
+    console.log(data)
     setPopularItems(data);
   });
 

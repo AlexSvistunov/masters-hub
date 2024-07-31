@@ -43,3 +43,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // popular, minicatalog
 
 // попбробовать useFetch передать колбек
+
+// search catalogpage
+// avatar user
+// show more reviews
+// popular fav
+// popular design
+// fav loading
+// continue decomposition
