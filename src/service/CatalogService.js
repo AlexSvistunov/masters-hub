@@ -18,8 +18,11 @@ export default class CatalogService {
       headers,
       params: {
         specialization,
-        categories: `${categories.join('')}`
-      } 
+        categories: categories
+      },
+      paramsSerializer: {
+        indexes: null,
+      }
     })
 
     return response

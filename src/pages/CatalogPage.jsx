@@ -29,7 +29,12 @@ const CatalogPage = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
   async function getCatalogCallback() {
-    const response = await CatalogService.getCatalog(currentToken, `${URL}/api/catalog/`, sort.specialization, sort.categories);
+    const response = await CatalogService.getCatalog(
+      currentToken,
+      `${URL}/api/catalog/`,
+      sort.specialization,
+      sort.categories
+    );
     setCatalog(response.data);
     setCatalogList(response.data.results);
   }
@@ -44,9 +49,10 @@ const CatalogPage = () => {
   );
 
   useEffect(() => {
-    getCatalog('123');
-  }, [sort]);
-
+    if (!isCategoryModalOpen) {
+      getCatalog();
+    }
+  }, [sort, isCategoryModalOpen]);
 
   useEffect(() => {
     if (isCategoryModalOpen) {
@@ -63,10 +69,6 @@ const CatalogPage = () => {
     } else {
       setSort({ ...sort, categories: [...sort.categories, id] });
     }
-  };
-
-  const sortByTypeAndCategories = () => {
-    getCatalog();
   };
 
   return (
