@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import  URL  from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import CatalogCard from "./CatalogCard";
 import { useFetch } from "../hooks/useFetch";
 import useAuth from "../hooks/useAuth";
 
 const Popular = () => {
   const [popularItems, setPopularItems] = useState([]);
-  const {currentToken} = useAuth()
+  const { currentToken } = useAuth();
 
   const [getPopular, isLoading, error] = useFetch(async () => {
     const headers = {};
@@ -15,13 +15,14 @@ const Popular = () => {
     }
 
     const response = await fetch(`${URL}/api/popular/`, {
-      method: 'GET',
-      headers
+      method: "GET",
+      headers,
     });
+
     const data = await response.json();
-    console.log(data)
     setPopularItems(data);
   });
+
 
   useEffect(() => {
     getPopular();
@@ -31,12 +32,10 @@ const Popular = () => {
     <section className="p-7">
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Популярные</h2>
-
+        {error && <h3 className="text-center text-2xl">{error}</h3>}
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
-          {error && <h3>{error}</h3>}
-
           {isLoading
-            ? [...Array(6)].map((_, index) => (
+            ? [...Array(6)]?.map((_, index) => (
                 <div
                   key={index}
                   className="flex flex-col gap-4 col-span-4 rounded-xl min-h-44"
@@ -57,7 +56,7 @@ const Popular = () => {
                   </div>
                 </div>
               ))
-            : popularItems.map((popularItem) => (
+            : popularItems?.map((popularItem) => (
                 <CatalogCard
                   key={popularItem.id}
                   item={popularItem}

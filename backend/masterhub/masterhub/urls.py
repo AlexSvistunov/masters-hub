@@ -19,12 +19,14 @@ from django.urls import path, include, re_path
 from .swagger import urlpatterns as urlpatterns_swagger
 from django.conf import settings
 from django.conf.urls.static import static
+# from djoser.serializers import
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('user.urls')),
     path('api/', include('service.urls')),
     path('api/', include('recording.urls')),
+    path('api/admin-panel/',include('admin_panel.urls')),
     # re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^api/auth/', include('djoser.urls.authtoken')),
     path("__debug__/", include("debug_toolbar.urls"))

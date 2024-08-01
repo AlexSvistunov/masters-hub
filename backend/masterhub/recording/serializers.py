@@ -5,7 +5,7 @@ from user.models import Specialist
 from service.models import Service
 from user.models import ProfileMaster
 from .models import Recording, WorkTime
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 
 class SpecialistSerializer(serializers.ModelSerializer):
@@ -90,18 +90,50 @@ class RecordinCreateSerializer(serializers.Serializer):
     surname = serializers.CharField(max_length=30)
     phone = serializers.CharField(max_length=12)
 
+    def save(self, **kwargs):
+        data = self.data
+        time_data = data.pop('time')
+        service = Service.objects.get(id=data['service'])
+        data['service'] = service
+        data['time_start'] = time(hour=int(time_data[:2]), minute=int(time_data[3:]))
+        service_time = service.time
+        hour = data['time_start'].hour + service_time.hour
+        minute = data['time_start'].minute + service_time.minute
+        data['time_end'] = time(hour=hour, minute=minute)
+        data['date'] = datetime.strptime(data['date'], '%Y-%m-%d')
+        data['profile_master'] = service.profile
+        if data['profile_master'].specialization != 'master':
+            data['specialist'] = service.specialist
+        recording = Recording(**data, user=kwargs.get('user'))
+        recording.save()
+
 
 class WorkTimeSerializer(serializers.Serializer):
     time = serializers.SerializerMethodField()
 
     def get_time(self, obj: WorkTime):
         time_relax = self.context.get('profile').time_relax
-        time = obj.time_work.split('-')
-        time_start = timedelta(hours=int(time[0][:2]), minutes=int(time[0][-2:]))
-        time_end = timedelta(hours=int(time[1][:2]), minutes=int(time[1][-2:]))
+        time_work = obj.time_work.split('-')
+        time_break = obj.break_time.split('-')
+        time_start = timedelta(hours=int(time_work[0][:2]), minutes=int(time_work[0][-2:]))
+        time_end = timedelta(hours=int(time_work[1][:2]), minutes=int(time_work[1][-2:]))
+        time_break_start = timedelta(hours=int(time_break[0][:2]), minutes=int(time_break[0][-2:]))
+        time_break_end = timedelta(hours=int(time_break[1][:2]), minutes=int(time_break[1][-2:]))
         time_relax = timedelta(hours=time_relax.hour, minutes=time_relax.minute)
+        service = self.context.get('service')
+        service_time = timedelta(hours=service.time.hour, minutes=service.time.minute)
+        recordings = list(self.context.get('recordings').order_by('time_start'))
         result = []
-        while time_start<=time_end:
-            result.append(str(time_start)[:-3])
-            time_start+=time_relax
+        while time_start + service_time <= time_end:
+            if recordings:
+                recording_time_start = timedelta(hours=recordings[0].time_start.hour,
+                                                 minutes=recordings[0].time_start.minute)
+                recording_time_end = timedelta(hours=recordings[0].time_end.hour,
+                                               minutes=recordings[0].time_start.minute)
+                if not time_start + time_relax + service_time <= recording_time_start:
+                    time_start = recording_time_end + time_relax
+                    recordings.pop(0)
+            if time_start+service_time<=time_break_start or time_start>=time_break_end:
+                result.append(str(time_start)[:-3])
+            time_start += time_relax
         return result

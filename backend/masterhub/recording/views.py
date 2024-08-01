@@ -7,9 +7,6 @@ from user.models import ProfileMaster
 from .models import Recording, WorkTime
 from service.models import Service
 from .serializers import ServicesRecordingSerializer, RecordingSerializer, RecordinCreateSerializer, WorkTimeSerializer
-from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
-from datetime import timedelta
-from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, permissions
 from django.shortcuts import get_object_or_404
@@ -17,7 +14,7 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
-class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModelMixin, ListModelMixin):
+class SpecialistRecordingAPIView(GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ServicesRecordingSerializer
 
@@ -45,8 +42,25 @@ class SpecialistRecordingAPIView(GenericViewSet, RetrieveModelMixin, CreateModel
 
     @action(methods=['get'], detail=True, url_path='service')
     def recording(self, request, *args, **kwargs):
+        date = request.GET.get('date', None)
+        if date:
+            date = datetime.datetime.strptime(date, '%Y-%m-%d')
+        else:
+            date = datetime.date.today()
         service = get_object_or_404(Service, id=kwargs.get('pk'))
         profile = service.profile
+        if profile.specialization == 'master':
+            recordings = Recording.objects.filter(profile_master=profile, date=date)
+        else:
+            recordings = Recording.objects.filter(specialist=service.specialist, date=date)
         work_time = WorkTime.objects.get(id=1)
-        serializer = WorkTimeSerializer(work_time, context={'profile': profile})
+        serializer = WorkTimeSerializer(work_time,
+                                        context={'profile': profile, 'recordings': recordings, 'service': service})
+        return Response(serializer.data)
+
+    def create(self, request):
+        data = request.data
+        serializer = RecordinCreateSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
         return Response(serializer.data)

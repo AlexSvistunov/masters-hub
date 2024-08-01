@@ -26,7 +26,7 @@ class UsersViewSet(GenericViewSet, RetrieveModelMixin):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             token = Token.objects.create(user=user)
-            return Response({'auth_token': token.key})
+            return Response({'auth_token': token.key, 'image': user.photo.url})
 
     def get_serializer_class(self):
         if self.action == 'create':

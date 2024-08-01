@@ -11,6 +11,7 @@ const Login = () => {
   const loginHandler = async ({email, password}) => {
 
     await dispatch(logIn({ email, password })).then((data) => {
+      console.log(data)
       if (data.payload.auth_token) {
         navigate('/');
       }

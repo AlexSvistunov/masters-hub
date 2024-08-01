@@ -118,7 +118,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     console.log(formattedDate);
 
     const obj = {
-      profile: id,
       time: chosenTime,
       date: formattedDate,
       service: chosenService,
@@ -126,6 +125,8 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       surname: surname,
       phone: phone,
     };
+
+    console.log(obj)
 
     try {
       const response = await fetch(`${URL}/api/recording/`, {

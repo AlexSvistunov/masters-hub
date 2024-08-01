@@ -19,7 +19,7 @@ const MiniCategories = () => {
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Категории</h2>
         <div className="flex gap-4 tablet:flex-row flex-col">
-          {error && <h3>{error}</h3>}
+          {error && <h3 className="text-center text-2xl">{error}</h3>}
           {isLoading ? (
             <>
               {Array(3)

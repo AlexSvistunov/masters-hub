@@ -13,6 +13,7 @@ const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
   const [visible, setVisible] = useState(true);
   const token = useSelector((state) => state.user.token);
+  const image = useSelector((state) => state.user.image);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,7 +74,8 @@ const Header = () => {
                 <summary className="m-1 btn bg-base-300 border-base-300 shadow-none">
                   <div className="avatar bg">
                     <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                      {/* <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" /> */}
+                      <img src={image} alt="" />
                     </div>
                   </div>
                 </summary>

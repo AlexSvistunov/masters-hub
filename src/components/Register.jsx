@@ -15,10 +15,10 @@ const Register = () => {
   }) => {
     await dispatch(signUp({ email, username, specialization, password })).then(
       (data) => {
-        if(data.payload.auth_token) {
-          navigator('/')
+        console.log(data)
+        if (data.payload.auth_token) {
+          navigator("/");
         }
-        
       }
     );
   };

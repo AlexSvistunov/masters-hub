@@ -69,6 +69,11 @@ const initialState = {
     localStorage.getItem("token") !== "undefined"
       ? localStorage.getItem("token")
       : null,
+  image:
+    localStorage.getItem("img")?.length &&
+    localStorage.getItem("img") !== "undefined"
+      ? localStorage.getItem("img")
+      : null,
 };
 
 const userSlice = createSlice({
@@ -77,15 +82,20 @@ const userSlice = createSlice({
   reducers: {
     removeUser: (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("img");
       state.token = null;
+      state.image = null;
     },
   },
 
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
+      console.log(action);
       if (action.payload.auth_token) {
         state.token = action.payload.auth_token;
+        state.image = `/backend/masterhub/static${action.payload.image}`;
         localStorage.setItem("token", action.payload.auth_token);
+        localStorage.setItem("img", `/backend/masterhub/static${action.payload.image}`);
       } else {
         for (let key in action.payload) {
           alert(`Некорректный ${key}`);
@@ -97,6 +107,8 @@ const userSlice = createSlice({
       if (action.payload.auth_token) {
         state.token = action.payload.auth_token;
         localStorage.setItem("token", action.payload.auth_token);
+        state.image = `/backend/masterhub/static${action.payload.image}`;
+        localStorage.setItem("img", `/backend/masterhub/static${action.payload.image}`);
       }
 
       if (action.payload["non_field_errors"]) {
@@ -106,7 +118,9 @@ const userSlice = createSlice({
 
     builder.addCase(logOut.fulfilled, (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("img");
       state.token = null;
+      state.image = null
     });
 
     builder.addCase(logOut.rejected, () => {

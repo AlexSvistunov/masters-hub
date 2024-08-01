@@ -1,8 +1,11 @@
 from django.contrib.auth.password_validation import validate_password
+from djoser.conf import settings
+
 from .models import CustomUser, ProfileMaster, ProfileImages, Specialist, Reviews, Favorites
 from rest_framework import serializers
 from service.models import Service
 from recording.serializers import ServicesSerializer
+from djoser.serializers import TokenCreateSerializer, TokenSerializer
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -188,3 +191,15 @@ class SpecialistDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialist
         fields = ['id', 'name', 'job', 'description', 'photo', 'services', 'images_work']
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    auth_token = serializers.CharField(source="key")
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, obj):
+        return obj.user.photo.url
+
+    class Meta:
+        model = settings.TOKEN_MODEL
+        fields = ("auth_token", "image")

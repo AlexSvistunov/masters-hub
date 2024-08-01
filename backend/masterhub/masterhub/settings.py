@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'service.apps.ServiceConfig',
     'recording.apps.RecordingConfig',
+    'admin_panel.apps.AdminPanelConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
@@ -145,7 +146,10 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 DJOSER = {
-    'LOGIN_FIELD': 'email'
+    'LOGIN_FIELD': 'email',
+    'SERIALIZERS': {
+        'token': 'user.serializers.TokenSerializer'
+    }
 }
 
 # python -Xutf8 manage.py dumpdata --indent=2 -o db.json
