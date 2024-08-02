@@ -5,7 +5,6 @@ from .models import CustomUser, ProfileMaster, ProfileImages, Specialist, Review
 from rest_framework import serializers
 from service.models import Service
 from recording.serializers import ServicesSerializer
-from djoser.serializers import TokenCreateSerializer, TokenSerializer
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -19,6 +18,28 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def save(self):
         return CustomUser.objects.create_user(**self.initial_data)
+
+
+class ReviewsProfileSerializerr(serializers.Serializer):
+    reviews = serializers.SerializerMethodField()
+
+    def get_reviews(self, obj):
+        queryset = obj.reviews_profile.all().select_related('user')
+        len_queryset = len(queryset)
+        data = {
+            'count': len_queryset,
+        }
+        if len_queryset == 0:
+            average_rating = 'нет отзывов'
+        else:
+            rating_star_all = [i.get_rating_star_display() for i in queryset]
+            rating_detail = {f'rating_{i}': rating_star_all.count(i) * 100 // len_queryset for i in range(1, 6)}
+            data.update(rating_detail)
+            average_rating = round(sum(rating_star_all) / len_queryset, 2)
+        serializer = ReviewsSerializer(queryset[:5], many=True)
+        data['average_rating'] = average_rating
+        data['detail'] = serializer.data
+        return data
 
 
 class ProfileImagesSerializer(serializers.ModelSerializer):

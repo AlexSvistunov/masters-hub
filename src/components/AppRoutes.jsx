@@ -11,6 +11,7 @@ import TestPage from "../pages/TestPage"
 import SpecialistPage from "../pages/SpecialistPage"
 import CreateProfile from "../pages/CreateProfile"
 import RecordingPage from "../pages/RecordingPage"
+import AllReviews from "../pages/AllReviews"
 
 
 const AppRoutes = () => {
@@ -30,6 +31,7 @@ const AppRoutes = () => {
         <Route path="/business/projects" element={<BusinessProfilePage/>}></Route>
         <Route path="/business/profile/creation" element={<CreateProfile/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
+        <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
       </Routes>
     </div>
   )
