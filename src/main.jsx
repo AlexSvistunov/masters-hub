@@ -51,3 +51,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // popular design
 // fav loading
 // continue decomposition
+
+// services pagination, see all
