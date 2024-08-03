@@ -4,12 +4,10 @@ import { useEffect } from "react";
 import { startTheme } from "./store/slices/themeSlice";
 
 export default function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startTheme());
   }, []);
-  
-  return (
-    <AppRoutes/>
-  )
+
+  return <AppRoutes />;
 }

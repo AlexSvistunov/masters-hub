@@ -149,6 +149,7 @@ const MasterPage = () => {
               masterData={masterData}
               setStepProps={setStepProps}
               recordingSlots={recordingSlots}
+              setMasterData={setMasterData}
             />
 
             <WorksExample masterData={masterData} />

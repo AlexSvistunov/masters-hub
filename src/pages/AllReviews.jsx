@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Reviews from "../components/Reviews";
 import URL from "../utils/backend-url";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Header from "../components/Header";
 
 const AllReviews = () => {
   const { id } = useParams();
@@ -29,21 +30,27 @@ const AllReviews = () => {
   }, [pageNum]);
 
   return (
-    <div className="container mx-auto">
-      <section className="py-10">
-        <h1 className="text-3xl text-center mb-5">Отзывы клиентов</h1>
-        <Reviews
-          reviewsArray={reviewsData.results}
-          count={reviewsData.count}
-          setPageNum={setPageNum}
-          reviewsData={reviewsData}
-        />
-      </section>
-    </div>
+    <>
+    <Header/>
+      <div className="container mx-auto">
+        <section className="py-40">
+          <div className="flex items-center mb-7">
+            <Link className="btn" to={-1}>Go back</Link>
+            <h1 className="text-3xl text-center flex-1">Отзывы клиентов</h1>
+          </div>
+
+          <Reviews
+            reviewsArray={reviewsData.results}
+            count={reviewsData.count}
+            setPageNum={setPageNum}
+            reviewsData={reviewsData}
+          />
+        </section>
+      </div>
+    </>
   );
 };
 
 // studio info
-// back arrow
 
 export default AllReviews;

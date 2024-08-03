@@ -53,3 +53,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // continue decomposition
 
 // services pagination, see all
+// studio info reviews

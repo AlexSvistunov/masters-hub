@@ -6,22 +6,36 @@ import useAuth from "../hooks/useAuth";
 
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import URL from "../utils/backend-url";
 
-
-const Services = ({step, setStep, masterData, setStepProps, time, setTime, recordingSlots }) => {
-
+const Services = ({
+  step,
+  setStep,
+  masterData,
+  setStepProps,
+  time,
+  setTime,
+  recordingSlots,
+  setMasterData,
+}) => {
   const dispatch = useDispatch();
   const { currentToken, token } = useAuth();
 
-  const [modalActive, setModalActive] = useState(false)
-  const [serviceId, setServiceId] = useState(null)
+  const [modalActive, setModalActive] = useState(false);
+  const [serviceId, setServiceId] = useState(null);
+  console.log(masterData);
+  const { id } = useParams();
 
-  // const {id} = useParams()
-  // console.log(id)
-
-  
-
-  console.log(masterData)
+  const getAllServices = async (id) => {
+    try {
+      const response = await fetch(`${URL}/api/services/${id}/`);
+      const data = await response.json();
+      setMasterData({ ...masterData, services: data });
+      console.log(data);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
 
   return (
     <div className="bg-base-200 p-5 rounded-2xl min-h-64 flex flex-col mb-5">
@@ -59,40 +73,37 @@ const Services = ({step, setStep, masterData, setStepProps, time, setTime, recor
               <div
                 className="ml-auto tablet:ml-0 btn btn-primary"
                 onClick={() => {
-                  if(!token) {
-                    return
+                  if (!token) {
+                    return;
                   }
                   dispatch(openModal());
-                  dispatch(setId({id: masterData?.id}))
-                  setStep(2)
-                  setModalActive(true)
-                  setServiceId(service.id)
-                  
+                  dispatch(setId({ id: masterData?.id }));
+                  setStep(2);
+                  setModalActive(true);
+                  setServiceId(service.id);
+
                   // recordingSlots(service.id)
                   // setStepProps(masterData.specialists[0].id)
                   // может какой-то пропс в dispatch с шагом???
                 }}
               >
                 Записаться
-
-                
               </div>
-
-             
             </div>
           </div>
         ))}
       </div>
 
-      <div className="flex justify-center mt-auto">
-        <button className="btn btn-ghost">Посмотреть все</button>
-      </div>
-      <EnrollModal step={step} setStep={setStep} propWord={serviceId}/>
-  
+      {masterData?.services_count > 5 && masterData?.services?.length <= 5 && (
+        <div className="flex justify-center mt-auto">
+          <button className="btn btn-ghost" onClick={() => getAllServices(id)}>
+            Посмотреть все
+          </button>
+        </div>
+      )}
 
-     
+      <EnrollModal step={step} setStep={setStep} propWord={serviceId} />
     </div>
-
   );
 };
 
