@@ -52,5 +52,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // fav loading
 // continue decomposition
 
-// services pagination, see all
 // studio info reviews

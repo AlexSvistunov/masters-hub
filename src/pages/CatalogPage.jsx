@@ -12,6 +12,7 @@ import serverURL from "../utils/backend-url";
 import Catalog from "../components/Catalog";
 import CatalogAside from "../components/CatalogAside";
 import CategoryModal from "../components/CategoryModal";
+import { useLocation } from "react-router-dom";
 
 const CatalogPage = () => {
   const { currentToken } = useAuth();
@@ -21,9 +22,12 @@ const CatalogPage = () => {
   const [categories, setCategories] = useState([]);
   const [pageNumber, setPageNumber] = useState(null);
 
+  const { state } = useLocation();
+  console.log(state);
+
   const [sort, setSort] = useState({
     specialization: "all",
-    categories: [],
+    categories: state ? [state.id] : [],
   });
 
   const [step, setStep] = useState(0);
@@ -58,9 +62,7 @@ const CatalogPage = () => {
   }, [sort, isCategoryModalOpen, pageNumber]);
 
   useEffect(() => {
-    if (isCategoryModalOpen) {
-      getCategories();
-    }
+    getCategories();
   }, [isCategoryModalOpen]);
 
   const onChangeCategoriesHandler = (id) => {
@@ -106,6 +108,7 @@ const CatalogPage = () => {
         </section>
 
         <CategoryModal
+        sort={sort}
           isCategoryModalOpen={isCategoryModalOpen}
           setIsCategoryModalOpen={setIsCategoryModalOpen}
           categoriesError={categoriesError}
@@ -117,7 +120,6 @@ const CatalogPage = () => {
     </>
   );
 };
-
 
 // reset pagenumber
 

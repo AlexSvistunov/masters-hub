@@ -1,5 +1,5 @@
 
-const CategoryModal = ({isCategoryModalOpen, setIsCategoryModalOpen, categoriesError, isCategoriesLoading, categories, onChangeCategoriesHandler}) => {
+const CategoryModal = ({isCategoryModalOpen, setIsCategoryModalOpen, categoriesError, isCategoriesLoading, categories, onChangeCategoriesHandler, sort}) => {
   return (
     <div
           className="enroll-modal"
@@ -26,6 +26,8 @@ const CategoryModal = ({isCategoryModalOpen, setIsCategoryModalOpen, categoriesE
                         onChangeCategoriesHandler(category.id);
                    
                       }}
+
+                      checked={sort?.categories?.some((el) => el === category.id)}
                     ></input>
                     <span className="text-2xl">{category.title}</span>
                   </label>
