@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
 import { addToFav } from "../store/slices/favSlice";
@@ -10,6 +10,7 @@ import { openModal, setId } from "../store/slices/modalSlice";
 const CatalogCard = ({ item, items, setItems, keyword }) => {
   const { currentToken } = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const { token } = useAuth();
 
@@ -55,6 +56,7 @@ const CatalogCard = ({ item, items, setItems, keyword }) => {
           className="btn btn-primary relataive z-10"
           onClick={() => {
             if (!token) {
+              navigate('/login')
               return;
             }
 
@@ -69,7 +71,10 @@ const CatalogCard = ({ item, items, setItems, keyword }) => {
       <button
         className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
         onClick={() => {
-          if (!token) return;
+          if (!token) {
+            navigate('/login')
+            return
+          }
 
           if (item?.is_favorite || item?.is_favorites) {
             if (keyword === "fav") {

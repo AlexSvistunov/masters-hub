@@ -13,6 +13,7 @@ const Register = () => {
     specialization,
     password,
   }) => {
+   if(email && username && password) {
     await dispatch(signUp({ email, username, specialization, password })).then(
       (data) => {
         console.log(data)
@@ -21,6 +22,7 @@ const Register = () => {
         }
       }
     );
+   }
   };
 
   return <Auth keyword="Зарегистрироваться" authHandler={registerHandler} />;

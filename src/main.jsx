@@ -35,21 +35,19 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // у специалиста запись
 // loading favpage, recording page
 
-// функционал
-// фичи
-// подробнее про каждый функционал
+
 // menu
 // если тыкую на функцонал который только с авторизацией - то перекидывает на register + do you aleady have an account?
 // popular, minicatalog
 
-// попбробовать useFetch передать колбек
-
-// search catalogpage
-// avatar user
-// show more reviews
-// popular fav
 // popular design
 // fav loading
 // continue decomposition
 
 // studio info reviews
+// categories slider
+// recording post
+
+// login register validation front + validation back
+// alerts if success login/register
+// recording page changes проверить с реальными записями + key for react

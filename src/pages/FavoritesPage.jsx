@@ -36,7 +36,9 @@ const FavoritesPage = () => {
   };
 
   useEffect(() => {
-    getFav();
+    setTimeout(() => {
+      getFav();
+    }, 0)
   }, []);
 
   console.log(favList);

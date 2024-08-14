@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Auth = ({ keyword, authHandler }) => {
   const [isModalOpen, setModalIsOpen] = useState(true);
@@ -7,11 +8,13 @@ const Auth = ({ keyword, authHandler }) => {
   const [password, setPassword] = useState("");
   const [activeTab, setActiveTab] = useState("Клиент");
 
+  const navigate = useNavigate()
+
   return (
     <>
       <dialog id="my_modal_3" className="modal" open>
         <div className="modal-box">
-          <div className="flex flex-col gap-5 p-5">
+          <div className="flex flex-col gap-5 p-7">
             <label className="input input-bordered flex items-center gap-2 input-primary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -89,16 +92,22 @@ const Auth = ({ keyword, authHandler }) => {
             )}
 
             {keyword === "Войти" && (
-              <button
-                onClick={() =>
-                  authHandler({
-                    email,
-                    password,
-                  })
-                }
-              >
-                {keyword}
-              </button>
+              <div className="flex">
+                <button className="mx-auto"
+                  onClick={() =>
+                    authHandler({
+                      email,
+                      password,
+                    })
+                  }
+                >
+                  {keyword}
+                </button>
+
+                <button onClick={() => {
+                  navigate('/register')
+                }} className="absolute top-2 right-3">Нет аккаунта? Зарегистрироваться</button>
+              </div>
             )}
           </div>
         </div>
