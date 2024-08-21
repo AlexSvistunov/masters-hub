@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { closeModal } from "../store/slices/modalSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ServiceItem = ({ enService, step, setStep, recordingSlots, setChosenService }) => {
   console.log(enService);
   const dispatch = useDispatch()
-  const id = useSelector((state) => state.enrollModal.modalId);
   return (
     <div className="item rounded-lg bg-base-300 p-3">
       <div className="flex gap-6 items-center mb-2">
@@ -29,7 +28,8 @@ const ServiceItem = ({ enService, step, setStep, recordingSlots, setChosenServic
           <Link to={`/profile/${enService.id}/specialist/${enService.specialist.id}`} onClick={() => dispatch(closeModal())} className="hover:underline">
             <span>Специалист: </span>
             <span>{enService.specialist.name}</span>  
-            <span>,{enService.specialist.job}</span>
+            {" "}
+            <span>{enService.specialist.job}</span>
           </Link>
         </div>
 

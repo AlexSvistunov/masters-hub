@@ -7,6 +7,7 @@ import { closeModal, openModal } from "../store/slices/modalSlice";
 import DateTime from "./DateTime";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { recordingArray } from "../utils/recordingArray";
 
 const EnrollModal = ({ step, setStep, propWord }) => {
   const dispatch = useDispatch();
@@ -28,13 +29,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   const [startDate, setStartDate] = useState(new Date());
 
-  const array = [
-    "Новая запись",
-    "Выбор услуг",
-    "Услуга",
-    "Дата и время",
-    "Подтверждение записи",
-  ];
+
 
   useEffect(() => {
     if (isModalOpen) {
@@ -45,8 +40,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     return () => {
       setStep(0);
       console.log("UNMOUNT");
-      // setTime(0)
-      // setChosenService(null)
       setEnrollServices([]);
     };
   }, [isModalOpen]);
@@ -63,7 +56,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     let month = String(currentDate.getMonth() + 1).padStart(2, "0");
     let day = String(currentDate.getDate()).padStart(2, "0");
 
-    let formattedDate = `${day}/${month}/${year}`;
+    let formattedDate = `${year}-${month}-${day}`;
     console.log(formattedDate);
 
     try {
@@ -79,9 +72,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       );
 
       const data = await response.json();
-      console.log("DATA", data);
       setTime(data.time);
-      console.log("RECODRING TEST", data);
     } catch (error) {
       setTime(null);
       console.log(error.message);
@@ -126,7 +117,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       phone: phone,
     };
 
-    console.log(obj)
 
     try {
       const response = await fetch(`${URL}/api/recording/`, {
@@ -147,7 +137,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
   };
 
   useEffect(() => {
-    // если отличается от текущей даты, то
     if (isModalOpen && chosenService) {
       console.log(startDate);
       recordingSlots(chosenService, startDate);
@@ -159,13 +148,13 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       <div
         className="enroll-modal"
         open={isModalOpen ? true : false}
-        onClick={(e) => dispatch(closeModal())}
+        onClick={e => dispatch(closeModal())}
       >
         <div className="enroll-modal__box" onClick={(e) => e.stopPropagation()}>
           {step === 0 && (
             <>
               <ChooseService
-                array={array}
+                array={recordingArray}
                 step={step}
                 setStep={setStep}
                 nextStep={nextStep}
@@ -216,7 +205,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
               </div>
               <form
                 onSubmit={(e) => e.preventDefault()}
-                className="flex flex-col gap-4 my-4"
+                className="flex flex-col gap-4 my-4 h-4/5"
               >
                 <input
                   type="text"
@@ -241,7 +230,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
                 />
 
                 <button
-                  className="btn btn-primary align-center"
+                  className="btn btn-primary align-center mt-auto"
                   onClick={createEnrollment}
                 >
                   Записаться

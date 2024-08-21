@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
-import  URL  from "../utils/backend-url";
 import ServiceItem from "./ServiceItem";
 import { MoonLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +7,10 @@ import { closeModal } from "../store/slices/modalSlice";
 const ChooseService = (props) => {
   console.log(props)
   const isModalOpen = useSelector((state) => state.enrollModal.isModalOpen);
-  const dispatch = useDispatch()
-  const [isChosen, setIsChosen] = useState(false);
+  const dispatch = useDispatch();
+  
   const [inputValue, setInputValue] = useState("");
   const [searchedServices, setSearchedServices] = useState([]);
-
-  console.log(searchedServices);
-
-  const { currentToken } = useAuth();
-  const id = useSelector((state) => state.enrollModal.modalId);
 
   const onSearchHandler = (e) => {
     setInputValue(e.target.value);
@@ -25,9 +18,10 @@ const ChooseService = (props) => {
     const searchedList = [];
 
     props.enrollServices.forEach((service) => {
+      console.log(service)
       Object.values(service).forEach((innerService) => {
         const searchResults = innerService.filter((el) =>
-          el.title.toLowerCase().includes(e.target.value.toLowerCase())
+          el.title.toLowerCase().includes(e.target.value.toLowerCase()) && e.target.value !== ' '
         );
         searchedList.push(...searchResults);
       });
@@ -38,38 +32,20 @@ const ChooseService = (props) => {
     setSearchedServices(searchedList);
   };
 
+  const clearStates = () => {
+    setSearchedServices([])
+    setInputValue('')
+  }
+
 
   useEffect(() => {
-    console.log('21312312 MOUNT')
     return () => {
-      console.log('12312312 UNMOUNT')
-      setSearchedServices([])
-      setInputValue('')
+      clearStates()
     }
   },[isModalOpen])
 
-  //   const onSearchHandler = (e) => {
-  //     setInputValue(e.target.value)
-  //     console.log('ITEMS', props.enrollServices);
-  //     const searchedItems = props.enrollServices.filter(service => {
-  //         return Object.values(service).some(serviceItem => {
-  //             return serviceItem?.title?.includes(e.target.value);
-  //         });
-  //     });
+  console.log(searchedServices)
 
-  //     console.log('SEARCHED ITEMS', searchedItems);
-  //     setSearchedServices(searchedItems);
-  // }
-
-  // useEffect(() => {
-  //   props.getEnrollServices();
-  // }, []);
-
-  // if(!enrollServices.length) {
-  //   return (
-  //     <div className="flex justify-center items-center text-3xl w-full h-full">Ничего не найдено!</div>
-  //   )
-  // }
 
   return (
     <>
@@ -88,17 +64,6 @@ const ChooseService = (props) => {
 
         <span className="inline-block mx-auto">{props.array[props.step]}</span>
 
-        {/* <button onClick={props.nextStep}>
-          <svg
-            className="h-6 w-6 fill-current md:h-8 md:w-8"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
-          </svg>
-        </button> */}
       </div>
 
       <div>
@@ -142,7 +107,7 @@ const ChooseService = (props) => {
           </div>
 
           <div className="list flex flex-col gap-5">
-            {searchedServices.length
+            {searchedServices.length && inputValue
               ? searchedServices.map((searchedService, index) => (
                   <ServiceItem
                     enService={searchedService}

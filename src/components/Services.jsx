@@ -20,10 +20,8 @@ const Services = ({
 }) => {
   const dispatch = useDispatch();
   const { currentToken, token } = useAuth();
-
   const [modalActive, setModalActive] = useState(false);
   const [serviceId, setServiceId] = useState(null);
-  console.log(masterData);
   const { id } = useParams();
 
   const getAllServices = async (id) => {
@@ -82,9 +80,6 @@ const Services = ({
                   setModalActive(true);
                   setServiceId(service.id);
 
-                  // recordingSlots(service.id)
-                  // setStepProps(masterData.specialists[0].id)
-                  // может какой-то пропс в dispatch с шагом???
                 }}
               >
                 Записаться

@@ -1,8 +1,10 @@
-from user.models import ProfileMaster
+from user.models import ProfileMaster, ProfileImages
 from rest_framework import serializers
 
 
-class ProfileAminSerializer(serializers.ModelSerializer):
+class ProfileAdminSerializer(serializers.ModelSerializer):
+    photo = serializers.ImageField(use_url=False, required=False)
+
     class Meta:
         model = ProfileMaster
         fields = ['id',
@@ -17,3 +19,10 @@ class ProfileAminSerializer(serializers.ModelSerializer):
                   'time_relax',
                   'date_creation'
                   ]
+
+
+class ProfileImagesAdminSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=False)
+    class Meta:
+        model = ProfileImages
+        fields = ['id', 'profile', 'specialist', 'image', 'date_creation']

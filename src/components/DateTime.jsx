@@ -28,7 +28,7 @@ const DateTime = ({ setStep, step, time, setTime, setChosenTime, startDate, setS
       <div className="flex justify-center my-2">
         <DatePicker
           showIcon
-          className="input input-bordered input-primary block w-full"
+          className="input input-bordered input-primary block w-full cursor-pointer"
           selected={startDate}
           onChange={(date) => {
             setStartDate(date);
@@ -36,7 +36,7 @@ const DateTime = ({ setStep, step, time, setTime, setChosenTime, startDate, setS
           dateFormat="yyyy/MM/dd"
           minDate={new Date()}
           icon={
-            <svg className="absolute top-2 right-2"
+            <svg className="absolute top-2 right-2 pointer-events-none"
             
               xmlns="http://www.w3.org/2000/svg"
               width="1em"

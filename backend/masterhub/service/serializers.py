@@ -1,7 +1,9 @@
+from rest_framework.exceptions import ValidationError
+
 from user.models import Categories, Favorites
 from rest_framework import serializers
 from user.models import ProfileMaster
-
+from rest_framework.response import Response
 
 class CategoriesSerializer(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField()

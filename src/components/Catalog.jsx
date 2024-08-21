@@ -5,7 +5,7 @@ const Catalog = ({error, isLoading, catalog, catalogList, setCatalogList, setPag
   return (
     <div className="col-span-12 laptop:col-span-9">
               <h1 className="text-4xl mb-5">Каталог</h1>
-              {error && <h3>{error}</h3>}
+              {error && <h3 className="text-2xl">{error}</h3>}
               <div className="list grid grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12 gap-4">
                 {isLoading
                   ? Array(3)

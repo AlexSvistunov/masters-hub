@@ -13,10 +13,6 @@ export const store = configureStore({
   },
 });
 
-const url = 'http://localhost:5173/catalog/?page=2'
-const array = url.split('?')
-const element = array.find(el => el.startsWith('page')).split('=').find(el => el !== 'page')
-console.log(element)
 
 
 

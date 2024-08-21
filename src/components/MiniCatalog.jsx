@@ -27,7 +27,7 @@ const MiniCatalog = () => {
         <h2 className="text-4xl mb-5">Каталог</h2>
         <></>
 
-        {error && <h3 className="text-center">{error}</h3>}
+        {error && <h3 className="text-center text-2xl">{error}</h3>}
         <div className="cards grid gap-6 grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-8 desktop:grid-cols-12">
           {isLoading
             ? [...Array(3)].map((_, index) => (

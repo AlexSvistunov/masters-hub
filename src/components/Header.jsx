@@ -39,7 +39,7 @@ const Header = () => {
 
   return (
     <div
-      className="navbar justify-between p-5 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2 flex-col phone:flex-row"
+      className="navbar justify-between p-1 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2 flex-col phone:flex-row phone:p-5"
       style={{ top: visible ? "0" : "-250px", transition: ".3s ease" }}
     >
       <Link
@@ -62,11 +62,7 @@ const Header = () => {
                   Зарегистрироваться
                 </Link>
               </div>
-              {/* <button className="w-6 h-10 flex flex-col items-center justify-center gap-1.5">
-                <span className="w-full h-0.5 bg-current"></span>
-                <span className="w-full h-0.5 bg-current"></span>
-                <span className="w-full h-0.5 bg-current"></span>
-              </button> */}
+
             </>
           ) : (
             <div className="">
