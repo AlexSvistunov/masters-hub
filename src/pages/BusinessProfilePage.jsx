@@ -1,52 +1,63 @@
 import { useEffect, useState } from "react";
-import  URL  from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
-
+import BusinessLayout from "../components/BusinessLayout";
 
 const BusinessProfilePage = () => {
+  const { token, currentToken } = useAuth();
+  const [isError, setError] = useState('')
 
-  const {currentToken} = useAuth()
+  console.log(isError)
 
-  const [profileData, setProfileData] = useState({})
+  const [profileData, setProfileData] = useState({});
+  console.log(profileData)
 
   const getProfile = async () => {
+    const headers = {};
+    if (token) {
+      headers.Authorization = `Token ${currentToken}`;
+    }
     try {
       const response = await fetch(`${URL}/api/admin-panel/profile/`, {
-        headers: {
-          Authorization: `Token ${currentToken}`
-        }
+       headers
       });
-      const data = await response.json();
-      setProfileData(data)
-      console.log(data);
+      if(response.ok) {
+        const data = await response.json();
+        setProfileData(data);
+      } else {
+        throw new Error('no master profile')
+      }
+   
+
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.log('1231231232112')
+      console.error("An error occurred:", error);
+      setError(error.message)
     }
   };
 
   useEffect(() => {
-    getProfile()
-  }, [])
+    getProfile();
+  }, []);
 
-  if(profileData?.detail === 'no profile') {
-    return (
-      <div>
-        No profile!
+  // не попадает в catch
 
-        <Link to='/business/profile/creation'>
-          Создать профиль
-        </Link>
-      </div>
-    )
-  }
 
-  
   return (
     <div>
-     
-    </div>
-  )
-}
+     <BusinessLayout>
+      <>
+      {isError && <button className="btn btn-accent">Создать профиль</button>}
+      </>
+     </BusinessLayout>
 
-export default BusinessProfilePage
+     
+  
+    </div>
+  );
+
+  //children
+};
+
+export default BusinessProfilePage;

@@ -1,12 +1,20 @@
-import HeaderBusiness from "../components/HeaderBusiness"
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+
+import BusinessLayout from '../components/BusinessLayout.jsx'
+import { useEffect } from "react";
+
 
 const BusinessPage = () => {
-  
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate('/business/profile/')
+  }, [])
   return (
     <div>
-      <HeaderBusiness/>
+       <BusinessLayout></BusinessLayout>
     </div>
-  )
-}
+  );
+};
 
-export default BusinessPage
+export default BusinessPage;

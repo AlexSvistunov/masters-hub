@@ -1,0 +1,45 @@
+import { Link } from "react-router-dom";
+
+import Header from "../components/HeaderBusiness";
+
+const Drawer = ({ children }) => {
+  return (
+    <div className="drawer default-tablet:drawer-open">
+      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content p-10">
+        {/* Page content here */}
+        {children}
+      </div>
+      <div className="drawer-side rounded-2xl">
+        <label
+          htmlFor="my-drawer"
+          aria-label="close sidebar"
+          className="drawer-overlay"
+        ></label>
+        <ul className="menu text-base-content min-h-full w-80 p-4 bg-base-200 default-tablet:bg-transparent">
+          {/* Sidebar content here */}
+          <li>
+            <Link to="">Профиль</Link>
+          </li>
+          <li>
+            <Link to="">Мои специалисты</Link>
+          </li>
+
+          <li>
+            <Link to="">Услуги</Link>
+          </li>
+
+          <li>
+            <Link to="">Рабочее время</Link>
+          </li>
+
+          <li>
+            <Link to="">Категории</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Drawer;
