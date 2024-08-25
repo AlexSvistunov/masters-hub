@@ -2,9 +2,11 @@ import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const CreateProfile = () => {
   const { currentToken } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -15,7 +17,6 @@ const CreateProfile = () => {
   } = useForm();
 
   const createProfile = async () => {
-
     const testObject = {
       name: watch("name"),
       address: watch("adress"),
@@ -26,8 +27,6 @@ const CreateProfile = () => {
       description: watch("description"),
       time_relax: "00:30:00",
     };
-
-    console.log(testObject);
 
     try {
       const response = await fetch(`${URL}/api/admin-panel/profile/`, {
@@ -41,12 +40,14 @@ const CreateProfile = () => {
       });
 
       const data = await response.json();
-      if(!response.ok) {
-        console.log('data')
-        setError('link_vk', { type: 'custom', message: data.link_vk[0] })
-        console.log(errors)
+      if (!response.ok) {
+        for (let key in data) {
+          setError(key, { type: "custom", message: data[key][0] });
+        }
+      } else {
+
+        navigate('/business/profile')
       }
-      console.log(data);
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -99,10 +100,11 @@ const CreateProfile = () => {
             name="specialization"
             {...register("specialization", {
               required: "Поле обязательно к заполнению!",
-              pattern: {  
-                value: /^(master|studio)$/,  
-                message: 'Специализация должна быть либо "master", либо "studio"',  
-            },  
+              pattern: {
+                value: /^(master|studio)$/,
+                message:
+                  'Специализация должна быть либо "master", либо "studio"',
+              },
             })}
           ></input>
           <span className="text-red-500">
@@ -148,5 +150,7 @@ const CreateProfile = () => {
     </div>
   );
 };
+
+// input + span seperate component
 
 export default CreateProfile;
