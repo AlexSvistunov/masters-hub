@@ -27,14 +27,16 @@ const CreateProfile = () => {
 
   const createProfile = async () => {
     const testObject = {
-      name: "Алексей",
-      address: "Улица Ленина, д. 12",
-      phone: "79525941396",
+      name: "Alex",
+      address: "Pushkina",
+      phone: "79999999999",
       specialization: "master",
-      link_vk: "vk.com/alexsvistunov",
-      link_tg: "@alex_666",
+      link_vk: "vk.com",
+      link_tg: "tgweb.com",
       description: "крутой тип",
+      time_relax: "00:30:00"
     };
+
 
     try {
       const response = await fetch(`${URL}/admin-panel/profile/`, {
@@ -54,51 +56,52 @@ const CreateProfile = () => {
 
   return (
     <div className="m-5">
+      <h1 className="text-3xl mb-4">Создание профиля</h1>
       <div className="flex flex-col gap-2 max-w-80">
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Имя"
           name="name"
           value={profileFields.name}
           onChange={handleChange}
         ></input>
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Адрес"
           name="address"
           value={profileFields.address}
           onChange={handleChange}
         ></input>
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Телефон"
           name="phone"
           value={profileFields.phone}
           onChange={handleChange}
         ></input>
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Специализация"
           name="specialization"
           value={profileFields.specialization}
           onChange={handleChange}
         ></input>
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Ссылка на VK"
           name="link_vk"
           value={profileFields.link_vk}
           onChange={handleChange}
         ></input>
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Ссылка на TG"
           name="link_tg"
           value={profileFields.link_tg}
           onChange={handleChange}
         ></input>
         <input
-          className="input input-bordered input-primary"
+          className="input input-bordered input-accent"
           placeholder="Описание"
           name="description"
           value={profileFields.description}
@@ -106,7 +109,7 @@ const CreateProfile = () => {
         ></input>
       </div>
 
-      <button className="btn btn-primary my-2" onClick={createProfile}>
+      <button className="btn btn-accent my-2" onClick={createProfile}>
         Создать профиль
       </button>
     </div>
