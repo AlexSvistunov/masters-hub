@@ -3,10 +3,12 @@ import URL from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 import BusinessLayout from "../components/BusinessLayout";
+import { MoonLoader } from "react-spinners";
 
 const BusinessProfilePage = () => {
   const { token, currentToken } = useAuth();
   const [isError, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const [profileData, setProfileData] = useState({});
   console.log(profileData);
@@ -21,13 +23,15 @@ const BusinessProfilePage = () => {
         headers,
       });
 
-      if(!response.ok)  throw new Error("no master profile");
+      if (!response.ok) throw new Error("no master profile");
       const data = await response.json();
       setProfileData(data);
     } catch (error) {
       console.log("1231231232112");
       console.error("An error occurred:", error);
       setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,13 +45,15 @@ const BusinessProfilePage = () => {
     <div>
       <BusinessLayout>
         <>
-          {isError && (
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <MoonLoader color="#6a5bff" size={75}></MoonLoader>
+            </div>
+          ) : isError ? (
             <Link to={"/business/profile/creation"} className="btn btn-accent">
               Создать профиль
             </Link>
-          )}
-
-          {profileData && (
+          ) : (
             <div>
               <div className="flex justify-between">
                 <h1 className="text-2xl mb-4">Профиль</h1>
@@ -105,7 +111,6 @@ const BusinessProfilePage = () => {
     </div>
   );
 
- 
   // links href
   // links condition
 };

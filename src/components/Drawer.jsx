@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import Header from "../components/HeaderBusiness";
 
@@ -10,16 +10,23 @@ const Drawer = ({ children }) => {
         {/* Page content here */}
         {children}
       </div>
-      <div className="drawer-side rounded-2xl">
+      <div className="drawer-side rounded-2xl h-full">
         <label
           htmlFor="my-drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu text-base-content min-h-full w-80 p-4 bg-base-200 default-tablet:bg-transparent">
+        <ul className="drawer-menu flex flex-col gap-2 text-base-content min-h-full w-80 p-4 bg-base-200 default-tablet:bg-transparent">
           {/* Sidebar content here */}
           <li>
-            <Link to="">Профиль</Link>
+            <NavLink
+              to="/business/profile"
+              className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "active" : ""
+              }
+            >
+              Профиль
+            </NavLink>
           </li>
           <li>
             <Link to="">Мои специалисты</Link>

@@ -71,6 +71,24 @@
   width: 100%;
 }
 
+.drawer-menu li {
+  padding: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.drawer-menu li a.active {
+  @apply text-accent
+}
+
+.drawer-menu li:hover {
+  /* background-color: #ccc; */
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-n,oklch(var(--n)/var(--tw-bg-opacity)));
+  --tw-text-opacity: 1;
+  /* color: var(--fallback-nc,oklch(var(--nc)/var(--tw-text-opacity))); */
+}
+
 
   button, a {
     @apply no-animation
