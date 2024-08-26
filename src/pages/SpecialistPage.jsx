@@ -6,12 +6,10 @@ import Header from "../components/Header";
 
 const SpecialistPage = () => {
   const [specialistData, setSpecialistData] = useState({});
-  console.log(specialistData);
 
   const [step, setStep] = useState(2)
 
   const { id, specId } = useParams();
-  console.log(id, specId)
   
   const getSpecialistData = async () => {
     const response = await fetch(`${URL}/api/specialist/${specId}/`);

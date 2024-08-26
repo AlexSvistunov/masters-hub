@@ -20,7 +20,7 @@ const HeaderBusiness = () => {
 
 
   return (
-    <header className="p-5 border-b border-base-200">
+    <header className="p-5 border-b border-base-200 bg-base-200">
       <div className="flex default-tablet:block">
         <Burger />
 

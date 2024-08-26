@@ -6,7 +6,7 @@ const Drawer = ({ children }) => {
   return (
     <div className="drawer default-tablet:drawer-open">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content p-10">
+      <div className="drawer-content px-10 py-5">
         {/* Page content here */}
         {children}
       </div>
