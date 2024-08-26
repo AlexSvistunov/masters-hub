@@ -74,7 +74,13 @@
 .drawer-menu li {
   padding: 10px;
   border-radius: 15px;
-  cursor: pointer;
+
+}
+
+.drawer-menu li a {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
 }
 
 .drawer-menu li a.active {

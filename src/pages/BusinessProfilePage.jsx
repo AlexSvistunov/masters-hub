@@ -45,7 +45,7 @@ const BusinessProfilePage = () => {
         <>
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
-              <MoonLoader color="#6a5bff" size={75}></MoonLoader>
+              <MoonLoader color="#00cab6" size={75}></MoonLoader>
             </div>
           ) : isError ? (
             <Link to={"/business/profile/creation"} className="btn btn-accent">
@@ -55,7 +55,9 @@ const BusinessProfilePage = () => {
             <div>
               <div className="flex justify-between">
                 <h1 className="text-2xl mb-4">Профиль</h1>
-                <Link className="btn btn-accent">Редактировать</Link>
+                <Link className="btn btn-accent" to="/business/profile/edit">
+                  Редактировать
+                </Link>
               </div>
 
               <div className="flex gap-7">
@@ -87,7 +89,7 @@ const BusinessProfilePage = () => {
                     <h3 className="text-xl">Ссылки</h3>
                     <div className="flex gap-2">
                       {profileData.link_tg && (
-                        <Link to={profileData.link_tg}>
+                        <Link to={profileData.link_tg} target="_blank">
                           <img
                             className="w-8 h-8"
                             src="/tg-icon.svg"
@@ -97,7 +99,7 @@ const BusinessProfilePage = () => {
                       )}
 
                       {profileData.link_vk && (
-                        <Link>
+                        <Link to={profileData.link_vk} target="_blank">
                           <img
                             className="w-8 h-8"
                             src="/vk-icon.png"
@@ -116,6 +118,8 @@ const BusinessProfilePage = () => {
               </div>
             </div>
           )}
+
+       
         </>
       </BusinessLayout>
     </div>

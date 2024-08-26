@@ -21,15 +21,15 @@ const Drawer = ({ children }) => {
           <li>
             <NavLink
               to="/business/profile"
-              className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "active" : ""
+              className={({ isActive }) =>
+                 isActive ? "active" : ""
               }
             >
               Профиль
             </NavLink>
           </li>
           <li>
-            <Link to="">Мои специалисты</Link>
+            <NavLink to='/business/specialists' className={({isActive}) => isActive ? 'active' : ''}>Мои специалисты</NavLink>
           </li>
 
           <li>

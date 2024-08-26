@@ -3,6 +3,7 @@ import BusinessLayout from "../components/BusinessLayout";
 import URL from "../utils/backend-url";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import SuccessAlert from "../components/SuccessAlert";
 
 const EditProfile = () => {
   const [profileData, setProfileData] = useState({});
@@ -11,6 +12,9 @@ const EditProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [inputValues, setInputValues] = useState(profileData);
+
+  const [editSuccess, setEditSuccess] = useState(false);
+
   console.log(inputValues);
 
   console.log(profileData);
@@ -47,34 +51,71 @@ const EditProfile = () => {
   };
 
   const patch = async (id) => {
-    try {
-      const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
-        method: 'PATCH',
-        body: JSON.stringify(inputValues),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${currentToken}`
-        }
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('An error occurred:', error);
+    const updatedValues = getUpdatedValues();
+    if (Object.keys(updatedValues).length > 0) {
+      try {
+        const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
+          method: "PATCH",
+          body: JSON.stringify(updatedValues),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${currentToken}`,
+          },
+        });
+        const data = await response.json();
+        // navigate("/business/profile");
+        setEditSuccess(true);
+        return data;
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
     }
   };
-  
+
+  console.log(editSuccess)
+
+  const getUpdatedValues = () => {
+    const updatedValues = {};
+
+    Object.keys(inputValues).forEach((key) => {
+      if (inputValues[key] !== profileData[key]) {
+        updatedValues[key] = inputValues[key];
+      }
+    });
+
+    return updatedValues;
+  };
 
   useEffect(() => {
     getProfile();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setEditSuccess((prev) => {
+        if (prev === true) return false;
+      });
+
+
+    }, 4000);
+  }, [editSuccess]);
+
   return (
     <BusinessLayout>
+      <div className="flex justify-between mb-3">
+        <h1 className="text-3xl">Редактирование профиля</h1>
+        <button
+          onClick={() => patch(profileData.id)}
+          className="btn self-start btn-accent"
+        >
+          Сохранить изменения
+        </button>
+      </div>
       <div className="flex flex-col gap-4">
         <label className="flex flex-col gap-2 text-xl">
           Имя
           <input
-            className="input input-accent max-w-80"
+            className="input input-bordered max-w-80"
             value={inputValues.name}
             onChange={inputChange}
             name="name"
@@ -84,7 +125,7 @@ const EditProfile = () => {
         <label className="flex flex-col gap-2 text-xl">
           Адрес
           <input
-            className="input input-accent max-w-80"
+            className="input input-bordered max-w-80"
             value={inputValues.address}
             onChange={inputChange}
             name="address"
@@ -94,7 +135,7 @@ const EditProfile = () => {
         <label className="flex flex-col gap-2 text-xl">
           Ссылка на TG
           <input
-            className="input input-accent max-w-80"
+            className="input input-bordered max-w-80"
             value={inputValues.link_tg}
             onChange={inputChange}
             name="link_tg"
@@ -104,7 +145,7 @@ const EditProfile = () => {
         <label className="flex flex-col gap-2 text-xl">
           Ссылка на VK
           <input
-            className="input input-accent max-w-80"
+            className="input input-bordered max-w-80"
             value={inputValues.link_vk}
             onChange={inputChange}
             name="link_vk"
@@ -114,7 +155,7 @@ const EditProfile = () => {
         <label className="flex flex-col gap-2 text-xl">
           Телефон
           <input
-            className="input input-accent max-w-80"
+            className="input input-bordered max-w-80"
             value={inputValues.phone}
             onChange={inputChange}
             name="phone"
@@ -124,17 +165,24 @@ const EditProfile = () => {
         <label className="flex flex-col gap-2 text-xl">
           Описание
           <textarea
-            className="textarea textarea-accent max-w-80"
+            className="textarea textarea-bordered max-w-80"
             value={inputValues.description}
             onChange={inputChange}
             name="description"
           ></textarea>
         </label>
-
-        <button onClick={() => patch(profileData.id)} className="btn self-start btn-accent">Сохранить изменения</button>
       </div>
+
+      {editSuccess && (
+        <SuccessAlert text='Профиль успешно отредактирован!'/>
+      )}
     </BusinessLayout>
   );
 };
+
+// промежуточный результат (1:40)
+// перебросить на страницу назад с alert
+// validation
+// ask for backend validation
 
 export default EditProfile;

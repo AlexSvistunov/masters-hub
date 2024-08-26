@@ -152,4 +152,5 @@ const CreateProfile = () => {
 
 // input + span seperate component
 
+
 export default CreateProfile;
