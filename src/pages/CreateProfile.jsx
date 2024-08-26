@@ -19,7 +19,7 @@ const CreateProfile = () => {
   const createProfile = async () => {
     const testObject = {
       name: watch("name"),
-      address: watch("adress"),
+      address: watch("address"),
       phone: watch("phone"),
       specialization: watch("specialization"),
       link_vk: watch("link_vk"),
@@ -42,11 +42,10 @@ const CreateProfile = () => {
       const data = await response.json();
       if (!response.ok) {
         for (let key in data) {
-          setError(key, { type: "custom", message: data[key][0] });
+          setError(key, { type: "custom", message: data[key][0]});
         }
       } else {
-
-        navigate('/business/profile')
+        navigate("/business/profile");
       }
     } catch (error) {
       console.error("An error occurred:", error);

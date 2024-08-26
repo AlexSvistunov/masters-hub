@@ -39,8 +39,6 @@ const BusinessProfilePage = () => {
     getProfile();
   }, []);
 
-  // не попадает в catch
-
   return (
     <div>
       <BusinessLayout>
@@ -88,13 +86,25 @@ const BusinessProfilePage = () => {
                   <div>
                     <h3 className="text-xl">Ссылки</h3>
                     <div className="flex gap-2">
-                      <Link>
-                        <img className="w-8 h-8" src="/tg-icon.svg" alt="tg" />
-                      </Link>
+                      {profileData.link_tg && (
+                        <Link to={profileData.link_tg}>
+                          <img
+                            className="w-8 h-8"
+                            src="/tg-icon.svg"
+                            alt="tg"
+                          />
+                        </Link>
+                      )}
 
-                      <Link>
-                        <img className="w-8 h-8" src="/vk-icon.png" alt="vk" />
-                      </Link>
+                      {profileData.link_vk && (
+                        <Link>
+                          <img
+                            className="w-8 h-8"
+                            src="/vk-icon.png"
+                            alt="vk"
+                          />
+                        </Link>
+                      )}
                     </div>
                   </div>
 
@@ -110,9 +120,6 @@ const BusinessProfilePage = () => {
       </BusinessLayout>
     </div>
   );
-
-  // links href
-  // links condition
 };
 
 export default BusinessProfilePage;
