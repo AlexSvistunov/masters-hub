@@ -74,7 +74,7 @@ const RecordingPage = () => {
               <>
                 {myRecording.length ? (
                   myRecording.map((recording) => (
-                    <Recording recording={recording} />
+                    <Recording recording={recording} key={recording.id}/>
                   ))
                 ) : (
                   <h3 className="text-4xl text-center">У вас нет текущих записей!</h3>

@@ -51,3 +51,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // login register validation front + validation back
 // alerts if success login/register
 // recording page changes проверить с реальными записями + key for react
+// при записи в личных данных можно сразу заполнить поля так как в настройках есть уже данные. но при этом поля ты должен заполнить, так как возможно ты записываешь подругу
+// а если запись ошибка? -> alert либо что-то
+// + попробовать почему бывает ошибка в записи, что-то там с time_end
