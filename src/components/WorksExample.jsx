@@ -1,4 +1,3 @@
-
 import { Navigation, Pagination } from "swiper/modules"
 import { SwiperSlide, Swiper } from "swiper/react"
 
