@@ -14,7 +14,9 @@ import CreateProfile from "../pages/CreateProfile"
 import RecordingPage from "../pages/RecordingPage"
 import AllReviews from "../pages/AllReviews"
 import EditProfile from "../pages/EditProfile"
-import MySpecialists from "../pages/MySpecialists"
+import BusinessCategories from "../pages/BusinessCategories"
+import BusinessSpecialists from "../pages/BusinessSpecialists"
+import BusinessService from "../pages/BusinessService"
 
 
 const AppRoutes = () => {
@@ -34,7 +36,9 @@ const AppRoutes = () => {
         <Route path="/business/projects" element={<BusinessProfilePage/>}></Route>
         <Route path="/business/profile/creation" element={<CreateProfile/>}></Route>
         <Route path="/business/profile/edit" element={<EditProfile/>}></Route>
-        <Route path="/business/specialists" element={<MySpecialists/>}></Route>
+        <Route path="/business/specialists" element={<BusinessSpecialists/>}></Route>
+        <Route path="/business/categories" element={<BusinessCategories/>}></Route>
+        <Route path="/business/service" element={<BusinessService/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
         <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
       </Routes>

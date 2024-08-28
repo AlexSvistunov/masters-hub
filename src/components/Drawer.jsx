@@ -1,7 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
 
-import Header from "../components/HeaderBusiness";
-
 const Drawer = ({ children }) => {
   return (
     <div className="drawer default-tablet:drawer-open">
@@ -21,27 +19,40 @@ const Drawer = ({ children }) => {
           <li>
             <NavLink
               to="/business/profile"
-              className={({ isActive }) =>
-                 isActive ? "active" : ""
-              }
+              className={({ isActive }) => (isActive ? "active" : "")}
             >
               Профиль
             </NavLink>
           </li>
           <li>
-            <NavLink to='/business/specialists' className={({isActive}) => isActive ? 'active' : ''}>Мои специалисты</NavLink>
+            <NavLink
+              to="/business/specialists"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Мои специалисты
+            </NavLink>
           </li>
 
           <li>
-            <Link to="">Услуги</Link>
+            <NavLink
+              to="/business/service"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Услуги
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/business/categories"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Категории
+            </NavLink>
           </li>
 
           <li>
             <Link to="">Рабочее время</Link>
-          </li>
-
-          <li>
-            <Link to="">Категории</Link>
           </li>
         </ul>
       </div>
