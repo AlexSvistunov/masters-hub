@@ -48,7 +48,7 @@ const FavoritesPage = () => {
       <Header />
       <Hero />
       <EnrollModal step={step} setStep={setStep} />
-      <div className="container mx-auto">
+      <div className="container mx-auto min-h-screen">
         <Tabs />
 
         <div className="">

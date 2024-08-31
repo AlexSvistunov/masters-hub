@@ -40,23 +40,10 @@ const RecordingPage = () => {
     <div>
       <Header />
       <Hero />
-      <div className="container mx-auto">
+      <div className="container mx-auto min-h-screen">
         <Tabs />
 
         <div className="py-10 text-center">
-          {/* {!token ? (
-            <div className="text-center text-4xl">
-              Авторизируйтесь чтобы посмотреть ваши записи
-            </div>
-          ) : myRecording.length ? (
-            <div className="flex flex-col gap-4">
-              {myRecording.map((recording) => (
-                <Recording recording={recording} />
-              ))}
-            </div>
-          ) : (
-            <h3 className="text-4xl text-center">У вас нет текущих записей!</h3>
-          )} */}
 
           {!token && (
             <div className="text-center text-4xl">
