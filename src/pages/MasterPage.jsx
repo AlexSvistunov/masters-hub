@@ -76,6 +76,10 @@ const MasterPage = () => {
       description: textareaValue,
     };
 
+    if(!textareaValue) {
+      return
+    }
+
     try {
       const response = await fetch(`${URL}/api/feedback/${id}/`, {
         method: "POST",

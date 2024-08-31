@@ -4,7 +4,7 @@ const SuccessAlert = ({text}) => {
   return (
     <div
     role="alert"
-    className="alert alert-success fixed top-4 right-4 max-w-96"
+    className="alert alert-success fixed top-4 right-4 max-w-96 z-50"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

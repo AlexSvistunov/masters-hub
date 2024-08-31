@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ChooseService from "./ChooseService";
-import  URL  from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../store/slices/modalSlice";
@@ -8,6 +8,7 @@ import DateTime from "./DateTime";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { recordingArray } from "../utils/recordingArray";
+import SuccessAlert from "./SuccessAlert";
 
 const EnrollModal = ({ step, setStep, propWord }) => {
   const dispatch = useDispatch();
@@ -28,22 +29,27 @@ const EnrollModal = ({ step, setStep, propWord }) => {
   const [phone, setPhone] = useState("");
 
   const [startDate, setStartDate] = useState(new Date());
-
-
+  const [successAlert, setSuccessAlert] = useState(false);
 
   useEffect(() => {
     if (isModalOpen) {
-      console.log('modal open')
       getEnrollServices(id);
     }
 
     return () => {
       setStep(0);
-      console.log("UNMOUNT");
       setEnrollServices([]);
+      setStartDate(new Date());
     };
   }, [isModalOpen]);
 
+  useEffect(() => {
+    if(successAlert) {
+      setTimeout(() => {
+        setSuccessAlert(false)
+      }, 3000)
+    }
+  }, [successAlert])
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
@@ -117,7 +123,6 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       phone: phone,
     };
 
-
     try {
       const response = await fetch(`${URL}/api/recording/`, {
         method: "POST",
@@ -129,8 +134,11 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
         body: JSON.stringify(obj),
       });
-      const data = await response.json();
-      console.log(data);
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(closeModal());
+        setSuccessAlert(true);
+      }
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -148,7 +156,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       <div
         className="enroll-modal"
         open={isModalOpen ? true : false}
-        onClick={e => dispatch(closeModal())}
+        onClick={(e) => dispatch(closeModal())}
       >
         <div className="enroll-modal__box" onClick={(e) => e.stopPropagation()}>
           {step === 0 && (
@@ -240,6 +248,8 @@ const EnrollModal = ({ step, setStep, propWord }) => {
           )}
         </div>
       </div>
+
+      {successAlert && <SuccessAlert text="Запись успешно создана" />}
     </>
   );
 };

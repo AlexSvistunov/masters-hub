@@ -27,8 +27,6 @@ const BusinessProfilePage = () => {
       const data = await response.json();
       setProfileData(data);
     } catch (error) {
-      console.log("1231231232112");
-      console.error("An error occurred:", error);
       setError(error.message);
     } finally {
       setIsLoading(false);

@@ -48,7 +48,7 @@ const Services = ({
         {masterData?.services?.map((service) => (
           <div
             className="flex my-5 flex-col tablet:flex-row"
-            key={service.title}
+            key={service.id}
           >
             <div className="flex items-center">
               <img

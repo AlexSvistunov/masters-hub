@@ -1,4 +1,3 @@
-
 import { Navigation, Pagination } from "swiper/modules"
 import { SwiperSlide, Swiper } from "swiper/react"
 
@@ -8,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 const WorksExample = ({masterData}) => {
+
   return (
     <div className="bg-base-200 p-5 rounded-2xl mb-5">
     <div className="flex gap-2 items-center mb-5">
