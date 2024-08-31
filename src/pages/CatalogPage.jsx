@@ -108,7 +108,7 @@ const CatalogPage = () => {
         </section>
 
         <CategoryModal
-        sort={sort}
+          sort={sort}
           isCategoryModalOpen={isCategoryModalOpen}
           setIsCategoryModalOpen={setIsCategoryModalOpen}
           categoriesError={categoriesError}

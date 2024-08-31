@@ -4,7 +4,7 @@ import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
 import CatalogCard from "../components/CatalogCard";
 import { useEffect, useState } from "react";
-import  URL  from "../utils/backend-url";
+import URL from "../utils/backend-url";
 import { MoonLoader } from "react-spinners";
 import EnrollModal from "../components/EnrollModal";
 
@@ -36,12 +36,9 @@ const FavoritesPage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      getFav();
-    }, 0)
+    getFav();
   }, []);
 
-  console.log(favList);
 
   return (
     <div>

@@ -31,10 +31,17 @@ const RecordingPage = () => {
       setIsLoading(false);
     }
   };
+  
 
   useEffect(() => {
     getNotes();
   }, []);
+
+  // const [isLoading, error, fetchCallback] = useFetch(getNotes)
+
+  // useEffect(() => {
+  //   fetchCallback();
+  // }, []);
 
   return (
     <div>

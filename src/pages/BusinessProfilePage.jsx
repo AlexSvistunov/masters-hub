@@ -4,48 +4,44 @@ import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 import BusinessLayout from "../components/BusinessLayout";
 import { MoonLoader } from "react-spinners";
+import { useFetch } from "../hooks/useFetch";
 
 const BusinessProfilePage = () => {
   const { token, currentToken } = useAuth();
-  const [isError, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
   const [profileData, setProfileData] = useState({});
-  console.log(profileData);
 
   const getProfile = async () => {
     const headers = {};
     if (token) {
       headers.Authorization = `Token ${currentToken}`;
     }
-    try {
-      const response = await fetch(`${URL}/api/admin-panel/profile/`, {
-        headers,
-      });
+    const response = await fetch(`${URL}/api/admin-panel/profile/`, {
+      headers,
+    });
 
-      if (!response.ok) throw new Error("no master profile");
-      const data = await response.json();
-      setProfileData(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    if(!response.ok) throw new Error('No data')
+
+    const data = await response.json();
+    setProfileData(data);
   };
 
+  const [getBusinessProfile, isLoading, error] = useFetch(getProfile);
+
   useEffect(() => {
-    getProfile();
+    getBusinessProfile();
   }, []);
 
   return (
     <div>
+
       <BusinessLayout>
         <>
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <MoonLoader color="#00cab6" size={75}></MoonLoader>
             </div>
-          ) : isError ? (
+          ) : error ? (
             <Link to={"/business/profile/creation"} className="btn btn-accent">
               Создать профиль
             </Link>
@@ -116,8 +112,6 @@ const BusinessProfilePage = () => {
               </div>
             </div>
           )}
-
-       
         </>
       </BusinessLayout>
     </div>

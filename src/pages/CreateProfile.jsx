@@ -52,7 +52,6 @@ const CreateProfile = () => {
     }
   };
 
-  console.log(watch("name"));
 
   return (
     <div className="m-5">
