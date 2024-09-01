@@ -28,9 +28,9 @@ const BusinessCategories = () => {
   }, []);
   return (
     <BusinessLayout>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         {categories?.map((category) => (
-          <div className="text-xl" key={category.id}>
+          <div className="text-xl p-4 bg-base-200 rounded-xl" key={category.id}>
             {category.title}
           </div>
         ))}

@@ -18,6 +18,7 @@ import BusinessCategories from "../pages/BusinessCategories"
 import BusinessSpecialists from "../pages/BusinessSpecialists"
 import BusinessService from "../pages/BusinessService"
 import BusinessSpecialistsAdd from "../pages/BusinessSpecialistsAdd"
+import BusinessServiceAdd from "../pages/BusinessServiceAdd"
 
 
 const AppRoutes = () => {
@@ -41,6 +42,7 @@ const AppRoutes = () => {
         <Route path="/business/specialists/create" element={<BusinessSpecialistsAdd/>}></Route>
         <Route path="/business/categories" element={<BusinessCategories/>}></Route>
         <Route path="/business/service" element={<BusinessService/>}></Route>
+        <Route path="/business/service/create" element={<BusinessServiceAdd/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
         <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
       </Routes>

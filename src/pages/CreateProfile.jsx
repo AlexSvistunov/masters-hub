@@ -39,8 +39,8 @@ const CreateProfile = () => {
         body: JSON.stringify(testObject),
       });
 
-      const data = await response.json();
       if (!response.ok) {
+        const data = await response.json();
         for (let key in data) {
           setError(key, { type: "custom", message: data[key][0]});
         }
