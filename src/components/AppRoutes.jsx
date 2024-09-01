@@ -13,12 +13,13 @@ import SpecialistPage from "../pages/SpecialistPage"
 import CreateProfile from "../pages/CreateProfile"
 import RecordingPage from "../pages/RecordingPage"
 import AllReviews from "../pages/AllReviews"
-import EditProfile from "../pages/EditProfile"
+import EditProfile from "../pages/BusinessProfileEditPage"
 import BusinessCategories from "../pages/BusinessCategories"
 import BusinessSpecialists from "../pages/BusinessSpecialists"
 import BusinessService from "../pages/BusinessService"
 import BusinessSpecialistsAdd from "../pages/BusinessSpecialistsAdd"
 import BusinessServiceAdd from "../pages/BusinessServiceAdd"
+import BusinessServiceEditPage from "../pages/BusinessServiceEditPage"
 
 
 const AppRoutes = () => {
@@ -43,6 +44,7 @@ const AppRoutes = () => {
         <Route path="/business/categories" element={<BusinessCategories/>}></Route>
         <Route path="/business/service" element={<BusinessService/>}></Route>
         <Route path="/business/service/create" element={<BusinessServiceAdd/>}></Route>
+        <Route path="/business/service/:id/edit" element={<BusinessServiceEditPage/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
         <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
       </Routes>

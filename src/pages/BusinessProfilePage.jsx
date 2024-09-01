@@ -118,4 +118,6 @@ const BusinessProfilePage = () => {
   );
 };
 
+// передавать пропсами, а не доп запрос
+
 export default BusinessProfilePage;

@@ -62,8 +62,8 @@ const BusinessService = () => {
                   className="hover:underline"
                 ></Link>
 
-                <Link to={`/business/service/${enService.id}/edit`}>
-                  <Pencil className="absolute top-4 right-4" />
+                <Link to={`/business/service/${enService.id}/edit`} state={services}>
+                  <Pencil color={'#00CDB7'} className="absolute top-4 right-4" />
                 </Link>
               </div>
             </div>

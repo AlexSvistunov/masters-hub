@@ -124,7 +124,7 @@ const BusinessSpecialistsAdd = () => {
           <span className="text-red-500">{errors.descr && errors.descr.message}</span>
         </div>
 
-        <button className="btn btn-accent">Создать специалиста</button>
+        <button className="btn btn-accent self-start">Создать специалиста</button>
       </form>
 
       {alertSuccess && (
