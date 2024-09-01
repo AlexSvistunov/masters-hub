@@ -41,28 +41,29 @@ const BusinessSpecialists = () => {
             Создать профиль
           </Link>
         ) : (
+
           <div>
-            <div className="flex flex-col gap-4 mb-4 max-w-96">
+            <div className="flex flex-col gap-4 mb-4 max-w-2xl">
               {specialists?.map((specialist) => (
                 <div className="p-4 bg-base-200 rounded-xl" key={specialist.id}>
-                  <div className="flex justify-between items-center">
-                    <img className="object-cover rounded-lg"
-                    width={100}
-                    height={60}
+                  <div className="flex gap-8">
+                    
+                    <img className="object-cover bg-center h-40 w-40 rounded-lg"
+
                       src={`/backend/masterhub/static/${specialist.photo}`}
                       alt=""
                     />
-                    <div>
-                      <div>{specialist.name}</div>
-                      <div>{specialist.job}</div>
-                      <div>{specialist.description}</div>
+                    <div className="max-w-xs">
+                      <div className="text-2xl">{specialist.name}</div>
+                      <div className="text-gray-400 mb-5">{specialist.job}</div>
+                      <div className="text-gray-400">{specialist.description}</div>
                     </div>
                   </div>
                   {/* img */}
                 </div>
               ))}
             </div>
-            <button className="btn btn-accent">Добавить специалиста</button>
+            <Link to='/business/specialists/create' className="btn btn-accent">Добавить специалиста</Link>
           </div>
         )}
       </BusinessLayout>
