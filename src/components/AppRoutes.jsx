@@ -20,6 +20,7 @@ import BusinessService from "../pages/BusinessService"
 import BusinessSpecialistsAdd from "../pages/BusinessSpecialistsAdd"
 import BusinessServiceAdd from "../pages/BusinessServiceAdd"
 import BusinessServiceEditPage from "../pages/BusinessServiceEditPage"
+import BusinessSpecialistPage from "../pages/BusinessSpecialistPage"
 
 
 const AppRoutes = () => {
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         <Route path="/business/profile/creation" element={<CreateProfile/>}></Route>
         <Route path="/business/profile/edit" element={<EditProfile/>}></Route>
         <Route path="/business/specialists" element={<BusinessSpecialists/>}></Route>
+        <Route path="/business/specialists/:id" element={<BusinessSpecialistPage/>}></Route>
         <Route path="/business/specialists/create" element={<BusinessSpecialistsAdd/>}></Route>
         <Route path="/business/categories" element={<BusinessCategories/>}></Route>
         <Route path="/business/service" element={<BusinessService/>}></Route>

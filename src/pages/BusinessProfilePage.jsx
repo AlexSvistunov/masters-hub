@@ -37,6 +37,7 @@ const BusinessProfilePage = () => {
 
       <BusinessLayout>
         <>
+          
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <MoonLoader color="#00cab6" size={75}></MoonLoader>
@@ -48,7 +49,7 @@ const BusinessProfilePage = () => {
           ) : (
             <div>
               <div className="flex justify-between">
-                <h1 className="text-2xl mb-4">Профиль</h1>
+                <h1 className="text-3xl mb-4">Профиль</h1>
                 <Link className="btn btn-accent" to="/business/profile/edit">
                   Редактировать
                 </Link>

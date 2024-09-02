@@ -17,6 +17,7 @@ const Services = ({
   setTime,
   recordingSlots,
   setMasterData,
+  keyword,
 }) => {
   const dispatch = useDispatch();
   const { currentToken, token } = useAuth();
@@ -35,24 +36,26 @@ const Services = ({
     }
   };
 
+  console.log(masterData);
+
   return (
-    <div className="bg-base-200 p-5 rounded-2xl min-h-64 flex flex-col mb-5">
-      <div className="flex gap-2 items-center">
+    <div className="bg-base-200 p-5 rounded-2xl min-h-52 flex flex-col mb-5">
+      <div className="flex gap-2 items-center mb-5">
         <h3 className="text-3xl">Услуги</h3>
         <span className="text-2xl text-primary">
           {masterData?.services_count}
         </span>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         {masterData?.services?.map((service) => (
           <div
-            className="flex my-5 flex-col tablet:flex-row"
+            className="flex p-6 px-6 flex-col tablet:flex-row bg-base-300 rounded-xl"
             key={service.id}
           >
             <div className="flex items-center">
               <img
-                className="block mr-4 rounded-md h-12 w-12"
+                className="block mr-4 rounded-md h-14 w-14"
                 src={`/backend/masterhub/${service.photo}`}
               ></img>
 
@@ -68,22 +71,23 @@ const Services = ({
               <div className="text-gray-500">{service.price} RUB</div>
               <span className="text-gray-500">{service.time}</span>
 
-              <div
-                className="ml-auto tablet:ml-0 btn btn-primary"
-                onClick={() => {
-                  if (!token) {
-                    return;
-                  }
-                  dispatch(openModal());
-                  dispatch(setId({ id: masterData?.id }));
-                  setStep(2);
-                  setModalActive(true);
-                  setServiceId(service.id);
-
-                }}
-              >
-                Записаться
-              </div>
+              {keyword ? null : (
+                <div
+                  className="ml-auto tablet:ml-0 btn btn-primary"
+                  onClick={() => {
+                    if (!token) {
+                      return;
+                    }
+                    dispatch(openModal());
+                    dispatch(setId({ id: masterData?.id }));
+                    setStep(2);
+                    setModalActive(true);
+                    setServiceId(service.id);
+                  }}
+                >
+                  Записаться
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -97,7 +101,9 @@ const Services = ({
         </div>
       )}
 
-      <EnrollModal step={step} setStep={setStep} propWord={serviceId} />
+      {keyword ? null : (
+        <EnrollModal step={step} setStep={setStep} propWord={serviceId} />
+      )}
     </div>
   );
 };
