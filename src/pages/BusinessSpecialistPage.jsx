@@ -29,6 +29,8 @@ const BusinessSpecialistPage = () => {
 
   const [getSpecialistData, isLoading, error] = useFetch(getSpecialist);
 
+  
+
   useEffect(() => {
     getSpecialistData();
   }, []);
@@ -58,7 +60,7 @@ const BusinessSpecialistPage = () => {
           <Services masterData={specialistData} keyword="business" />
         </div>
 
-        <Link className="btn btn-accent">Редактировать</Link>
+        <Link className="btn btn-accent" to={`/business/specialists/${id}/edit`}>Редактировать</Link>
       </div>
     </BusinessLayout>
   );

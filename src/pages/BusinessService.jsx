@@ -10,6 +10,7 @@ import { MoonLoader } from "react-spinners";
 const BusinessService = () => {
   const { currentToken } = useAuth();
   const [services, setServices] = useState([]);
+  console.log(services)
 
   const getServices = async () => {
     const response = await fetch(`${URL}/api/admin-panel/service/`, {

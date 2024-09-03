@@ -1,39 +1,46 @@
-import { useLocation, useParams } from "react-router-dom";
-import BusinessLayout from "../components/BusinessLayout";
+import { useParams } from "react-router-dom"
+import BusinessLayout from "../components/BusinessLayout"
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
+import { useFetch } from "../hooks/useFetch";
 import URL from "../utils/backend-url";
 import ErrorAlert from "../components/ErrorAlert";
 import SuccessAlert from "../components/SuccessAlert";
 
-const BusinessServiceEditPage = () => {
-  const location = useLocation();
-  const { state } = location;
-
+const BusinessSpecialistEdit = () => {
+  const {id} = useParams()
   const { currentToken } = useAuth();
 
-  const [alerts, setAlerts] = useState(false);
-  const [alerte, setAlerte] = useState(false);
-  const { id } = useParams();
+  const [specialistData, setSpecialistData] = useState({});
+  const [inputValues, setInputValues] = useState({});
 
-  const item = state.find((service) => service.id === Number(id));
+  console.log(specialistData)
+  console.log(inputValues)
 
-  const [inputValues, setInputValues] = useState(item);
-  console.log(inputValues);
+  const [alertSuccess, setAlertSuccess] = useState(false)
+  const [alertError, setAlertError] = useState(false)
 
-  const inputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+  const getSpecialist = async () => {
+    const response = await fetch(`${URL}/api/admin-panel/specialist/${id}/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${currentToken}`,
+      },
+    });
+    if (!response.ok) throw new Error("Something went wrong!");
+    const data = await response.json();
+    setSpecialistData(data);
+    setInputValues(data)
+    console.log(data);
+
+    return data;
   };
 
   const patch = async (id) => {
     const updatedValues = getUpdatedValues();
     if (Object.keys(updatedValues).length > 0) {
       try {
-        const response = await fetch(`${URL}/api/admin-panel/service/${id}/`, {
+        const response = await fetch(`${URL}/api/admin-panel/specialist/${id}/`, {
           method: "PATCH",
           body: JSON.stringify(updatedValues),
           headers: {
@@ -45,19 +52,27 @@ const BusinessServiceEditPage = () => {
         if (!response.ok) throw new Error("Failed to fetch");
 
         const data = await response.json();
-        setAlerts(true);
+        setAlertSuccess(true);
         return data;
       } catch (error) {
-        setAlerte(error.message)
+        setAlertError(error.message)
       }
     }
+  }
+
+  const inputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
   };
 
   const getUpdatedValues = () => {
     const updatedValues = {};
 
     Object.keys(inputValues).forEach((key) => {
-      if (inputValues[key] !== item[key]) {
+      if (inputValues[key] !== specialistData[key]) {
         updatedValues[key] = inputValues[key];
       }
     });
@@ -65,35 +80,42 @@ const BusinessServiceEditPage = () => {
     return updatedValues;
   };
 
-  useEffect(() => {
-    if(alerts) {
-      setTimeout(() => {
-        setAlerts((prev) => {
-          if (prev === true) return false;
-        });
-  
-  
-      }, 4000);
-    }
-  }, [alerts])
+  const [getSpecialistData, isLoading, error] = useFetch(getSpecialist);
 
   useEffect(() => {
-    if(alerte) {
+    getSpecialistData();
+  }, []);
+
+  useEffect(() => {
+    if(alertSuccess) {
       setTimeout(() => {
-        setAlerte((prev) => {
+        setAlertSuccess((prev) => {
           if (prev === true) return false;
         });
   
   
       }, 4000);
     }
-  }, [alerte])
+  }, [alertSuccess])
+
+  useEffect(() => {
+    if(alertError) {
+      setTimeout(() => {
+        setAlertError((prev) => {
+          if (prev === true) return false;
+        });
+  
+  
+      }, 4000);
+    }
+  }, [alertError])
 
   return (
     <BusinessLayout>
+      <div>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl">Редактирование услуг</h1>
-        <button className="btn btn-accent" onClick={() => patch(item.id)}>
+        <h1 className="text-3xl">Редактирование специалиста</h1>
+        <button className="btn btn-accent" onClick={() => patch(specialistData.id)}>
           Сохранить изменения
         </button>
       </div>
@@ -102,9 +124,9 @@ const BusinessServiceEditPage = () => {
         <input
           onChange={inputChange}
           className="input input-bordered"
-          value={inputValues.title}
+          value={inputValues.name}
           placeholder="Заголовок"
-          name="title"
+          name="name"
         />
         <input
           onChange={inputChange}
@@ -116,16 +138,9 @@ const BusinessServiceEditPage = () => {
         <input
           onChange={inputChange}
           className="input input-bordered"
-          value={inputValues.price}
-          placeholder="Цена"
-          name="price"
-        />
-        <input
-          onChange={inputChange}
-          className="input input-bordered"
-          value={inputValues.time}
-          placeholder="Время"
-          name="time"
+          value={inputValues.job}
+          placeholder="Специализация"
+          name="job"
         />
       </div>
 
@@ -135,15 +150,15 @@ const BusinessServiceEditPage = () => {
         className="w-16 h-16 object-cover rounded-lg"
       /> */}
 
-      {alerts && <SuccessAlert text="Услуга успешно изменена!" />}
+      {alertSuccess && <SuccessAlert text="Специалист успешно отредактирован!" />}
 
-      {alerte && <ErrorAlert text={alerte} />}
-      
+      {alertError && <ErrorAlert text={alertError} />}
+      </div>
     </BusinessLayout>
-  );
-};
+  )
+}
 
-// private route???
 // loading
+//back btn
 
-export default BusinessServiceEditPage;
+export default BusinessSpecialistEdit

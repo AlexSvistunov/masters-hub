@@ -24,6 +24,15 @@ const Drawer = ({ children }) => {
               Профиль
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to="/business/recording"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Записи
+            </NavLink>
+          </li>
           <li>
             <NavLink
               to="/business/specialists"

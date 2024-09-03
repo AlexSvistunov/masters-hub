@@ -23,6 +23,7 @@ import BusinessServiceEditPage from "../pages/BusinessServiceEditPage"
 import BusinessSpecialistPage from "../pages/BusinessSpecialistPage"
 import BusinessWorkTime from "../pages/BusinessWorkTime"
 import BusinessWorkTimeE from "../pages/BusinessWorkTimeE"
+import BusinessSpecialistEdit from "../pages/BusinessSpecialistEdit"
 
 
 const AppRoutes = () => {
@@ -45,6 +46,7 @@ const AppRoutes = () => {
         <Route path="/business/specialists" element={<BusinessSpecialists/>}></Route>
         <Route path="/business/specialists/:id" element={<BusinessSpecialistPage/>}></Route>
         <Route path="/business/specialists/create" element={<BusinessSpecialistsAdd/>}></Route>
+        <Route path="/business/specialists/:id/edit" element={<BusinessSpecialistEdit/>}></Route>
         <Route path="/business/categories" element={<BusinessCategories/>}></Route>
         <Route path="/business/service" element={<BusinessService/>}></Route>
         <Route path="/business/service/create" element={<BusinessServiceAdd/>}></Route>
