@@ -84,6 +84,10 @@
   padding: 10px;
 }
 
+.drawer-menu li a {
+  @apply text-xl
+}
+
 .drawer-menu li a.active {
   @apply text-accent
 }
@@ -96,3 +100,9 @@
   button, a {
     @apply no-animation
   }
+
+  .rdp-root {
+  --rdp-accent-color: indigo; /* Change the accent color to indigo. */
+  --rdp-accent-background-color: #f0f0f0; /* Change the accent background color. */
+  /* Add more CSS variables here. */
+}

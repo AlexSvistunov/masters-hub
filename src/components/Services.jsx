@@ -44,10 +44,11 @@ const Services = ({
         <h3 className="text-3xl">Услуги</h3>
         <span className="text-2xl text-primary">
           {masterData?.services_count}
+          {/* {masterData?.services?.length} */}
         </span>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 mb-4">
         {masterData?.services?.map((service) => (
           <div
             className="flex p-6 px-6 flex-col tablet:flex-row bg-base-300 rounded-xl"

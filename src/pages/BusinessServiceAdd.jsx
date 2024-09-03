@@ -3,6 +3,7 @@ import BusinessLayout from "../components/BusinessLayout";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
 import { useEffect, useState } from "react";
+import SuccessAlert from "../components/SuccessAlert";
 
 const BusinessServiceAdd = () => {
   const { currentToken } = useAuth();
@@ -10,11 +11,13 @@ const BusinessServiceAdd = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
     setError,
   } = useForm();
 
   const [categories, setCategories] = useState([])
+  const [createSuccess, setCreateSuccess] = useState(false);
 
   const getCategories = async () => {
     try {
@@ -68,12 +71,24 @@ const BusinessServiceAdd = () => {
       }
 
       const data = await response.json();
+      setCreateSuccess(true)
+      reset()
       console.log(data);
       return data;
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCreateSuccess((prev) => {
+        if (prev === true) return false;
+      });
+
+
+    }, 4000);
+  }, [createSuccess]);
 
   return (
     <BusinessLayout>
@@ -140,6 +155,11 @@ const BusinessServiceAdd = () => {
 
         <button className="btn btn-accent my-2">Создать услугу</button>
       </form>
+
+      
+      {createSuccess && (
+        <SuccessAlert text='Услуга успешно создана!'/>
+      )}
     </BusinessLayout>
   );
 };

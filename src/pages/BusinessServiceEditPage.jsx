@@ -8,12 +8,12 @@ import SuccessAlert from "../components/SuccessAlert";
 
 const BusinessServiceEditPage = () => {
   const location = useLocation();
+  const { state } = location;
+
   const { currentToken } = useAuth();
 
   const [alerts, setAlerts] = useState(false);
   const [alerte, setAlerte] = useState(false);
-
-  const { state } = location;
   const { id } = useParams();
 
   const item = state.find((service) => service.id === Number(id));

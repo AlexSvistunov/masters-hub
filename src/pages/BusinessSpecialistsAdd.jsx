@@ -13,6 +13,7 @@ const BusinessSpecialistsAdd = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
     setError,
   } = useForm();
@@ -42,6 +43,7 @@ const BusinessSpecialistsAdd = () => {
 
       const data = await response.json();
       setAlertSuccess(true)
+      reset()
       return data
       
     } catch (error) {
@@ -104,6 +106,11 @@ const BusinessSpecialistsAdd = () => {
             name="job"
             {...register("job", {
               required: "Поле обязательно к заполнению!",
+              pattern: {
+                value: /^(master|studio)$/,
+                message:
+                  'Специализация должна быть либо "master", либо "studio"',
+              },
             })}
           ></input>
 

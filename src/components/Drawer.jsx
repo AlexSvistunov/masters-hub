@@ -52,7 +52,12 @@ const Drawer = ({ children }) => {
           </li>
 
           <li>
-            <Link to="">Рабочее время</Link>
+            <NavLink
+              to="/business/work-time"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              График
+            </NavLink>
           </li>
         </ul>
       </div>

@@ -10,6 +10,7 @@ const BusinessProfilePage = () => {
   const { token, currentToken } = useAuth();
 
   const [profileData, setProfileData] = useState({});
+  console.log(profileData)
 
   const getProfile = async () => {
     const headers = {};

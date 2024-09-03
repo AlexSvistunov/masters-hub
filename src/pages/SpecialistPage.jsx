@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import  URL  from "/src/utils/backend-url";
 import Services from "../components/Services";
 import Header from "../components/Header";
+import WorksExample from "../components/WorksExample";
 
 const SpecialistPage = () => {
   const [specialistData, setSpecialistData] = useState({});
@@ -46,6 +47,8 @@ const SpecialistPage = () => {
         </div>
 
         <Services masterData={specialistData} step={step} setStep={setStep} />
+
+        <WorksExample masterData={specialistData}/>
       </div>
     </section></>
   );

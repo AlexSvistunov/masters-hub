@@ -10,7 +10,7 @@ import BusinessPage from "../pages/BusinessPage"
 import BusinessProfilePage from "../pages/BusinessProfilePage"
 import TestPage from "../pages/TestPage"
 import SpecialistPage from "../pages/SpecialistPage"
-import CreateProfile from "../pages/CreateProfile"
+import CreateProfile from "../pages/BusinessProfileCreatePage"
 import RecordingPage from "../pages/RecordingPage"
 import AllReviews from "../pages/AllReviews"
 import EditProfile from "../pages/BusinessProfileEditPage"
@@ -21,6 +21,8 @@ import BusinessSpecialistsAdd from "../pages/BusinessSpecialistsAdd"
 import BusinessServiceAdd from "../pages/BusinessServiceAdd"
 import BusinessServiceEditPage from "../pages/BusinessServiceEditPage"
 import BusinessSpecialistPage from "../pages/BusinessSpecialistPage"
+import BusinessWorkTime from "../pages/BusinessWorkTime"
+import BusinessWorkTimeE from "../pages/BusinessWorkTimeE"
 
 
 const AppRoutes = () => {
@@ -47,6 +49,8 @@ const AppRoutes = () => {
         <Route path="/business/service" element={<BusinessService/>}></Route>
         <Route path="/business/service/create" element={<BusinessServiceAdd/>}></Route>
         <Route path="/business/service/:id/edit" element={<BusinessServiceEditPage/>}></Route>
+        <Route path="/business/work-time" element={<BusinessWorkTime/>}></Route>
+        <Route path="/business/work-time/edit" element={<BusinessWorkTimeE/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
         <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
       </Routes>

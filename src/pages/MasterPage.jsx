@@ -172,7 +172,7 @@ const MasterPage = () => {
                       <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-500">
                         <img
                           className="w-full h-full"
-                          src={`/backend/masterhub/static${specialist.photo}`}
+                          src={`/backend/masterhub/static/${specialist.photo}`}
                         ></img>
                       </div>
 
