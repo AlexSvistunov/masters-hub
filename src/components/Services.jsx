@@ -5,7 +5,7 @@ import EnrollModal from "./EnrollModal";
 import useAuth from "../hooks/useAuth";
 
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import URL from "../utils/backend-url";
 
 const Services = ({
@@ -69,6 +69,7 @@ const Services = ({
             </div>
 
             <div className="mt-3 tablet:mt-0 tablet:ml-auto flex  gap-10 items-center">
+              {keyword === 'worktime' && <Link className="btn btn-accent">Рабочее рвемя</Link>}
               <div className="text-gray-500">{service.price} RUB</div>
               <span className="text-gray-500">{service.time}</span>
 

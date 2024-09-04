@@ -38,6 +38,7 @@ const BusinessSpecialistPage = () => {
   return (
     <BusinessLayout>
       <div className="flex gap-10">
+        
         <div className="flex-auto">
           <div className="flex gap-8 mb-5">
             <img

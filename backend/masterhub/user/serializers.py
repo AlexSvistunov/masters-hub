@@ -49,13 +49,12 @@ class ProfileImagesSerializer(serializers.ModelSerializer):
 
 
 class ServiceSerializer(serializers.ModelSerializer):
-
-
     class Meta:
         model = Service
-        fields = ['id', 'title', 'description','category', 'price', 'photo', 'time']
+        fields = ['id', 'title', 'description', 'category', 'price', 'photo', 'time']
         # write_only_fields = ['category']
-        extra_kwargs = {'category':{'write_only':True}}
+        extra_kwargs = {'category': {'write_only': True}}
+
 
 class SpecialistSerializer(serializers.ModelSerializer):
     photo = serializers.ImageField(use_url=False, required=False)
@@ -195,6 +194,7 @@ class SpecialistDetailSerializer(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField()
     services = serializers.SerializerMethodField()
     images_work = serializers.SerializerMethodField()
+    services_count = serializers.SerializerMethodField()
 
     def get_photo(self, obj):
         return obj.photo.url
@@ -209,9 +209,13 @@ class SpecialistDetailSerializer(serializers.ModelSerializer):
         serializer = ProfileImagesSerializer(queryset, many=True)
         return serializer.data
 
+    def get_services_count(self, obj):
+        count = obj.specialist_services.count()
+        return count
+
     class Meta:
         model = Specialist
-        fields = ['id', 'name', 'job', 'description', 'photo', 'services', 'images_work']
+        fields = ['id', 'name', 'job', 'description', 'photo', 'services_count', 'services', 'images_work']
 
 
 class TokenSerializer(serializers.ModelSerializer):

@@ -6,6 +6,8 @@ import { useFetch } from "../hooks/useFetch";
 import { Link } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 
+import BusinessSpecialist from "../components/BusinessSpecialists";
+
 const BusinessSpecialists = () => {
   const { currentToken } = useAuth();
   const [specialists, setSpecialists] = useState([]);
@@ -32,8 +34,8 @@ const BusinessSpecialists = () => {
   return (
     <div>
       <BusinessLayout>
-      <h1 className="text-3xl mb-4">Мои специалисты</h1>
- 
+        <h1 className="text-3xl mb-4">Мои специалисты</h1>
+
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <MoonLoader color="#00cab6" size={75}></MoonLoader>
@@ -46,27 +48,11 @@ const BusinessSpecialists = () => {
           <div>
             <div className="flex flex-col gap-4 mb-4 max-w-2xl">
               {specialists?.map((specialist) => (
-                <Link to={`/business/specialists/${specialist.id}`} key={specialist.id}>
-                  <div className="p-4 bg-base-200 rounded-xl">
-                    <div className="flex gap-8">
-                      <img
-                        className="object-cover bg-center h-40 w-40 rounded-lg"
-                        src={`/backend/masterhub/static/${specialist.photo}`}
-                        alt=""
-                      />
-                      <div className="max-w-xs">
-                        <div className="text-2xl">{specialist.name}</div>
-                        <div className="text-gray-400 mb-5">
-                          {specialist.job}
-                        </div>
-                        <div className="text-gray-400">
-                          {specialist.description}
-                        </div>
-                      </div>
-                    </div>
-                    {/* img */}
-                  </div>
-                </Link>
+                <BusinessSpecialist
+                  key={specialist.id}
+                  specialist={specialist}
+              
+                />
               ))}
             </div>
             <Link to="/business/specialists/create" className="btn btn-accent">

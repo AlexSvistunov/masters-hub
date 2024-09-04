@@ -133,7 +133,7 @@ class WorkTimeSerializer(serializers.Serializer):
                 if not time_start + time_relax + service_time <= recording_time_start:
                     time_start = recording_time_end + time_relax
                     recordings.pop(0)
-            if time_start+service_time<=time_break_start or time_start>=time_break_end:
+            if time_start + service_time <= time_break_start or time_start >= time_break_end:
                 result.append(str(time_start)[:-3])
             time_start += time_relax
         return result

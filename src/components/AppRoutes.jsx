@@ -24,6 +24,7 @@ import BusinessSpecialistPage from "../pages/BusinessSpecialistPage"
 import BusinessWorkTime from "../pages/BusinessWorkTime"
 import BusinessWorkTimeE from "../pages/BusinessWorkTimeE"
 import BusinessSpecialistEdit from "../pages/BusinessSpecialistEdit"
+import BusinessWorkTimeSpec from "../pages/BusinessWorkTimeSpec"
 
 
 const AppRoutes = () => {
@@ -52,6 +53,8 @@ const AppRoutes = () => {
         <Route path="/business/service/create" element={<BusinessServiceAdd/>}></Route>
         <Route path="/business/service/:id/edit" element={<BusinessServiceEditPage/>}></Route>
         <Route path="/business/work-time" element={<BusinessWorkTime/>}></Route>
+
+        <Route path="/business/work-time/:id" element={<BusinessWorkTimeSpec/>}></Route>
         <Route path="/business/work-time/edit" element={<BusinessWorkTimeE/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
         <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
