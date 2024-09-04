@@ -18,9 +18,12 @@ const BusinessSpecialists = ({ specialist, keyword }) => {
             </div>
           </div>
 
-          {keyword === "worktime" && (
-            <Link className="btn btn-accent" to={`/business/work-time/${specialist.id}`}>Посмотреть график</Link>
-          )}
+          <Link
+            className="btn btn-accent"
+            to={`/business/work-time/${specialist.id}`}
+          >
+            Посмотреть график
+          </Link>
         </div>
         {/* img */}
       </div>

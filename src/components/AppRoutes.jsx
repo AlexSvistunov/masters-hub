@@ -25,6 +25,7 @@ import BusinessWorkTime from "../pages/BusinessWorkTime"
 import BusinessWorkTimeE from "../pages/BusinessWorkTimeE"
 import BusinessSpecialistEdit from "../pages/BusinessSpecialistEdit"
 import BusinessWorkTimeSpec from "../pages/BusinessWorkTimeSpec"
+import BusinessRecordingPage from "../pages/BusinessRecordingPage"
 
 
 const AppRoutes = () => {
@@ -56,6 +57,8 @@ const AppRoutes = () => {
 
         <Route path="/business/work-time/:id" element={<BusinessWorkTimeSpec/>}></Route>
         <Route path="/business/work-time/edit" element={<BusinessWorkTimeE/>}></Route>
+
+        <Route path="/business/recording" element={<BusinessRecordingPage/>}></Route>
         <Route path="/test" element={<TestPage/>}></Route>
         <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
       </Routes>
