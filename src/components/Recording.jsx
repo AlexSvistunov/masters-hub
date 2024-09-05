@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
 
-const Recording = ({recording}) => {
+const Recording = ({recording, deleteRecording}) => {
+
+
+
   return (
     <div
     className="p-5 bg-base-200 flex flex-col items-start rounded-xl relative"
@@ -35,7 +38,7 @@ const Recording = ({recording}) => {
       </span>
     </div>
 
-    <button className="btn btn-circle absolute top-2 right-2">
+    <button className="btn btn-circle absolute top-2 right-2" onClick={() => deleteRecording(recording.id)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
@@ -50,6 +53,7 @@ const Recording = ({recording}) => {
           d="M6 18L18 6M6 6l12 12"
         />
       </svg>
+     
     </button>
   </div>
   )

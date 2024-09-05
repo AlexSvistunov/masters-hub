@@ -31,6 +31,24 @@ const RecordingPage = () => {
       setIsLoading(false);
     }
   };
+
+  const deleteRecording = async (id) => {
+    try {
+      const response = await fetch(`${URL}/api/recording/${id}/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${currentToken}`,
+        },
+      });
+      const data = await response.json();
+      setMyRecording(data);
+      setIsLoading(false);
+      console.log(data);
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setIsLoading(false);
+    }
+  }
   
 
   useEffect(() => {
@@ -68,7 +86,7 @@ const RecordingPage = () => {
               <>
                 {myRecording.length ? (
                   myRecording.map((recording) => (
-                    <Recording recording={recording} key={recording.id}/>
+                    <Recording recording={recording} key={recording.id} deleteRecording={deleteRecording}/>
                   ))
                 ) : (
                   <h3 className="text-4xl text-center">У вас нет текущих записей!</h3>
@@ -82,5 +100,7 @@ const RecordingPage = () => {
     </div>
   );
 };
+
+// success || error alert
 
 export default RecordingPage;
