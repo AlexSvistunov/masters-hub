@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const CategoryCard = ({category}) => {
   return (
-    <Link className="block w-full tablet:w-2/6 relative category-card  before:block before:absolute before:inset-0 before:bg-black-rgba before:rounded-lg tablet:min-h-52 h-40 tablet:h-auto" to={'/catalog'} state={category}>
+    <Link className="block relative category-card before:block before:absolute before:inset-0 before:bg-black-rgba before:rounded-lg tablet:h-40 tablet:w-72 h-28" to={'/catalog'} state={category}>
       <img
         className="w-full h-full rounded-lg object-cover"
         src={`/backend/masterhub${category.photo}`}
@@ -14,5 +14,7 @@ const CategoryCard = ({category}) => {
     </Link>
   );
 };
+
+//  <Link className="block w-64 tablet:w-2/6 relative category-card  before:block before:absolute before:inset-0 before:bg-black-rgba before:rounded-lg h-40"/>
 
 export default CategoryCard;

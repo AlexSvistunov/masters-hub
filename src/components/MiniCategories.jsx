@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard";
 import { useFetch } from "../hooks/useFetch";
 import CategoryService from "../service/CategoryService";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 
 const MiniCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -19,7 +21,7 @@ const MiniCategories = () => {
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Категории</h2>
         {error && <h3 className="text-center text-2xl">{error}</h3>}
-        <div className="flex gap-4 tablet:flex-row flex-col">
+        <div className="flex gap-4">
           {isLoading ? (
             <>
               {Array(3)
@@ -27,14 +29,19 @@ const MiniCategories = () => {
                 .map((skeleton, index) => (
                   <div
                     key={index}
-                    className="skeleton tablet:w-2/6 w-full rounded-lg tablet:min-h-52 min-h-40"
+                    className="skeleton tablet:h-40 tablet:w-72 h-28"
                   ></div>
                 ))}
             </>
           ) : (
-            categories.map((category) => (
-              <CategoryCard key={category.id} category={category} />
-            ))
+            <Swiper wrapperClass="category" modules={[Navigation]} slidesPerView={"auto"} spaceBetween={30} navigation>
+              {categories.map((category) => (
+                <SwiperSlide className="myCard">
+                  <CategoryCard key={category.id} category={category} />
+                  {/* <img src={`/backend/masterhub${category.photo}`} className="h-40 w-64" alt="" /> */}
+                </SwiperSlide>
+              ))}
+            </Swiper>
           )}
         </div>
       </div>

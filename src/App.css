@@ -15,4 +15,33 @@
     @apply bg-primary
 }
 
+.container {
+    @apply px-5;
+}
+
+.swiper-button-prev::after {
+    display: none;
+}
+
+
+ .swiper-button-next::after {
+    display: none;
+}
+
+.swiper-button-prev {
+    transform: rotate(180deg);
+}
+
+.swiper-button-prev, .swiper-button-next {
+    position: absolute;
+    display: block;
+    height: 40px!important;
+    width: 40px!important;
+    background-image: url(/icon-swiper-right.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    z-index: 1000;
+}
 
