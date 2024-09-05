@@ -3,10 +3,14 @@ import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import MyDropzone from "../components/MyDropZone";
+
+
 
 const CreateProfile = () => {
   const { currentToken } = useAuth();
   const navigate = useNavigate();
+
 
   const {
     register,
@@ -145,6 +149,8 @@ const CreateProfile = () => {
 
         <button className="btn btn-accent my-2">Создать профиль</button>
       </form>
+
+      {/* <MyDropzone/> */}
     </div>
   );
 };

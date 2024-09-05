@@ -14,6 +14,7 @@ const RecordingPage = () => {
   const [myRecording, setMyRecording] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+
   const getNotes = async () => {
     try {
       const response = await fetch(`${URL}/api/recording/`, {
@@ -23,6 +24,7 @@ const RecordingPage = () => {
         },
       });
       const data = await response.json();
+      
       setMyRecording(data);
       setIsLoading(false);
       console.log(data);
@@ -49,7 +51,7 @@ const RecordingPage = () => {
       setIsLoading(false);
     }
   }
-  
+
 
   useEffect(() => {
     getNotes();
@@ -65,7 +67,7 @@ const RecordingPage = () => {
     <div>
       <Header />
       <Hero />
-      <div className="container mx-auto min-h-screen">
+      <div className="container mx-auto min-h-screen px-5">
         <Tabs />
 
         <div className="py-10 text-center">
@@ -102,5 +104,6 @@ const RecordingPage = () => {
 };
 
 // success || error alert
+// confirm modal
 
 export default RecordingPage;

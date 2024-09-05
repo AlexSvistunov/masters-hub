@@ -9,6 +9,7 @@ import DateTime from "./DateTime";
 import "react-datepicker/dist/react-datepicker.css";
 import { recordingArray } from "../utils/recordingArray";
 import SuccessAlert from "./SuccessAlert";
+import ErrorAlert from './ErrorAlert'
 
 const EnrollModal = ({ step, setStep, propWord }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -47,9 +49,17 @@ const EnrollModal = ({ step, setStep, propWord }) => {
     if(successAlert) {
       setTimeout(() => {
         setSuccessAlert(false)
-      }, 3000)
+      }, 2000)
     }
   }, [successAlert])
+
+  useEffect(() => {
+    if(errorAlert) {
+      setTimeout(() => {
+        setErrorAlert(false)
+      }, 2000)
+    }
+  }, [errorAlert])
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
@@ -105,14 +115,14 @@ const EnrollModal = ({ step, setStep, propWord }) => {
 
   const createEnrollment = async (service) => {
     let currentDate = startDate;
-    currentDate.setDate(currentDate.getDate() - 1);
+    currentDate.setDate(currentDate.getDate());
 
     let year = currentDate.getFullYear();
     let month = String(currentDate.getMonth() + 1).padStart(2, "0");
     let day = String(currentDate.getDate()).padStart(2, "0");
-
+    
     let formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
+    console.log(formattedDate)
 
     const obj = {
       time: chosenTime,
@@ -138,8 +148,11 @@ const EnrollModal = ({ step, setStep, propWord }) => {
         const data = await response.json();
         dispatch(closeModal());
         setSuccessAlert(true);
+      } else {
+        throw new Error('Something went wrong!')
       }
     } catch (error) {
+      setErrorAlert(error.message)
       console.error("An error occurred:", error);
     }
   };
@@ -250,6 +263,7 @@ const EnrollModal = ({ step, setStep, propWord }) => {
       </div>
 
       {successAlert && <SuccessAlert text="Запись успешно создана" />}
+      {errorAlert && <ErrorAlert text={errorAlert}/>}
     </>
   );
 };
