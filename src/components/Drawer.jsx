@@ -8,7 +8,7 @@ const Drawer = ({ children }) => {
         {/* Page content here */}
         {children}
       </div>
-      <div className="drawer-side rounded-2xl h-full">
+      <div className="drawer-side rounded-2xl h-full z-50">
         <label
           htmlFor="my-drawer"
           aria-label="close sidebar"

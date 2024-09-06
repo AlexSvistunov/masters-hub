@@ -91,8 +91,8 @@ const BusinessServiceEditPage = () => {
 
   return (
     <BusinessLayout>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl">Редактирование услуг</h1>
+      <div className="flex justify-between tablet:items-center items-start mb-4 gap-4 tablet:flex-row flex-col">
+        <h1 className="tablet:text-3xl text-2xl">Редактирование услуг</h1>
         <button className="btn btn-accent" onClick={() => patch(item.id)}>
           Сохранить изменения
         </button>

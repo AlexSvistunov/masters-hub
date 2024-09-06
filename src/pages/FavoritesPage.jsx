@@ -74,7 +74,7 @@ const FavoritesPage = () => {
                       />
                     ))
                   ) : (
-                    <div className="text-4xl text-center">
+                    <div className="tablet:text-4xl text-xl text-center">
                       Ваше избранное пусто!
                     </div>
                   )}

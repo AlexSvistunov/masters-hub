@@ -4,10 +4,11 @@ const BusinessSpecialists = ({ specialist, keyword }) => {
   return (
     <Link to={`/business/specialists/${specialist.id}`} key={specialist.id}>
       <div className="p-4 bg-base-200 rounded-xl flex">
-        <div className="flex w-full">
+        
+        <div className="flex w-full tablet:flex-row flex-col gap-4">
           <div className="flex gap-8 flex-auto">
             <img
-              className="object-cover bg-center h-40 w-40 rounded-lg"
+              className="object-cover bg-center tablet:h-40 tablet:w-40 w-24 h-24 rounded-lg"
               src={`/backend/masterhub/static/${specialist.photo}`}
               alt=""
             />
@@ -19,7 +20,7 @@ const BusinessSpecialists = ({ specialist, keyword }) => {
           </div>
 
           <Link
-            className="btn btn-accent"
+            className="btn btn-accent self-end"
             to={`/business/work-time/${specialist.id}`}
           >
             Посмотреть график

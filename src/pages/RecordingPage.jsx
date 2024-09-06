@@ -24,6 +24,7 @@ const RecordingPage = () => {
         },
       });
       const data = await response.json();
+      console.log(data)
       
       setMyRecording(data);
       setIsLoading(false);
@@ -91,7 +92,7 @@ const RecordingPage = () => {
                     <Recording recording={recording} key={recording.id} deleteRecording={deleteRecording}/>
                   ))
                 ) : (
-                  <h3 className="text-4xl text-center">У вас нет текущих записей!</h3>
+                  <h3 className="tablet:text-4xl text-xl text-center">У вас нет текущих записей!</h3>
                 )}
               </>
             )}

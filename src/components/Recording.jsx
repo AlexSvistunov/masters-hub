@@ -9,7 +9,7 @@ const Recording = ({recording, deleteRecording}) => {
     className="p-5 bg-base-200 flex flex-col items-start rounded-xl relative"
     key={recording.id}
   >
-    <span className="font-bold block text-xl mb-2">
+    <span className="font-bold block text-xl mb-2 text-left">
       {recording.date} {recording.time_start} -{" "}
       {recording.time_end}
     </span>
@@ -38,6 +38,8 @@ const Recording = ({recording, deleteRecording}) => {
       </span>
     </div>
 
+    
+      
     <button className="btn btn-circle absolute top-2 right-2" onClick={() => deleteRecording(recording.id)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"

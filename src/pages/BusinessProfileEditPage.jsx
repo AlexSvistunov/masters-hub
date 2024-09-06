@@ -102,8 +102,8 @@ const EditProfile = () => {
 
   return (
     <BusinessLayout>
-      <div className="flex justify-between mb-3">
-        <h1 className="text-3xl">Редактирование профиля</h1>
+      <div className="flex justify-between mb-3 gap-4 tablet:flex-row flex-col">
+        <h1 className="tablet:text-3xl text-2xl">Редактирование профиля</h1>
         <button
           onClick={() => patch(profileData.id)}
           className="btn self-start btn-accent"

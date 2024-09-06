@@ -42,7 +42,7 @@ const BusinessWorkTime = () => {
     <div>
       <BusinessLayout>
         <div>
-          <div className="flex flex-col gap-4 mb-4 max-w-2xl">
+          <div className="flex flex-col gap-4 mb-4 tablet:max-w-2xl max-w-full">
             {specialist?.map((specialist) => (
               <BusinessSpecialists
                 key={specialist.id}
