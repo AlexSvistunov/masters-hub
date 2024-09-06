@@ -43,6 +43,7 @@ const Services = ({
       <div className="flex gap-2 items-center mb-5">
         <h3 className="text-3xl">Услуги</h3>
         <span className="text-2xl text-primary">
+      
           {masterData?.services_count}
           {/* {masterData?.services?.length} */}
         </span>
@@ -55,6 +56,7 @@ const Services = ({
             key={service.id}
           >
             <div className="flex items-center">
+              
               <img
                 className="block mr-4 rounded-md h-14 w-14"
                 src={`/backend/masterhub/${service.photo}`}

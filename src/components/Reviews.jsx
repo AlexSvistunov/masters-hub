@@ -38,10 +38,10 @@ const Reviews = ({
         {token && !masterPage && <h3 className="text-xl">Все отзывы</h3>}
 
         {masterPage && (
-          <div className="flex flex-col items-start max-w-150 w-full">
+          <div className="flex flex-col items-start max-w-150 w-full mb-5 tablet:mb-0">
             {token && masterPage && (
               <button
-                className="btn btn-ghost self-end"
+                className="tablet:self-end"
                 onClick={() => setIsLeavingCommentOpen((prev) => !prev)}
               >
                 Оставить отзыв

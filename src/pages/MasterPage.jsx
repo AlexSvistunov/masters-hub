@@ -127,7 +127,7 @@ const MasterPage = () => {
     <>
       <Header />
       {/* <EnrollModal step={step} setStep={setStep} /> */}
-      <section className="py-40">
+      <section className="py-52 tablet:py-40">
         {masterData && (
           <div className="container mx-auto">
             <div className="mb-5">
@@ -162,7 +162,7 @@ const MasterPage = () => {
               <div className="bg-base-200 p-5 rounded-2xl mb-5">
                 <h3 className="text-3xl mb-2">Специалисты</h3>
 
-                <div className="flex flex-wrap tablet:flex-nowrap items-center gap-4 my-4">
+                <div className="flex flex-wrap tablet:flex-nowrap tablet:items-center items-start gap-4 my-4">
                   {masterData?.specialists?.map((specialist) => (
                     <Link
                       to={`/profile/${id}/specialist/${specialist.id}`}

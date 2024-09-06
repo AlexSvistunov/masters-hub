@@ -50,7 +50,7 @@ const Header = () => {
         MASTERS <span className="text-primary">HUB</span>
       </Link>
 
-      <div className="flex items-center gap-4 tablet:flex-row flex-col">
+      <div className="flex items-center gap-4 phone:flex-row flex-col">
         <div className="flex gap-5">
           {!token ? (
             <>
