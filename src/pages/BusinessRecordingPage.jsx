@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import BusinessLayout from "../components/BusinessLayout"
 import URL from "../utils/backend-url"
 import useAuth from "../hooks/useAuth"
+import { useFetch } from "../hooks/useFetch"
 
 
 const BusinessRecordingPage = () => {
@@ -23,8 +24,10 @@ const BusinessRecordingPage = () => {
     }
   }
 
+  const [getBusinessRecording, isLoading, error] = useFetch(getRecording);
+
   useEffect(() => {
-    getRecording()
+    getBusinessRecording()
   }, [])
 
   return (

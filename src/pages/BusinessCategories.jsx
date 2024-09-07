@@ -4,6 +4,7 @@ import URL from "../utils/backend-url";
 import BusinessLayout from "../components/BusinessLayout";
 import { useFetch } from "../hooks/useFetch";
 import { MoonLoader } from "react-spinners";
+import { Link } from "react-router-dom";
 
 const BusinessCategories = () => {
   const { currentToken } = useAuth();
@@ -36,7 +37,12 @@ const BusinessCategories = () => {
           <MoonLoader color="#00cab6" size={75}></MoonLoader>
         </div>
       ) : error ? (
-        <div className="text-3xl">{error}</div>
+        <div className="flex flex-col gap-3 items-start">
+        <div className="text-xl">{error}</div>
+        <Link to="/business/profile/creation" className="btn btn-accent">
+          Создать профиль
+        </Link>
+      </div>
       ) : (
         <>
           <div className="flex flex-col gap-4 max-w-xl">

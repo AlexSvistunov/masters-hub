@@ -108,5 +108,9 @@
 }
 
 .container {
-  max-width: 100%;
+  max-width: 1280px;
+}
+
+body {
+  min-height: 100vh;
 }

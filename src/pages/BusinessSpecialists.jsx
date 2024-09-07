@@ -19,7 +19,17 @@ const BusinessSpecialists = () => {
         Authorization: `Token ${currentToken}`,
       },
     });
-    if (!response.ok) throw new Error("something went wrong");
+    if (!response.ok)
+      if(response.status === 404) {
+        throw new Error(
+          "Нет профиля! Создайте профиль чтобы создавать специалистов"
+        )
+      } else {
+        throw new Error(
+          "Something went wrong"
+        )
+      }
+   
     const data = await response.json();
     setSpecialists(data);
     return data;
@@ -30,6 +40,7 @@ const BusinessSpecialists = () => {
   useEffect(() => {
     getSpecialists();
   }, []);
+
   console.log(specialists);
   return (
     <div>
@@ -41,9 +52,14 @@ const BusinessSpecialists = () => {
             <MoonLoader color="#00cab6" size={75}></MoonLoader>
           </div>
         ) : error ? (
-          <Link to="/business/profile/creation" className="btn btn-accent">
-            Создать профиль
-          </Link>
+          <>
+            <div className="flex flex-col gap-3 items-start">
+              <span className="text-xl">{error}</span>
+              <Link to="/business/profile/creation" className="btn btn-accent">
+                Создать профиль
+              </Link>
+            </div>
+          </>
         ) : (
           <div>
             <div className="flex flex-col gap-4 mb-4 max-w-2xl">
@@ -51,7 +67,6 @@ const BusinessSpecialists = () => {
                 <BusinessSpecialist
                   key={specialist.id}
                   specialist={specialist}
-              
                 />
               ))}
             </div>
