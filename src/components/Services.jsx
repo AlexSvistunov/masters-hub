@@ -52,7 +52,7 @@ const Services = ({
       <div className="flex flex-col gap-6 mb-4">
         {masterData?.services?.map((service) => (
           <div
-            className="flex p-6 px-6 flex-col tablet:flex-row bg-base-300 rounded-xl"
+            className="flex p-6 px-6 flex-col tablet:flex-row border border-gray-700 rounded-xl"
             key={service.id}
           >
             <div className="flex items-center">

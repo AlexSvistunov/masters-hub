@@ -94,7 +94,7 @@ const Reviews = ({
                   </div>
 
                   <div className="font-medium dark:text-white">
-                    <p className="text-gray-400">
+                    <p className="text-gray-500 dark:text-gray-400">
                       {review.user_name}
                       <time
                         dateTime={review?.data_create}
