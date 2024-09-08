@@ -3,10 +3,12 @@ import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
 import CatalogCard from "../components/CatalogCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import URL from "../utils/backend-url";
 import { MoonLoader } from "react-spinners";
 import EnrollModal from "../components/EnrollModal";
+import { useLocation } from "react-router-dom";
+import scrollToRef from "../utils/scrollToRef";
 
 const FavoritesPage = () => {
   const [favList, setFavList] = useState([]);
@@ -14,6 +16,10 @@ const FavoritesPage = () => {
   const { currentToken } = useAuth();
 
   const [step, setStep] = useState(0);
+
+  const location = useLocation()
+  const ref = useRef()
+
 
   const { token } = useAuth();
   console.log(token);
@@ -39,6 +45,12 @@ const FavoritesPage = () => {
     getFav();
   }, []);
 
+  useEffect(() => {
+    if(location.state === 'dropdown') {
+      scrollToRef(ref)
+    }
+  }, [location])
+
 
   return (
     <div>
@@ -48,7 +60,7 @@ const FavoritesPage = () => {
       <div className="container mx-auto min-h-screen">
         <Tabs />
 
-        <div className="">
+        <div className="" ref={ref}>
           {!token && (
             <div className="text-4xl text-center py-10">
               Авторизируйтесь, чтобы посмотреть избранное

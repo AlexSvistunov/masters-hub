@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Recording from "../components/Recording";
 import { MoonLoader } from "react-spinners";
+import scrollToRef from "../utils/scrollToRef";
 
 const RecordingPage = () => {
   const { token, currentToken } = useAuth();
 
   const [myRecording, setMyRecording] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  
+  const location = useLocation()
+  const ref = useRef()
 
 
   const getNotes = async () => {
@@ -58,6 +63,13 @@ const RecordingPage = () => {
     getNotes();
   }, []);
 
+
+  useEffect(() => {
+    if(location.state === 'dropdown') {
+      scrollToRef(ref)
+    }
+  }, [])
+
   // const [isLoading, error, fetchCallback] = useFetch(getNotes)
 
   // useEffect(() => {
@@ -68,7 +80,7 @@ const RecordingPage = () => {
     <div>
       <Header />
       <Hero />
-      <div className="container mx-auto min-h-screen px-5">
+      <div className="container mx-auto min-h-screen px-5" ref={ref}>
         <Tabs />
 
         <div className="py-10 text-center">

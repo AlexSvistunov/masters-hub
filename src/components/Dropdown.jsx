@@ -4,8 +4,8 @@ import { logOut } from "../store/slices/userSlice";
 import useAuth from "../hooks/useAuth";
 
 const Dropdown = () => {
-  const dispatch = useDispatch()
-  const {currentToken} = useAuth()
+  const dispatch = useDispatch();
+  const { currentToken } = useAuth();
 
   return (
     <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
@@ -13,27 +13,23 @@ const Dropdown = () => {
         <Link to="/">Главная</Link>
       </li>
       <li>
-        <Link to="/notes">Мои записи</Link>
+        <Link  state='dropdown' to="/recording">Мои записи</Link>
       </li>
 
       <li>
-        <Link to="/favorites">Избранное</Link>
+        <Link state='dropdown' to="/favorites">Избранное</Link>
       </li>
 
       <li>
-        <a>
-          Мои проекты <span className="text-accent">business</span>
-        </a>
-      </li>
-
-      <li>
-        <a>
+        <Link to="/business/profile">
           Мой профиль <span className="text-accent">business</span>
-        </a>
+        </Link>
       </li>
 
       <li>
-        <button onClick={() => dispatch(logOut({ currentToken }))}>Выйти</button>
+        <button onClick={() => dispatch(logOut({ currentToken }))}>
+          Выйти
+        </button>
       </li>
     </ul>
   );

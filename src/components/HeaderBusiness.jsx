@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Burger from "./Burger";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
+import ToggleTheme from "./ToggleTheme";
 
 const HeaderBusiness = () => {
   const image = useSelector((state) => state.user.image);
@@ -33,10 +34,16 @@ const HeaderBusiness = () => {
             MASTERS<span className="text-accent">BUSINESS</span>
           </Link>
 
+          <div>
+          <ToggleTheme />
+          </div>
+
         </div>
       </div>
     </header>
   );
 };
+
+// user info
 
 export default HeaderBusiness;

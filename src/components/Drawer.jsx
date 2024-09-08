@@ -14,7 +14,7 @@ const Drawer = ({ children }) => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="drawer-menu flex flex-col gap-2 text-base-content min-h-full w-80 p-4 bg-base-200 default-tablet:bg-transparent">
+        <ul className="drawer-menu flex flex-col gap-2 text-base-content min-h-full w-80 p-4 tablet:py-4 py-7 bg-base-200 default-tablet:bg-transparent">
           {/* Sidebar content here */}
           <li>
             <NavLink

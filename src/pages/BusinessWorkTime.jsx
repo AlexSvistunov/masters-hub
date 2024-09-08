@@ -4,7 +4,6 @@ import "react-day-picker/style.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import CustomDay from "../components/CustomDay";
-import DayTooltip from "../components/DayTooltip";
 import useAuth from "../hooks/useAuth";
 import { useFetch } from "../hooks/useFetch";
 import BusinessSpecialists from "../components/BusinessSpecialists";
