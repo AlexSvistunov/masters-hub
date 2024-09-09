@@ -5,12 +5,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import MyDropzone from "../components/MyDropZone";
 
-
-
 const CreateProfile = () => {
   const { currentToken } = useAuth();
   const navigate = useNavigate();
-
 
   const {
     register,
@@ -20,7 +17,14 @@ const CreateProfile = () => {
     setError,
   } = useForm();
 
+  const [avatar, setAvatar] = useState(null)
+
+  const handleFileChange = (event) => { 
+    setAvatar(event.target.files[0]);  
+}; 
+
   const createProfile = async () => {
+
     const testObject = {
       name: watch("name"),
       address: watch("address"),
@@ -29,8 +33,11 @@ const CreateProfile = () => {
       link_vk: watch("link_vk"),
       link_tg: watch("link_tg"),
       description: watch("description"),
-      time_relax: "00:30:00",
+      time_relax: watch("time_relax") ? watch("time_relax") : "00:30:00",
+      // photo: avatar
     };
+
+    console.log(testObject)
 
     try {
       const response = await fetch(`${URL}/api/admin-panel/profile/`, {
@@ -46,7 +53,7 @@ const CreateProfile = () => {
       if (!response.ok) {
         const data = await response.json();
         for (let key in data) {
-          setError(key, { type: "custom", message: data[key][0]});
+          setError(key, { type: "custom", message: data[key][0] });
         }
       } else {
         navigate("/business/profile");
@@ -55,7 +62,6 @@ const CreateProfile = () => {
       console.error("An error occurred:", error);
     }
   };
-
 
   return (
     <div className="m-5">
@@ -145,6 +151,28 @@ const CreateProfile = () => {
           <span className="text-red-500">
             {errors.description && errors.description.message}
           </span>
+
+          <input
+            className="input input-bordered"
+            placeholder="Время отдыха между клиентами"
+            name="time_relax"
+            {...register("time_relax", {
+              pattern: {
+                value: /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/,
+                message: "Неверный формат времени. Используйте HH:MM:SS.",
+              },
+            })}
+          ></input>
+
+          <span className="text-red-500">
+            {errors.time_relax && errors.time_relax.message}
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-2 items-start">
+          Аватар
+          <input type="file" onChange={handleFileChange} accept="image/*"  />
+          {/* <button type="submit">Загрузить</button> */}
         </div>
 
         <button className="btn btn-accent my-2">Создать профиль</button>
@@ -156,6 +184,5 @@ const CreateProfile = () => {
 };
 
 // input + span seperate component
-
 
 export default CreateProfile;

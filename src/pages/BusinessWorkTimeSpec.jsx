@@ -20,14 +20,14 @@ const BusinessWorkTimeSpec = () => {
   ];
 
   const [selectedDays, setSelectedDays] = useState([]);
-  console.log(selectedDays);
+  const [selected, setSelected] = useState(new Date())
 
   return (
     <BusinessLayout>
       <div className="flex items-start gap-10 flex-col laptop:flex-row">
-        <DayPicker mode="single" onSelect={(day) => setSelectedDays(day)} />
+        <DayPicker mode="single" selected={selected} onSelect={(day) => setSelectedDays(day)} />
 
-        <div className="p-7 px-9 bg-base-200 max-w-lg w-full flex flex-wrap gap-2 rounded-xl min-h-40 items-start relative">
+        <div className="py-4 px-9 border border-gray-700 max-w-lg w-full flex flex-wrap gap-2 rounded-xl min-h-32 items-start relative">
           {myTime?.map((time) => (
             <>
               <div

@@ -69,7 +69,7 @@ const BusinessProfilePage = () => {
                 <div className="flex gap-7">
                   <img
                     className="object-cover h-52 w-52 rounded-lg"
-                    src={`/backend/masterhub/static/${profileData.photo}`}
+                    src={`/backend/masterhub/${profileData.photo}`}
                     alt="avatar"
                   />
 
