@@ -1,80 +1,39 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
+import { useLocation } from "react-router-dom";
+
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
+
 import useAuth from "../hooks/useAuth";
-import URL from "../utils/backend-url";
-import { useLocation } from "react-router-dom";
+import { useFetch } from "../hooks/useFetch";
+
 import Recording from "../components/Recording";
 import { MoonLoader } from "react-spinners";
+
 import scrollToRef from "../utils/scrollToRef";
+
+import { deleteRecording, getRecording } from "../service/RecordingService";
 
 const RecordingPage = () => {
   const { token, currentToken } = useAuth();
 
-  const [myRecording, setMyRecording] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  
-  const location = useLocation()
-  const ref = useRef()
-
-
-  const getNotes = async () => {
-    try {
-      const response = await fetch(`${URL}/api/recording/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-      const data = await response.json();
-      console.log(data)
-      
-      setMyRecording(data);
-      setIsLoading(false);
-      console.log(data);
-    } catch (error) {
-      console.error("An error occurred:", error);
-      setIsLoading(false);
-    }
-  };
-
-  const deleteRecording = async (id) => {
-    try {
-      const response = await fetch(`${URL}/api/recording/${id}/`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-      const data = await response.json();
-      setMyRecording(data);
-      setIsLoading(false);
-      console.log(data);
-    } catch (error) {
-      console.error("An error occurred:", error);
-      setIsLoading(false);
-    }
-  }
-
+  const location = useLocation();
+  const ref = useRef();
+ 
+  const [getRecordingData, isLoading, error, myRecording, setMyRecording] = useFetch(() => getRecording(currentToken))
 
   useEffect(() => {
-    getNotes();
+    if (token) {
+      getRecordingData();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (location.state === "dropdown") {
+      scrollToRef(ref);
+    }
   }, []);
-
-
-  useEffect(() => {
-    if(location.state === 'dropdown') {
-      scrollToRef(ref)
-    }
-  }, [])
-
-  // const [isLoading, error, fetchCallback] = useFetch(getNotes)
-
-  // useEffect(() => {
-  //   fetchCallback();
-  // }, []);
 
   return (
     <div>
@@ -84,31 +43,32 @@ const RecordingPage = () => {
         <Tabs />
 
         <div className="py-10 text-center">
-
-          {!token && (
+          {!token ? (
             <div className="text-center text-4xl">
               Авторизируйтесь чтобы посмотреть ваши записи
             </div>
-          )}
+          ) : isLoading ? (
+            <div className="flex items-center justify-center p-10">
+              <MoonLoader color="#6a5bff" size={75} />
+            </div>
+          ) : error ? (
+            <p className="text-xl text-center">{error}</p>
+          ) : (
+            <div className="p-10 flex flex-col gap-4">
+              {myRecording.map((recording) => (
+                <Recording
+                  recording={recording}
+                  key={recording.id}
+                  deleteRecording={() => deleteRecording(recording.id, currentToken, setMyRecording)}
+                />
+              ))}
 
-          {token && (
-            <div className="flex flex-col gap-4">
-            {isLoading ? (
-              <div className="flex items-center justify-center p-10">
-                <MoonLoader color="#6a5bff" size={75}/>
-              </div>
-            ) : (
-              <>
-                {myRecording.length ? (
-                  myRecording.map((recording) => (
-                    <Recording recording={recording} key={recording.id} deleteRecording={deleteRecording}/>
-                  ))
-                ) : (
-                  <h3 className="tablet:text-4xl text-xl text-center">У вас нет текущих записей!</h3>
-                )}
-              </>
-            )}
-          </div>
+              {myRecording.length === 0 && (
+                <div className="tablet:text-4xl text-xl text-center">
+                  У вас нет текущих записей!
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

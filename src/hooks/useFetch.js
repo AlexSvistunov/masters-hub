@@ -1,12 +1,16 @@
 import { useState } from "react";
 
 export const useFetch = (fetchCallback) => {
+  
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [data, setData] = useState(null)
 
   const fetch = async () => {
     try {
-      await fetchCallback();
+      const result = await fetchCallback();
+      console.log(result)
+      setData(result)
     } catch (error) {
       setError(error.message);
     } finally {
@@ -14,5 +18,5 @@ export const useFetch = (fetchCallback) => {
     }
   };
 
-  return [fetch, isLoading, error];
+  return [fetch, isLoading, error, data, setData];
 };

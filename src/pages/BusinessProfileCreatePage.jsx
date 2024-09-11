@@ -169,7 +169,7 @@ const CreateProfile = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-2 items-start">
+        <div className="flex flex-col gap-2 items-start mb-4">
           Аватар
           <input type="file" onChange={handleFileChange} accept="image/*"  />
           {/* <button type="submit">Загрузить</button> */}

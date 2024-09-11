@@ -8,7 +8,6 @@ import CatalogPage from "../pages/CatalogPage"
 import FavoritesPage from "../pages/FavoritesPage"
 import BusinessPage from "../pages/BusinessPage"
 import BusinessProfilePage from "../pages/BusinessProfilePage"
-import TestPage from "../pages/TestPage"
 import SpecialistPage from "../pages/SpecialistPage"
 import CreateProfile from "../pages/BusinessProfileCreatePage"
 import RecordingPage from "../pages/RecordingPage"
@@ -27,43 +26,42 @@ import BusinessSpecialistEdit from "../pages/BusinessSpecialistEdit"
 import BusinessWorkTimeSpec from "../pages/BusinessWorkTimeSpec"
 import BusinessRecordingPage from "../pages/BusinessRecordingPage"
 
+import { RoutesConfig } from "../utils/routes"
+
 
 const AppRoutes = () => {
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<LandingPage/>}></Route>
-        <Route path="/register" element={<RegisterPage/>}></Route>
-        <Route path="/login" element={<LoginPage/>}></Route>
-        <Route path="/profile/:id" element={<MasterPage/>}></Route>
-        <Route path="/profile/:id/specialist/:specId" element={<SpecialistPage/>}></Route>
-        <Route path="/catalog" element={<CatalogPage/>}></Route>
-        <Route path="/favorites" element={<FavoritesPage/>}></Route>
-        <Route path="/recording" element={<RecordingPage/>}></Route>
-        <Route path="/business" element={<BusinessPage/>}></Route>
-        <Route path="/business/profile" element={<BusinessProfilePage/>}></Route>
-        <Route path="/business/projects" element={<BusinessProfilePage/>}></Route>
-        <Route path="/business/profile/creation" element={<CreateProfile/>}></Route>
-        <Route path="/business/profile/edit" element={<EditProfile/>}></Route>
-        <Route path="/business/specialists" element={<BusinessSpecialists/>}></Route>
-        <Route path="/business/specialists/:id" element={<BusinessSpecialistPage/>}></Route>
-        <Route path="/business/specialists/create" element={<BusinessSpecialistsAdd/>}></Route>
-        <Route path="/business/specialists/:id/edit" element={<BusinessSpecialistEdit/>}></Route>
-        <Route path="/business/categories" element={<BusinessCategories/>}></Route>
-        <Route path="/business/service" element={<BusinessService/>}></Route>
-        <Route path="/business/service/create" element={<BusinessServiceAdd/>}></Route>
-        <Route path="/business/service/:id/edit" element={<BusinessServiceEditPage/>}></Route>
-        <Route path="/business/work-time" element={<BusinessWorkTime/>}></Route>
+  return (  
+    <Routes>  
+      <Route path={RoutesConfig.LANDING} element={<LandingPage />} />  
+      <Route path={RoutesConfig.REGISTER} element={<RegisterPage />} />  
+      <Route path={RoutesConfig.LOGIN} element={<LoginPage />} />  
+      <Route path={RoutesConfig.PROFILE(':id')} element={<MasterPage />} />  
+      <Route path={RoutesConfig.SPECIALIST(':id', ':specId')} element={<SpecialistPage />} />  
+      <Route path={RoutesConfig.CATALOG} element={<CatalogPage />} />  
+      <Route path={RoutesConfig.FAVORITES} element={<FavoritesPage />} />  
+      <Route path={RoutesConfig.RECORDING} element={<RecordingPage />} /> 
 
-        <Route path="/business/work-time/:id" element={<BusinessWorkTimeSpec/>}></Route>
-        <Route path="/business/work-time/edit" element={<BusinessWorkTimeE/>}></Route>
-
-        <Route path="/business/recording" element={<BusinessRecordingPage/>}></Route>
-        <Route path="/test" element={<TestPage/>}></Route>
-        <Route path="/all-reviews/:id" element={<AllReviews/>}></Route>
-      </Routes>
-    </div>
-  )
+      <Route path={RoutesConfig.BUSINESS} element={<BusinessPage />} />  
+      <Route path={RoutesConfig.BUSINESS_PROFILE} element={<BusinessProfilePage />} />  
+      <Route path={RoutesConfig.BUSINESS_PROJECTS} element={<BusinessProfilePage />} />  
+      <Route path={RoutesConfig.BUSINESS_PROFILE_CREATION} element={<CreateProfile />} />  
+      <Route path={RoutesConfig.BUSINESS_PROFILE_EDIT} element={<EditProfile />} />  
+      <Route path={RoutesConfig.BUSINESS_SPECIALISTS} element={<BusinessSpecialists />} />  
+      <Route path={RoutesConfig.BUSINESS_SPECIALIST(':id')} element={<BusinessSpecialistPage />} />  
+      <Route path={RoutesConfig.BUSINESS_SPECIALISTS_CREATE} element={<BusinessSpecialistsAdd />} />  
+      <Route path={RoutesConfig.BUSINESS_SPECIALIST_EDIT(':id')} element={<BusinessSpecialistEdit />} />  
+      <Route path={RoutesConfig.BUSINESS_CATEGORIES} element={<BusinessCategories />} />  
+      <Route path={RoutesConfig.BUSINESS_SERVICE} element={<BusinessService />} />  
+      <Route path={RoutesConfig.BUSINESS_SERVICE_CREATE} element={<BusinessServiceAdd />} />  
+      <Route path={RoutesConfig.BUSINESS_SERVICE_EDIT(':id')} element={<BusinessServiceEditPage />} />  
+      <Route path={RoutesConfig.BUSINESS_WORK_TIME} element={<BusinessWorkTime />} />  
+      <Route path={RoutesConfig.BUSINESS_WORK_TIME_SPEC(':id')} element={<BusinessWorkTimeSpec />} />  
+      <Route path={RoutesConfig.BUSINESS_WORK_TIME_EDIT} element={<BusinessWorkTimeE />} />  
+      <Route path={RoutesConfig.BUSINESS_RECORDING} element={<BusinessRecordingPage />} />  
+      
+      <Route path={RoutesConfig.ALL_REVIEWS(':id')} element={<AllReviews />} />  
+    </Routes>  
+  );  
 }
 
 export default AppRoutes
