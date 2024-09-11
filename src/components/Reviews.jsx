@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 import LeavingComment from "./LeavingComment";
-import Raiting from "./Raiting";
+import Rating from "./ui/Rating";
 
 const Reviews = ({
   masterData,
@@ -107,7 +107,7 @@ const Reviews = ({
                 </div>
 
                 <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
-                  <Raiting raiting={review?.rating_star} />
+                  <Rating raiting={review?.rating_star} />
                 </div>
               </div>
 

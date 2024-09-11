@@ -6,6 +6,7 @@ const Auth = ({ keyword, authHandler }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [activeTab, setActiveTab] = useState('')
 
   const navigate = useNavigate()
 

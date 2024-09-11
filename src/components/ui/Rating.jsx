@@ -1,6 +1,6 @@
 
 
-const Raiting = ({raiting}) => {
+const Rating = ({raiting}) => {
     const filledStars = parseInt(raiting);
     const renderStars = () => {
       const stars = [];
@@ -43,4 +43,4 @@ const Raiting = ({raiting}) => {
     );
 }
 
-export default Raiting
+export default Rating

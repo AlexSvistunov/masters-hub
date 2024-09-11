@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Burger from "./ui/Burger";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
-import ToggleTheme from "./ToggleTheme";
+import ToggleTheme from "./ui/ToggleTheme";
 
 const HeaderBusiness = () => {
   const image = useSelector((state) => state.user.image);

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logOut } from "../store/slices/userSlice";
-import useAuth from "../hooks/useAuth";
+import { logOut } from "../../store/slices/userSlice";
+import useAuth from "../../hooks/useAuth";
 
 const Dropdown = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
 import { useLocation, useParams } from "react-router-dom";
-import BusinessLayout from "../components/BusinessLayout";
+import BusinessLayout from "../components/business/BusinessLayout";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
-import ErrorAlert from "../components/ErrorAlert";
-import SuccessAlert from "../components/SuccessAlert";
+import ErrorAlert from "../components/ui/ErrorAlert";
+import SuccessAlert from "../components/ui/SuccessAlert";
 
 const BusinessServiceEditPage = () => {
   const location = useLocation();

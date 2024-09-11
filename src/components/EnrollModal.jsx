@@ -8,8 +8,8 @@ import DateTime from "./DateTime";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { recordingArray } from "../utils/recordingArray";
-import SuccessAlert from "./SuccessAlert";
-import ErrorAlert from './ErrorAlert'
+import SuccessAlert from "./ui/SuccessAlert";
+import ErrorAlert from './ui/ErrorAlert'
 
 const EnrollModal = ({ step, setStep, propWord }) => {
   const dispatch = useDispatch();

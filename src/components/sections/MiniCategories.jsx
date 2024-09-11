@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import CategoryCard from "./CategoryCard";
-import { useFetch } from "../hooks/useFetch";
-import CategoryService from "../service/CategoryService";
+import CategoryCard from "../CategoryCard";
+import { useFetch } from "../../hooks/useFetch";
+import CategoryService from "../../service/CategoryService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 

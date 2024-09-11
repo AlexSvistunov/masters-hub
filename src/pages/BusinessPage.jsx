@@ -1,6 +1,6 @@
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 
-import BusinessLayout from '../components/BusinessLayout.jsx'
+import BusinessLayout from '../components/business/BusinessLayout.jsx'
 import { useEffect } from "react";
 
 

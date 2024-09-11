@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
-import BusinessLayout from "../components/BusinessLayout";
+import BusinessLayout from "../components/business/BusinessLayout";
 import { useFetch } from "../hooks/useFetch";
 import { Link } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 
-import BusinessSpecialist from "../components/BusinessSpecialists";
+import BusinessSpecialist from "../components/business/BusinessSpecialists";
 
 const BusinessSpecialists = () => {
   const { currentToken } = useAuth();

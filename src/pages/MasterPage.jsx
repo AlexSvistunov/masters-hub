@@ -12,7 +12,6 @@ import "../App.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import Raiting from "../components/Raiting";
 import Services from "../components/Services";
 import WorksExample from "../components/WorksExample";
 

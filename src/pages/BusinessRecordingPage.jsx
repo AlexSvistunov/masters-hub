@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import BusinessLayout from "../components/BusinessLayout"
+import BusinessLayout from "../components/business/BusinessLayout"
 import URL from "../utils/backend-url"
 import useAuth from "../hooks/useAuth"
 import { useFetch } from "../hooks/useFetch"

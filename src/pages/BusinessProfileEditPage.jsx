@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import BusinessLayout from "../components/BusinessLayout";
+import BusinessLayout from "../components/business/BusinessLayout";
 import URL from "../utils/backend-url";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import SuccessAlert from "../components/SuccessAlert";
+import SuccessAlert from "../components/ui/SuccessAlert";
 
 const EditProfile = () => {
   const [profileData, setProfileData] = useState({});

@@ -4,8 +4,8 @@ import useAuth from "../hooks/useAuth";
 
 import EnrollModal from "../components/EnrollModal";
 import Header from "../components/Header";
-import Hero from "../components/Hero";
-import Tabs from "../components/Tabs";
+import Hero from "../components/sections/Hero";
+import Tabs from "../components/ui/Tabs";
 import CatalogService from "../service/CatalogService";
 import CategoryService from "../service/CategoryService";
 import serverURL from "../utils/backend-url";

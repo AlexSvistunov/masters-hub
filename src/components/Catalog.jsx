@@ -1,4 +1,4 @@
-import SkeletonCatalog from "./SkeletonCatalog";
+import SkeletonCatalog from "./ui/SkeletonCatalog";
 import CatalogCard from "./CatalogCard";
 
 const Catalog = ({error, isLoading, catalog, catalogList, setCatalogList, setPageNumber}) => {

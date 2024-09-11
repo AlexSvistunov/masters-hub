@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
-// import useThemeChanger from "../hooks/useThemeChanger";
-import { changeTheme } from "../store/slices/themeSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-import { logOut } from "../store/slices/userSlice";
-import Dropdown from "./Dropdown";
-import ToggleTheme from "./ToggleTheme";
+
+import ToggleTheme from "./ui/ToggleTheme";
+import CustomDropdown from "./ui/Dropdown";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -68,7 +66,7 @@ const Header = () => {
                     </div>
                   </div>
                 </summary>
-                <Dropdown />
+                <CustomDropdown />
               </details>
             </div>
           )}

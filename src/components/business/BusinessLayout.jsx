@@ -1,5 +1,5 @@
-import Drawer from "./Drawer";
-import HeaderBusiness from "./HeaderBusiness";
+import Drawer from "../ui/Drawer";
+import HeaderBusiness from "../HeaderBusiness";
 
 const BusinessLayout = ({ children }) => {
   return (

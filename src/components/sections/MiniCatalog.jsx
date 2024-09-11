@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import CatalogCard from "./CatalogCard";
+import CatalogCard from "../CatalogCard";
 import { Link } from "react-router-dom";
-import URL from "../utils/backend-url";
-import useAuth from "../hooks/useAuth";
-import EnrollModal from "./EnrollModal";
-import { useFetch } from "../hooks/useFetch";
-import CatalogService from "../service/CatalogService";
+import URL from "../../utils/backend-url";
+import useAuth from "../../hooks/useAuth";
+import EnrollModal from "../EnrollModal";
+import { useFetch } from "../../hooks/useFetch";
+import CatalogService from "../../service/CatalogService";
 
 const MiniCatalog = () => {
   const [catalogItems, setCatalogItems] = useState([]);

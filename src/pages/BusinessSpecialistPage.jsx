@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import BusinessLayout from "../components/BusinessLayout";
+import BusinessLayout from "../components/business/BusinessLayout";
 import { useFetch } from "../hooks/useFetch";
 import URL from "../utils/backend-url";
 import useAuth from "../hooks/useAuth";

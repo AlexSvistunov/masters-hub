@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import URL from "../utils/backend-url";
-import CatalogCard from "./CatalogCard";
-import { useFetch } from "../hooks/useFetch";
-import useAuth from "../hooks/useAuth";
+import URL from "../../utils/backend-url";
+import CatalogCard from "../CatalogCard";
+import { useFetch } from "../../hooks/useFetch";
+import useAuth from "../../hooks/useAuth";
 
 const Popular = () => {
   const [popularItems, setPopularItems] = useState([]);

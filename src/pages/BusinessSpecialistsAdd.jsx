@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import BusinessLayout from "../components/BusinessLayout";
+import BusinessLayout from "../components/business/BusinessLayout";
 import useAuth from "../hooks/useAuth";
 import URL from "../utils/backend-url";
 import { useEffect, useState } from "react";
-import SuccessAlert from "../components/SuccessAlert";
-import ErrorAlert from "../components/ErrorAlert";
+import SuccessAlert from "../components/ui/SuccessAlert";
+import ErrorAlert from "../components/ui/ErrorAlert";
 
 const BusinessSpecialistsAdd = () => {
   const { currentToken } = useAuth();

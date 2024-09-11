@@ -1,6 +1,6 @@
 import Header from "../components/Header";
-import Hero from "../components/Hero";
-import Tabs from "../components/Tabs";
+import Hero from "../components/sections/Hero";
+import Tabs from "../components/ui/Tabs";
 import CatalogCard from "../components/CatalogCard";
 
 import useAuth from "../hooks/useAuth";
