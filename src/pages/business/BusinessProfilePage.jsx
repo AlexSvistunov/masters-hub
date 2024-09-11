@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import URL from "../utils/backend-url";
-import useAuth from "../hooks/useAuth";
+import URL from "../../utils/backend-url";
+import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
-import BusinessLayout from "../components/business/BusinessLayout";
+import BusinessLayout from "../../components/business/BusinessLayout";
 import { MoonLoader } from "react-spinners";
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 
 const BusinessProfilePage = () => {
   const { token, currentToken } = useAuth();

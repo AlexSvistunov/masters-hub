@@ -6,25 +6,26 @@ import LoginPage from "../pages/LoginPage"
 import MasterPage from "../pages/MasterPage"
 import CatalogPage from "../pages/CatalogPage"
 import FavoritesPage from "../pages/FavoritesPage"
-import BusinessPage from "../pages/BusinessPage"
-import BusinessProfilePage from "../pages/BusinessProfilePage"
 import SpecialistPage from "../pages/SpecialistPage"
-import CreateProfile from "../pages/BusinessProfileCreatePage"
 import RecordingPage from "../pages/RecordingPage"
 import AllReviews from "../pages/AllReviews"
-import EditProfile from "../pages/BusinessProfileEditPage"
-import BusinessCategories from "../pages/BusinessCategories"
-import BusinessSpecialists from "../pages/BusinessSpecialists"
-import BusinessService from "../pages/BusinessService"
-import BusinessSpecialistsAdd from "../pages/BusinessSpecialistsAdd"
-import BusinessServiceAdd from "../pages/BusinessServiceAdd"
-import BusinessServiceEditPage from "../pages/BusinessServiceEditPage"
-import BusinessSpecialistPage from "../pages/BusinessSpecialistPage"
-import BusinessWorkTime from "../pages/BusinessWorkTime"
-import BusinessWorkTimeE from "../pages/BusinessWorkTimeE"
-import BusinessSpecialistEdit from "../pages/BusinessSpecialistEdit"
-import BusinessWorkTimeSpec from "../pages/BusinessWorkTimeSpec"
-import BusinessRecordingPage from "../pages/BusinessRecordingPage"
+
+import BusinessCreateProfilePage from "../pages/business/BusinessProfileCreatePage"
+import BusinessProfilePage from "../pages/business/BusinessProfilePage"
+import BusinessProfileEditPage from "../pages/business/BusinessProfileEditPage"
+import BusinessMainPage from "../pages/business/BusinessPage"
+import BusinessCategories from "../pages/business/BusinessCategories"
+import BusinessSpecialists from "../pages/business/BusinessSpecialists"
+import BusinessService from "../pages/business/BusinessService"
+import BusinessSpecialistsAdd from '../pages/business/BusinessSpecialistsAdd'
+import BusinessServiceAdd from "../pages/business/BusinessServiceAdd"
+import BusinessServiceEditPage from "../pages/business/BusinessServiceEditPage"
+import BusinessSpecialistPage from "../pages/business/BusinessSpecialistPage"
+import BusinessWorkTime from "../pages/business/BusinessWorkTime"
+import BusinessWorkTimeE from "../pages/business/BusinessWorkTimeE"
+import BusinessSpecialistEdit from "../pages/business/BusinessSpecialistEdit"
+import BusinessWorkTimeSpec from "../pages/business/BusinessWorkTimeSpec"
+import BusinessRecordingPage from "../pages/business/BusinessRecordingPage"
 
 import { RoutesConfig } from "../utils/routes"
 
@@ -41,11 +42,11 @@ const AppRoutes = () => {
       <Route path={RoutesConfig.FAVORITES} element={<FavoritesPage />} />  
       <Route path={RoutesConfig.RECORDING} element={<RecordingPage />} /> 
 
-      <Route path={RoutesConfig.BUSINESS} element={<BusinessPage />} />  
+      <Route path={RoutesConfig.BUSINESS} element={<BusinessMainPage />} />  
       <Route path={RoutesConfig.BUSINESS_PROFILE} element={<BusinessProfilePage />} />  
       <Route path={RoutesConfig.BUSINESS_PROJECTS} element={<BusinessProfilePage />} />  
-      <Route path={RoutesConfig.BUSINESS_PROFILE_CREATION} element={<CreateProfile />} />  
-      <Route path={RoutesConfig.BUSINESS_PROFILE_EDIT} element={<EditProfile />} />  
+      <Route path={RoutesConfig.BUSINESS_PROFILE_CREATION} element={<BusinessCreateProfilePage />} />  
+      <Route path={RoutesConfig.BUSINESS_PROFILE_EDIT} element={<BusinessProfileEditPage />} />  
       <Route path={RoutesConfig.BUSINESS_SPECIALISTS} element={<BusinessSpecialists />} />  
       <Route path={RoutesConfig.BUSINESS_SPECIALIST(':id')} element={<BusinessSpecialistPage />} />  
       <Route path={RoutesConfig.BUSINESS_SPECIALISTS_CREATE} element={<BusinessSpecialistsAdd />} />  

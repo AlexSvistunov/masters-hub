@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom"
-import BusinessLayout from "../components/business/BusinessLayout"
+import BusinessLayout from "../../components/business/BusinessLayout"
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
-import { useFetch } from "../hooks/useFetch";
-import URL from "../utils/backend-url";
-import ErrorAlert from "../components/ui/ErrorAlert";
-import SuccessAlert from "../components/ui/SuccessAlert";
+import useAuth from "../../hooks/useAuth";
+import { useFetch } from "../../hooks/useFetch";
+import URL from "../../utils/backend-url";
+import ErrorAlert from "../../components/ui/ErrorAlert";
+import SuccessAlert from "../../components/ui/SuccessAlert";
+
 
 const BusinessSpecialistEdit = () => {
   const {id} = useParams()

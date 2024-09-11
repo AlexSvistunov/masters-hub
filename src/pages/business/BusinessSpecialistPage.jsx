@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import BusinessLayout from "../components/business/BusinessLayout";
-import { useFetch } from "../hooks/useFetch";
-import URL from "../utils/backend-url";
-import useAuth from "../hooks/useAuth";
+import BusinessLayout from "../../components/business/BusinessLayout";
+import { useFetch } from "../../hooks/useFetch";
+import URL from "../../utils/backend-url";
+import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-import Services from "../components/Services";
+import Services from "../../components/Services";
 
 const BusinessSpecialistPage = () => {
   const { id } = useParams();

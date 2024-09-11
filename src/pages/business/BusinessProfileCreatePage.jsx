@@ -1,9 +1,9 @@
 import { useState } from "react";
-import useAuth from "../hooks/useAuth";
-import URL from "../utils/backend-url";
+import useAuth from "../../hooks/useAuth";
+import URL from "../../utils/backend-url";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import MyDropzone from "../components/MyDropZone";
+
 
 const CreateProfile = () => {
   const { currentToken } = useAuth();

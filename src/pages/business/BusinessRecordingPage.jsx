@@ -1,8 +1,8 @@
 import { useEffect } from "react"
-import BusinessLayout from "../components/business/BusinessLayout"
-import URL from "../utils/backend-url"
-import useAuth from "../hooks/useAuth"
-import { useFetch } from "../hooks/useFetch"
+import BusinessLayout from "../../components/business/BusinessLayout"
+import URL from "../../utils/backend-url"
+import useAuth from "../../hooks/useAuth"
+import { useFetch } from "../../hooks/useFetch"
 
 
 const BusinessRecordingPage = () => {

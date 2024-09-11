@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
-import URL from "../utils/backend-url";
-import BusinessLayout from "../components/business/BusinessLayout";
+import useAuth from "../../hooks/useAuth";
+import URL from "../../utils/backend-url";
+import BusinessLayout from "../../components/business/BusinessLayout";
+
 import { Link } from "react-router-dom";
 import { Pencil } from "lucide-react";
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import { MoonLoader } from "react-spinners";
 
 const BusinessService = () => {

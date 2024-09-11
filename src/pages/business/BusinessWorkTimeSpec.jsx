@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import BusinessLayout from "../components/business/BusinessLayout";
+import BusinessLayout from "../../components/business/BusinessLayout";
 import { DayPicker } from "react-day-picker";
 import { useState } from "react";
 

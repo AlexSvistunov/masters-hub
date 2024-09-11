@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import BusinessLayout from "../components/business/BusinessLayout"
+import BusinessLayout from "../../components/business/BusinessLayout"
 
 const BusinessWorkTimeE = () => {
   const location = useLocation();
