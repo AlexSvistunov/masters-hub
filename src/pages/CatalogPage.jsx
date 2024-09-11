@@ -23,7 +23,7 @@ const CatalogPage = () => {
   const [pageNumber, setPageNumber] = useState(null);
 
   const { state } = useLocation();
-  console.log(state);
+
 
   const [sort, setSort] = useState({
     specialization: "all",

@@ -54,7 +54,7 @@ const RecordingPage = () => {
           ) : error ? (
             <p className="text-xl text-center">{error}</p>
           ) : (
-            <div className="p-10 flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {myRecording.map((recording) => (
                 <Recording
                   recording={recording}

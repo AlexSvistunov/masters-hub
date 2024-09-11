@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { logOut } from "../store/slices/userSlice";
 import { useSelector } from "react-redux";
-import Burger from "./Burger";
+import Burger from "./ui/Burger";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
 import ToggleTheme from "./ToggleTheme";

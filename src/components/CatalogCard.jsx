@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import URL from "../utils/backend-url";
 import { addToFav } from "../store/slices/favSlice";
 import { deleteFromFav } from "../store/slices/favSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openModal, setId } from "../store/slices/modalSlice";
 
 const CatalogCard = ({ item, items, setItems, keyword }) => {
