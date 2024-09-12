@@ -12,7 +12,6 @@ export const addToFav = createAsyncThunk(
         },
       });
       const data = await response.json();
-      console.log("addtofav data ->>> ", data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -32,7 +31,6 @@ export const deleteFromFav = createAsyncThunk(
       });
 
       const data = await response.json();
-      console.log("deletefromfav data =>>> ", data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -48,8 +46,6 @@ const favSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(addToFav.fulfilled, (state, action) => {
-      console.log(213);
-      console.log(action);
       state.favList = action.payload;
     });
   },

@@ -4,6 +4,8 @@ import URL from "../../utils/backend-url";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import SuccessAlert from "../../components/ui/SuccessAlert";
+import { useDispatch } from "react-redux";
+import { showAlert } from "../../store/slices/successAlert";
 
 const EditProfile = () => {
   const [profileData, setProfileData] = useState({});
@@ -13,11 +15,17 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const [inputValues, setInputValues] = useState(profileData);
 
+  const dispatch = useDispatch()
+
   const [editSuccess, setEditSuccess] = useState(false);
 
   console.log(inputValues);
 
   console.log(profileData);
+
+  const showSuccessAlert = () => {
+    dispatch(showAlert({text: 'Профиль успешно отредактирован!'}))
+  }
 
   const getProfile = async () => {
     const headers = {};
@@ -33,6 +41,7 @@ const EditProfile = () => {
       const data = await response.json();
       setProfileData(data);
       setInputValues(data);
+
     } catch (error) {
       setError(error.message);
       navigate("/business/profile");
@@ -63,8 +72,9 @@ const EditProfile = () => {
           },
         });
         const data = await response.json();
-        // navigate("/business/profile");
+        navigate("/business/profile");
         setEditSuccess(true);
+        showSuccessAlert()
         return data;
       } catch (error) {
         console.error("An error occurred:", error);
@@ -72,7 +82,7 @@ const EditProfile = () => {
     }
   };
 
-  console.log(editSuccess)
+  console.log(editSuccess);
 
   const getUpdatedValues = () => {
     const updatedValues = {};
@@ -90,15 +100,13 @@ const EditProfile = () => {
     getProfile();
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setEditSuccess((prev) => {
-        if (prev === true) return false;
-      });
-
-
-    }, 4000);
-  }, [editSuccess]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setEditSuccess((prev) => {
+  //       if (prev === true) return false;
+  //     });
+  //   }, 4000);
+  // }, [editSuccess]);
 
   return (
     <BusinessLayout>
@@ -173,9 +181,7 @@ const EditProfile = () => {
         </label>
       </div>
 
-      {editSuccess && (
-        <SuccessAlert text='Профиль успешно отредактирован!'/>
-      )}
+    
     </BusinessLayout>
   );
 };

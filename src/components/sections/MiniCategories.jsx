@@ -26,7 +26,7 @@ const MiniCategories = () => {
             <>
               {Array(3)
                 .fill(0)
-                .map((skeleton, index) => (
+                .map((_, index) => (
                   <div
                     key={index}
                     className="skeleton tablet:h-40 tablet:w-72 h-28"
@@ -36,9 +36,9 @@ const MiniCategories = () => {
           ) : (
             <Swiper wrapperClass="category" modules={[Navigation]} slidesPerView={"auto"} spaceBetween={30} navigation>
               {categories.map((category) => (
-                <SwiperSlide className="myCard">
-                  <CategoryCard key={category.id} category={category} />
-                  {/* <img src={`/backend/masterhub${category.photo}`} className="h-40 w-64" alt="" /> */}
+                <SwiperSlide className="myCard" key={category.id}>
+                  <CategoryCard category={category} />
+                  
                 </SwiperSlide>
               ))}
             </Swiper>

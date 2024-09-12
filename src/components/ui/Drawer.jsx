@@ -1,13 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { RoutesConfig } from "../../utils/routes";
 
 const Drawer = ({ children }) => {
   return (
     <div className="drawer default-tablet:drawer-open">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content px-10 py-5">
-        {/* Page content here */}
-        {children}
-      </div>
+      <div className="drawer-content px-10 py-5">{children}</div>
       <div className="drawer-side rounded-2xl h-full z-50">
         <label
           htmlFor="my-drawer"
@@ -15,10 +13,9 @@ const Drawer = ({ children }) => {
           className="drawer-overlay"
         ></label>
         <ul className="drawer-menu flex flex-col gap-2 text-base-content min-h-full w-80 p-4 tablet:py-4 py-7 bg-base-200 default-tablet:bg-transparent">
-          {/* Sidebar content here */}
           <li>
             <NavLink
-              to="/business/profile"
+              to={RoutesConfig.BUSINESS_PROFILE}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Профиль
@@ -27,7 +24,7 @@ const Drawer = ({ children }) => {
 
           <li>
             <NavLink
-              to="/business/recording"
+              to={RoutesConfig.BUSINESS_RECORDING}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Записи
@@ -35,7 +32,7 @@ const Drawer = ({ children }) => {
           </li>
           <li>
             <NavLink
-              to="/business/specialists"
+              to={RoutesConfig.BUSINESS_SPECIALISTS}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Мои специалисты
@@ -44,7 +41,7 @@ const Drawer = ({ children }) => {
 
           <li>
             <NavLink
-              to="/business/service"
+              to={RoutesConfig.BUSINESS_SERVICE}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Услуги
@@ -53,7 +50,7 @@ const Drawer = ({ children }) => {
 
           <li>
             <NavLink
-              to="/business/categories"
+              to={RoutesConfig.BUSINESS_CATEGORIES}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Категории
@@ -62,7 +59,7 @@ const Drawer = ({ children }) => {
 
           <li>
             <NavLink
-              to="/business/work-time"
+              to={RoutesConfig.BUSINESS_WORK_TIME}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               График
