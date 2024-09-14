@@ -20,7 +20,13 @@ const BusinessService = () => {
         Authorization: `Token ${currentToken}`,
       },
     });
-    if (!response.ok) throw new Error("Something went wrong!");
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("Нет профиля! Создайте профиль");
+      } else {
+        throw new Error("Something went wrong");
+      }
+    }
     const data = await response.json();
     setServices(data);
     return data;

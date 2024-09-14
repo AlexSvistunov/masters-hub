@@ -23,7 +23,7 @@ const BusinessWorkTime = () => {
       },
     });
     if (!response.ok) {
-      if (response.status === 400) {
+      if (response.status === 404) {
         throw new Error("Нет профиля или специалистов");
       } else {
         throw new Error("Something went wrong!");

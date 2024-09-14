@@ -4,26 +4,15 @@ import URL from "../utils/backend-url";
 import { useEffect, useState } from "react";
 import CatalogCard from "../components/CatalogCard";
 import useAuth from "../hooks/useAuth";
-import EnrollModal from "../components/EnrollModal";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Scrollbar } from "swiper/modules";
-
 import "../App.css";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
 import Services from "../components/Services";
 import WorksExample from "../components/WorksExample";
-
 import { useDispatch } from "react-redux";
-import LeavingComment from "../components/LeavingComment";
 import Reviews from "../components/Reviews";
 
 const MasterPage = () => {
-  const dispatch = useDispatch();
-  const { currentToken } = useAuth();
-  const { token } = useAuth();
 
+  const { currentToken } = useAuth();
   const [masterData, setMasterData] = useState({});
   const [moreReviews, setMoreReviews] = useState(null);
   const [stepProps, setStepProps] = useState(null);
@@ -75,8 +64,8 @@ const MasterPage = () => {
       description: textareaValue,
     };
 
-    if(!textareaValue) {
-      return
+    if (!textareaValue) {
+      return;
     }
 
     try {
@@ -159,7 +148,12 @@ const MasterPage = () => {
 
             {masterData?.specialists?.length ? (
               <div className="bg-base-200 p-5 rounded-2xl mb-5">
-                <h3 className="text-3xl mb-2">Специалисты</h3>
+                <div className="flex gap-2 items-center mb-5">
+                  <h3 className="text-3xl">Специалисты</h3>
+                  <span className="text-2xl text-primary">
+                    {masterData?.specialists?.length}
+                  </span>
+                </div>
 
                 <div className="flex flex-wrap tablet:flex-nowrap tablet:items-center items-start gap-4 my-4">
                   {masterData?.specialists?.map((specialist) => (
@@ -185,7 +179,6 @@ const MasterPage = () => {
               </div>
             ) : null}
 
-         
             <Reviews
               masterData={masterData}
               setIsLeavingCommentOpen={setIsLeavingCommentOpen}

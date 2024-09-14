@@ -17,7 +17,13 @@ const BusinessCategories = () => {
         Authorization: `Token ${currentToken}`,
       },
     });
-    if (!response.ok) throw new Error("Something went wrong!");
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("Нет профиля! Создайте профиль");
+      } else {
+        throw new Error("Something went wrong");
+      }
+    }
     const data = await response.json();
     setCategories(data);
     return data;
@@ -38,11 +44,11 @@ const BusinessCategories = () => {
         </div>
       ) : error ? (
         <div className="flex flex-col gap-3 items-start">
-        <div className="text-xl">{error}</div>
-        <Link to="/business/profile/creation" className="btn btn-accent">
-          Создать профиль
-        </Link>
-      </div>
+          <div className="text-xl">{error}</div>
+          <Link to="/business/profile/creation" className="btn btn-accent">
+            Создать профиль
+          </Link>
+        </div>
       ) : (
         <>
           <div className="flex flex-col gap-4 max-w-xl">

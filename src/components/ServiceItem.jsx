@@ -3,8 +3,12 @@ import { closeModal } from "../store/slices/modalSlice";
 import { useDispatch } from "react-redux";
 
 const ServiceItem = ({ enService, step, setStep, recordingSlots, setChosenService }) => {
-  console.log(enService);
   const dispatch = useDispatch()
+
+  const closeServiceModal = () => {
+    dispatch(closeModal())
+  }
+
   return (
     <div className="item rounded-lg bg-base-300 p-3">
       <div className="flex gap-6 items-center mb-2">
@@ -25,7 +29,7 @@ const ServiceItem = ({ enService, step, setStep, recordingSlots, setChosenServic
 
             <span className="text-slate-500">{enService.time}</span>
           </div>
-          <Link to={`/profile/${enService.id}/specialist/${enService.specialist.id}`} onClick={() => dispatch(closeModal())} className="hover:underline">
+          <Link to={enService.specialist.specialization === 'studio' ? `/profile/${enService.id}/specialist/${enService.specialist.id}` : `/profile/${enService.specialist.id}`} onClick={closeServiceModal} className="hover:underline">
             <span>Специалист: </span>
             <span>{enService.specialist.name}</span>  
             {" "}
