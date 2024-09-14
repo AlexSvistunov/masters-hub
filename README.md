@@ -17,15 +17,15 @@ Backend: Django, db: sqlite3
 
 + Catalog filtration (by categories, all | studio | master filter)
 
-+ Adding to favorites with API
++ Adding to favorite
 
-+ Deleting from favorites with API
++ Deleting from favorites
 
-+ Recording with API
++ Recording for a selected service on a specific day
 
-+ Deleting recording with API
++ Deleting recording
 
-+ Leaving reviews and comments
++ Leaving reviews
 
 + Pagination (show more btn)
 
@@ -49,7 +49,6 @@ Backend: Django, db: sqlite3
   
 + Work time (view, add, edit)
   
-
 
 
 ### Author: Alex Svistunov
