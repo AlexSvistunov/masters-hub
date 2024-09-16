@@ -1,0 +1,41 @@
+.custom-select {  
+  position: relative;  
+  width: 200px;  
+}  
+
+.select-box {  
+  border: 1px solid #ccc;  
+  padding: 10px;  
+  cursor: pointer;  
+  min-height: 40px;  
+}  
+
+.options {  
+  border: 1px solid #ccc;  
+  border-top: none;  
+  position: absolute;  
+  width: 100%;  
+  background: white;  
+  z-index: 1;  
+}  
+
+.option {  
+  padding: 10px;  
+  cursor: pointer;  
+}  
+
+.option:hover {  
+  background-color: #f0f0f0;  
+}  
+
+.selected-option {  
+  display: flex;  
+  align-items: center;  
+  justify-content: space-between;  
+}  
+
+.remove-option {  
+  cursor: pointer;  
+  margin-left: 10px;  
+  color: red;  
+}

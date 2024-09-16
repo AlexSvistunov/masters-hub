@@ -35,6 +35,8 @@ const BusinessCategories = () => {
     getCategoriesData();
   }, []);
 
+  console.log(categories)
+
   return (
     <BusinessLayout>
       <h1 className="text-3xl mb-4">Категории</h1>

@@ -6,8 +6,7 @@ const CatalogAside = ({
   setPageNumber,
   setSort,
 }) => {
-  console.log(sort)
-  console.log(categories)
+
   return (
     <aside className="laptop:block hidden col-start-10 col-end-13 p-5 rounded-xl bg-base-200 ml-auto self-start min-h-96">
       <div className="py-5">
