@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 const Recording = ({recording, deleteRecording}) => {
 
 
-
   return (
     <div
     className="p-5 bg-base-200 flex flex-col items-start rounded-xl relative"

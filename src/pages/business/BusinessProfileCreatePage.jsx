@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CategoryService from "../../service/CategoryService";
 import { useFetch } from "../../hooks/useFetch";
-import CustomSelect from "../../components/ui/CustomSelect";
+import CustomSelect from "../../components/ui/CustomSelect/CustomSelect";
 import FormInput from "../../components/ui/FormInput";
 
 import { formNames } from "../../utils/formNames";
