@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const BusinessSpecialists = ({ specialist, keyword }) => {
+  
   return (
     <Link to={`/business/specialists/${specialist.id}`} key={specialist.id}>
       <div className="p-4 bg-base-200 rounded-xl flex">

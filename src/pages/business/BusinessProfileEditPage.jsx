@@ -50,7 +50,7 @@ const EditProfile = () => {
 		const updatedValues = getUpdatedValues()
 		if (Object.keys(updatedValues).length > 0) {
 			try {
-				const response = await fetch(`${URL}/api/admin-panel/profile${id}/`, {
+				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
 					method: 'PATCH',
 					body: JSON.stringify(updatedValues),
 					headers: {

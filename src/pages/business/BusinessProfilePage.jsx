@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import BusinessLayout from "../../components/business/BusinessLayout";
 import { MoonLoader } from "react-spinners";
 import { useFetch } from "../../hooks/useFetch";
-import { current } from '@reduxjs/toolkit'
+
 
 const BusinessProfilePage = () => {
 
@@ -68,7 +68,7 @@ const BusinessProfilePage = () => {
                   </Link>
                 </div>
 
-                <button className=''>12312321312</button>
+                
 
                 <div className="flex gap-7">
                   <img

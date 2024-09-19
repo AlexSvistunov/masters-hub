@@ -23,6 +23,10 @@ const errorAlertSlice = createSlice({
   }
 })
 
+const formData = new FormData()
+formData.append('categories[]', [1,3,3])
+console.log(Object.fromEntries(formData.entries()))
+
 export const {showAlert: showAlertError, hideAlert} = errorAlertSlice.actions
 
 export default errorAlertSlice.reducer;
