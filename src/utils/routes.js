@@ -27,3 +27,5 @@ export const RoutesConfig = {
   BUSINESS_RECORDING: '/business/recording',  
   ALL_REVIEWS: (id) => `/all-reviews/${id}`,  
 };
+
+// business profile creation if profile exist, etc

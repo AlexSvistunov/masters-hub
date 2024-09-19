@@ -17,7 +17,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return data
 
     def save(self):
-        return CustomUser.objects.create_user(**self.initial_data)
+        return super(CustomUserSerializer, self).save(**self.validated_data)
+    #     return CustomUser.objects.create_user(**self.initial_data)
 
 
 class ReviewsProfileSerializerr(serializers.Serializer):

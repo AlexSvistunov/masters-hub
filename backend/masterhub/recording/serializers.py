@@ -34,9 +34,13 @@ class ServicesSerializer(serializers.ModelSerializer):
     def get_specialist(self, obj):
         if obj.specialist:
             serializer = SpecialistSerializer(obj.specialist)
+            data_spec = {'specialization': 'studio'}
         else:
             serializer = ProfileSerializer(obj.profile)
-        return serializer.data
+            data_spec = {'specialization': 'master'}
+        data = serializer.data
+        data.update(data_spec)
+        return data
 
     class Meta:
         model = Service

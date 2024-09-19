@@ -10,7 +10,7 @@ const FormInput = ({ register, name, errors, placeholder }) => {
         })}
       ></input>
 
-      <span className="text-red-500">{errors.name && errors.name.message}</span>
+      <span className="text-red-500">{errors[name]&& errors[name].message}</span>
     </>
   );
 };
