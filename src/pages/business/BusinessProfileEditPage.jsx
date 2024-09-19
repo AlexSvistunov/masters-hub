@@ -3,31 +3,18 @@ import BusinessLayout from '../../components/business/BusinessLayout'
 import URL from '../../utils/backend-url'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
-import SuccessAlert from '../../components/ui/SuccessAlert'
-import { useDispatch } from 'react-redux'
-import { showAlert } from '../../store/slices/successAlert'
 import CategoryService from '../../service/CategoryService'
 
 const EditProfile = () => {
-	const [profileData, setProfileData] = useState({})
 	const { currentToken } = useAuth()
-	const [isError, setError] = useState('')
-	const [isLoading, setIsLoading] = useState(true)
 	const navigate = useNavigate()
 
+	const [profileData, setProfileData] = useState({})
 	const [categories, setCategories] = useState([])
 	const [myCategories, setMyCategories] = useState([])
-  const [inputValues, setInputValues] = useState(profileData)
-  console.log('inputValues', inputValues)
-  
-	const dispatch = useDispatch()
+	const [inputValues, setInputValues] = useState(profileData)
 
-	const [editSuccess, setEditSuccess] = useState(false)
-
-
-	const showSuccessAlert = () => {
-		dispatch(showAlert({ text: 'Профиль успешно отредактирован!' }))
-	}
+	console.log('inputValues', inputValues)
 
 	const getProfile = async () => {
 		const headers = {}
@@ -41,14 +28,21 @@ const EditProfile = () => {
 
 			if (!response.ok) throw new Error('no master profile')
 			const data = await response.json()
-      console.log('profile', data)
-			setProfileData({...data, categories: myCategories})
-			setInputValues({...data, categories: myCategories})
+			console.log('profile', data)
+			const idData = data?.categories?.map(category => category.id)
+			setProfileData({
+				...data,
+				categories: [...data.categories, ...idData],
+			})
+			setInputValues({
+				...data,
+				categories: [...data.categories, ...idData],
+			})
 		} catch (error) {
-			setError(error.message)
+			// setError(error.message)
 			navigate('/business/profile')
 		} finally {
-			setIsLoading(false)
+			// setIsLoading(false)
 		}
 	}
 
@@ -62,7 +56,7 @@ const EditProfile = () => {
 
 	const patch = async id => {
 		const updatedValues = getUpdatedValues()
-    console.log(updatedValues)
+		console.log(updatedValues)
 		if (Object.keys(updatedValues).length > 0) {
 			try {
 				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
@@ -75,15 +69,12 @@ const EditProfile = () => {
 				})
 				const data = await response.json()
 				navigate('/business/profile')
-				setEditSuccess(true)
-				showSuccessAlert()
 				return data
 			} catch (error) {
 				console.error('An error occurred:', error)
 			}
 		}
 	}
-
 
 	const getUpdatedValues = () => {
 		const updatedValues = {}
@@ -105,8 +96,13 @@ const EditProfile = () => {
 			},
 		})
 		const data = await response.json()
-		setMyCategories(data)
-		console.log('my <CATEGORIES></CATEGORIES>', data)
+		const idData = data.map(category => String(category.id))
+		setInputValues({
+			...inputValues,
+			categories: [...inputValues.categories, ...idData],
+		})
+		setMyCategories(idData)
+
 		return data
 	}
 
@@ -115,18 +111,16 @@ const EditProfile = () => {
 		setCategories(categories)
 	}
 
-  const onChangeSelect = (e) => {
-    const id = e.target.value
-    setMyCategories(
-      [...myCategories, id]
-    )
-  }
+	const onChangeSelect = e => {
+		const id = e.target.value
+		setInputValues({
+			...inputValues,
+			categories: [...inputValues.categories, id],
+		})
+		setMyCategories([...myCategories, id])
+	}
 
-  console.log(myCategories)
-
-	useEffect(() => {
-		getMyCategories()
-	}, [])
+	console.log(myCategories)
 
 	useEffect(() => {
 		getProfile()
@@ -136,7 +130,9 @@ const EditProfile = () => {
 		getCategories()
 	}, [])
 
-
+	useEffect(() => {
+		getMyCategories()
+	}, [])
 
 	return (
 		<BusinessLayout>
@@ -233,9 +229,9 @@ const EditProfile = () => {
 					{myCategories?.map(category => (
 						<div
 							className='border border-accent rounded-md px-2'
-							key={category.id}
+							key={category}
 						>
-							{category.title}
+							{category}
 						</div>
 					))}
 				</div>
