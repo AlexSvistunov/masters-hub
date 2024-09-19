@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import URL from "../../utils/backend-url";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BusinessLayout from "../../components/business/BusinessLayout";
 import { MoonLoader } from "react-spinners";
 import { useFetch } from "../../hooks/useFetch";
+import { current } from '@reduxjs/toolkit'
 
 const BusinessProfilePage = () => {
+
   const { token, currentToken } = useAuth();
 
   const [profileData, setProfileData] = useState({});
@@ -65,6 +67,8 @@ const BusinessProfilePage = () => {
                     Редактировать
                   </Link>
                 </div>
+
+                <button className=''>12312321312</button>
 
                 <div className="flex gap-7">
                   <img

@@ -15,6 +15,7 @@ const EditProfile = () => {
 
 	const [inputValues, setInputValues] = useState({ ...state, categories: [] })
 	const [categories, setCategories] = useState([])
+	const [myInitialCategories, setMyInitialCategories] = useState([])
 	const dispatch = useDispatch()
 
 	const inputChange = e => {
@@ -25,54 +26,44 @@ const EditProfile = () => {
 		}))
 	}
 	const getUpdatedValues = () => {
+		
 		const updatedValues = {}
-		// Создаем новую переменную state с обновлением categories
-		const newState = { ...state, categories: inputValues.categories }
+		const newState = { ...state, categories: myInitialCategories }
 
-		console.log('newstate', newState)
-		console.log('inputValues', inputValues)
-
-		// Сравниваем значения
 		Object.keys(inputValues).forEach(key => {
-			if (inputValues[key] !== newState[key]) {
-				updatedValues[key] = inputValues[key]
+			if (JSON.stringify(inputValues[key]) !== JSON.stringify(newState[key])) {
+				console.log(key)
+				if(key === 'categories') {
+					const categoryArray = inputValues.categories.map(el => String(el.id))
+					updatedValues[key] = categoryArray
+				} else {
+					updatedValues[key] = inputValues[key]
+				}
+
 			}
 		})
 
-		console.log(updatedValues)
 		return updatedValues
 	}
 
 	const patch = async id => {
 		const updatedValues = getUpdatedValues()
-		// let improvedUpdatedValues = {
-		// 	...updatedValues,
-		// 	categories: updatedValues.categories
-		// 		? updatedValues.categories.map(el => String(el.id))
-		// 		: null,
-		// }
-
-		console.log('updatedValues', updatedValues)
-		// console.log('improvedUpdatedValues', improvedUpdatedValues)
-
 		if (Object.keys(updatedValues).length > 0) {
 			try {
-				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
+				const response = await fetch(`${URL}/api/admin-panel/profile${id}/`, {
 					method: 'PATCH',
 					body: JSON.stringify(updatedValues),
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Token ${currentToken}`,
 					},
-
 				})
-		
+
 				if (!response.ok) {
 					const my = await response.json()
 					const objectkey = Object.keys(my)
-					
-					throw new Error(my[objectkey])
 
+					throw new Error(my[objectkey])
 				}
 				const data = await response.json()
 				console.log(data)
@@ -81,7 +72,7 @@ const EditProfile = () => {
 				return data
 			} catch (error) {
 				console.log(error)
-				dispatch(showAlertError({ text: error.message }))
+				dispatch(showAlertError({ text: 'Произошла ошибка!' }))
 			}
 		}
 	}
@@ -94,6 +85,7 @@ const EditProfile = () => {
 			},
 		})
 		const data = await response.json()
+		setMyInitialCategories(data)
 		setInputValues({ ...inputValues, categories: data })
 	}
 

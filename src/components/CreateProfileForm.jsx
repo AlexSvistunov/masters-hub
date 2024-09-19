@@ -8,6 +8,7 @@ import URL from '../utils/backend-url'
 import { formNames } from '../utils/formNames'
 import FormInput from './ui/FormInput'
 import { stringify } from 'postcss'
+import { Type } from 'lucide-react'
 
 const CreateProfileForm = () => {
 	const navigate = useNavigate()
@@ -65,11 +66,13 @@ const CreateProfileForm = () => {
 			'time_relax',
 			watch('time_relax') ? watch('time_relax') : null
 		)
-		if (selectedValues.length) {
-			selectedValues.forEach(value => {
-				formData.append('categories', value)
-			})
-		}
+		// if (selectedValues.length) {
+		// 	selectedValues.forEach(value => {
+		// 		selectedValues.push(value)
+	
+		// 	})
+		// 	formData.append('categories', selectedValues)
+		// } // <FIX!></FIX!>
 
 		if (avatar) {
 			formData.append('photo', avatar)
