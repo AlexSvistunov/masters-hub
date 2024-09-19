@@ -1,50 +1,17 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BusinessLayout from '../../components/business/BusinessLayout'
 import URL from '../../utils/backend-url'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import CategoryService from '../../service/CategoryService'
 
 const EditProfile = () => {
-	const { currentToken } = useAuth()
+	let { state } = useLocation()
 	const navigate = useNavigate()
+	const { currentToken } = useAuth()
 
-	const [profileData, setProfileData] = useState({})
+	const [inputValues, setInputValues] = useState({ ...state, categories: [] })
 	const [categories, setCategories] = useState([])
-	const [myCategories, setMyCategories] = useState([])
-	const [inputValues, setInputValues] = useState(profileData)
-
-	console.log('inputValues', inputValues)
-
-	const getProfile = async () => {
-		const headers = {}
-		if (currentToken) {
-			headers.Authorization = `Token ${currentToken}`
-		}
-		try {
-			const response = await fetch(`${URL}/api/admin-panel/profile/`, {
-				headers,
-			})
-
-			if (!response.ok) throw new Error('no master profile')
-			const data = await response.json()
-			console.log('profile', data)
-			const idData = data?.categories?.map(category => category.id)
-			setProfileData({
-				...data,
-				categories: [...data.categories, ...idData],
-			})
-			setInputValues({
-				...data,
-				categories: [...data.categories, ...idData],
-			})
-		} catch (error) {
-			// setError(error.message)
-			navigate('/business/profile')
-		} finally {
-			// setIsLoading(false)
-		}
-	}
 
 	const inputChange = e => {
 		const { name, value } = e.target
@@ -54,38 +21,47 @@ const EditProfile = () => {
 		}))
 	}
 
+	const getUpdatedValues = () => {
+		//import func
+		const updatedValues = {}
+
+		Object.keys(inputValues).forEach(key => {
+			if (inputValues[key] !== state[key]) {
+				updatedValues[key] = inputValues[key]
+			}
+		})
+
+		return updatedValues
+	}
+
 	const patch = async id => {
 		const updatedValues = getUpdatedValues()
-		console.log(updatedValues)
+		let improvedUpdatedValues = {
+			...updatedValues,
+			categories: updatedValues.categories
+				? updatedValues.categories.map(el => String(el.id))
+				: null,
+		}
+
 		if (Object.keys(updatedValues).length > 0) {
+	
 			try {
 				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
 					method: 'PATCH',
-					body: JSON.stringify(updatedValues),
+					body: JSON.stringify(improvedUpdatedValues),
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Token ${currentToken}`,
 					},
 				})
 				const data = await response.json()
-				navigate('/business/profile')
+				console.log(data)
+				// navigate('/business/profile')
 				return data
 			} catch (error) {
 				console.error('An error occurred:', error)
 			}
 		}
-	}
-
-	const getUpdatedValues = () => {
-		const updatedValues = {}
-
-		Object.keys(inputValues).forEach(key => {
-			if (inputValues[key] !== profileData[key]) {
-				updatedValues[key] = inputValues[key]
-			}
-		})
-
-		return updatedValues
 	}
 
 	const getMyCategories = async () => {
@@ -96,50 +72,53 @@ const EditProfile = () => {
 			},
 		})
 		const data = await response.json()
-		const idData = data.map(category => String(category.id))
-		setInputValues({
-			...inputValues,
-			categories: [...inputValues.categories, ...idData],
-		})
-		setMyCategories(idData)
+		setInputValues({ ...inputValues, categories: data })
 
-		return data
 	}
 
 	const getCategories = async () => {
 		const categories = await CategoryService.getAllCategories(currentToken)
 		setCategories(categories)
+
 	}
 
-	const onChangeSelect = e => {
-		const id = e.target.value
-		setInputValues({
-			...inputValues,
-			categories: [...inputValues.categories, id],
-		})
-		setMyCategories([...myCategories, id])
+	const onSelectChange = e => {
+		const value = e.target.value
+		const item = categories?.find(category => category.id === Number(value))
+
+		const exists = inputValues?.categories?.some(
+			category => category.id === item.id
+		)
+
+		if (!exists) {
+			setInputValues({
+				...inputValues,
+				categories: [...inputValues.categories, item],
+			})
+		}
 	}
 
-	console.log(myCategories)
-
-	useEffect(() => {
-		getProfile()
-	}, [])
+  const removeCategoryItem = (category) => {
+    const newCategories = inputValues?.categories?.filter(item => item.id !== category.id)
+    setInputValues({
+      ...inputValues,
+      categories: newCategories
+    })
+  }
 
 	useEffect(() => {
 		getCategories()
-	}, [])
-
-	useEffect(() => {
 		getMyCategories()
 	}, [])
+
+	console.log(inputValues)
 
 	return (
 		<BusinessLayout>
 			<div className='flex justify-between mb-3 gap-4 tablet:flex-row flex-col'>
 				<h1 className='tablet:text-3xl text-2xl'>Редактирование профиля</h1>
 				<button
-					onClick={() => patch(profileData.id)}
+					onClick={() => patch(state.id)}
 					className='btn self-start btn-accent'
 				>
 					Сохранить изменения
@@ -210,7 +189,7 @@ const EditProfile = () => {
 					Категории
 					<select
 						className='select select-bordered max-w-80'
-						onChange={onChangeSelect}
+						onChange={onSelectChange}
 					>
 						<option disabled selected>
 							Выбрать категорию
@@ -224,14 +203,16 @@ const EditProfile = () => {
 				</label>
 
 				<h3>Выбранные категории:</h3>
-
 				<div className='flex gap-2 flex-wrap'>
-					{myCategories?.map(category => (
+					{inputValues?.categories?.map(category => (
 						<div
-							className='border border-accent rounded-md px-2'
-							key={category}
+							className='border border-accent rounded-md px-2 flex items-center gap-2'
+							key={category.id}
 						>
-							{category}
+							{category.title}
+              <button onClick={() => removeCategoryItem(category)}>
+                <img src="/remove.svg" alt="" />
+              </button>
 						</div>
 					))}
 				</div>
@@ -244,5 +225,8 @@ const EditProfile = () => {
 // перебросить на страницу назад с alert
 // validation
 // ask for backend validation
+
+// alert
+// delete
 
 export default EditProfile

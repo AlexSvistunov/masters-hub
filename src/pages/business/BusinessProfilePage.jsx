@@ -61,7 +61,7 @@ const BusinessProfilePage = () => {
               <div>
                 <div className="flex justify-between mb-5">
                   <h1 className="text-3xl mb-4">Профиль</h1>
-                  <Link className="btn btn-accent" to="/business/profile/edit">
+                  <Link className="btn btn-accent" to="/business/profile/edit" state={profileData}>
                     Редактировать
                   </Link>
                 </div>
