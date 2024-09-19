@@ -4,11 +4,11 @@ import { hideAlert } from "../../store/slices/errorAlert";
 
 const ErrorAlert = ({ seconds }) => {
   const isShown = useSelector(
-    (state) => state?.successAlert?.alertSuccess?.alertState
+    (state) => state?.errorAlert?.alertError?.alertState
   );
 
   const text = useSelector(
-    (state) => state?.successAlert?.alertSuccess?.message
+    (state) => state?.errorAlert?.alertError?.message
   );
   const dispatch = useDispatch();
 

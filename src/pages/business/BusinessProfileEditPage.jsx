@@ -4,6 +4,9 @@ import URL from '../../utils/backend-url'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import CategoryService from '../../service/CategoryService'
+import { useDispatch } from 'react-redux'
+import { showAlert } from '../../store/slices/successAlert'
+import { showAlertError } from '../../store/slices/errorAlert'
 
 const EditProfile = () => {
 	let { state } = useLocation()
@@ -12,6 +15,7 @@ const EditProfile = () => {
 
 	const [inputValues, setInputValues] = useState({ ...state, categories: [] })
 	const [categories, setCategories] = useState([])
+	const dispatch = useDispatch()
 
 	const inputChange = e => {
 		const { name, value } = e.target
@@ -20,46 +24,64 @@ const EditProfile = () => {
 			[name]: value,
 		}))
 	}
-
 	const getUpdatedValues = () => {
-		//import func
 		const updatedValues = {}
+		// Создаем новую переменную state с обновлением categories
+		const newState = { ...state, categories: inputValues.categories }
 
+		console.log('newstate', newState)
+		console.log('inputValues', inputValues)
+
+		// Сравниваем значения
 		Object.keys(inputValues).forEach(key => {
-			if (inputValues[key] !== state[key]) {
+			if (inputValues[key] !== newState[key]) {
 				updatedValues[key] = inputValues[key]
 			}
 		})
 
+		console.log(updatedValues)
 		return updatedValues
 	}
 
 	const patch = async id => {
 		const updatedValues = getUpdatedValues()
-		let improvedUpdatedValues = {
-			...updatedValues,
-			categories: updatedValues.categories
-				? updatedValues.categories.map(el => String(el.id))
-				: null,
-		}
+		// let improvedUpdatedValues = {
+		// 	...updatedValues,
+		// 	categories: updatedValues.categories
+		// 		? updatedValues.categories.map(el => String(el.id))
+		// 		: null,
+		// }
+
+		console.log('updatedValues', updatedValues)
+		// console.log('improvedUpdatedValues', improvedUpdatedValues)
 
 		if (Object.keys(updatedValues).length > 0) {
-	
 			try {
 				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
 					method: 'PATCH',
-					body: JSON.stringify(improvedUpdatedValues),
+					body: JSON.stringify(updatedValues),
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Token ${currentToken}`,
 					},
+
 				})
+		
+				if (!response.ok) {
+					const my = await response.json()
+					const objectkey = Object.keys(my)
+					
+					throw new Error(my[objectkey])
+
+				}
 				const data = await response.json()
 				console.log(data)
-				// navigate('/business/profile')
+				dispatch(showAlert({ text: 'Профиль успешно отредактирован!' }))
+				navigate('/business/profile')
 				return data
 			} catch (error) {
-				console.error('An error occurred:', error)
+				console.log(error)
+				dispatch(showAlertError({ text: error.message }))
 			}
 		}
 	}
@@ -73,13 +95,11 @@ const EditProfile = () => {
 		})
 		const data = await response.json()
 		setInputValues({ ...inputValues, categories: data })
-
 	}
 
 	const getCategories = async () => {
 		const categories = await CategoryService.getAllCategories(currentToken)
 		setCategories(categories)
-
 	}
 
 	const onSelectChange = e => {
@@ -98,13 +118,15 @@ const EditProfile = () => {
 		}
 	}
 
-  const removeCategoryItem = (category) => {
-    const newCategories = inputValues?.categories?.filter(item => item.id !== category.id)
-    setInputValues({
-      ...inputValues,
-      categories: newCategories
-    })
-  }
+	const removeCategoryItem = category => {
+		const newCategories = inputValues?.categories?.filter(
+			item => item.id !== category.id
+		)
+		setInputValues({
+			...inputValues,
+			categories: newCategories,
+		})
+	}
 
 	useEffect(() => {
 		getCategories()
@@ -201,20 +223,21 @@ const EditProfile = () => {
 						))}
 					</select>
 				</label>
-
-				<h3>Выбранные категории:</h3>
-				<div className='flex gap-2 flex-wrap'>
-					{inputValues?.categories?.map(category => (
-						<div
-							className='border border-accent rounded-md px-2 flex items-center gap-2'
-							key={category.id}
-						>
-							{category.title}
-              <button onClick={() => removeCategoryItem(category)}>
-                <img src="/remove.svg" alt="" />
-              </button>
-						</div>
-					))}
+				<div className='pb-4'>
+					<h3 className='mb-2'>Выбранные категории:</h3>
+					<div className='flex gap-2 flex-wrap'>
+						{inputValues?.categories?.map(category => (
+							<div
+								className='border border-accent rounded-md px-2 flex items-center gap-2'
+								key={category.id}
+							>
+								{category.title}
+								<button onClick={() => removeCategoryItem(category)}>
+									<img src='/remove.svg' alt='' />
+								</button>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		</BusinessLayout>

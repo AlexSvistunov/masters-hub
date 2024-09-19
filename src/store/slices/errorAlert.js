@@ -8,7 +8,7 @@ const initialState = {
 }
 
 const errorAlertSlice = createSlice({
-  name: 'successAlert',
+  name: 'errorAlert',
   initialState,
   reducers: {
     showAlert: (state, action) => {
@@ -23,6 +23,6 @@ const errorAlertSlice = createSlice({
   }
 })
 
-export const {showAlert, hideAlert} = errorAlertSlice.actions
+export const {showAlert: showAlertError, hideAlert} = errorAlertSlice.actions
 
 export default errorAlertSlice.reducer;
