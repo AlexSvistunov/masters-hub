@@ -28,6 +28,7 @@ import BusinessWorkTimeSpec from "../pages/business/BusinessWorkTimeSpec"
 import BusinessRecordingPage from "../pages/business/BusinessRecordingPage"
 
 import { RoutesConfig } from "../utils/routes"
+import BusinessRecordingSpec from '../pages/business/BusinessRecordingSpec'
 
 
 const AppRoutes = () => {
@@ -59,6 +60,7 @@ const AppRoutes = () => {
       <Route path={RoutesConfig.BUSINESS_WORK_TIME_SPEC(':id')} element={<BusinessWorkTimeSpec />} />  
       <Route path={RoutesConfig.BUSINESS_WORK_TIME_EDIT} element={<BusinessWorkTimeE />} />  
       <Route path={RoutesConfig.BUSINESS_RECORDING} element={<BusinessRecordingPage />} />  
+      <Route path={RoutesConfig.BUSINESS_RECORDING_SPEC} element={<BusinessRecordingSpec/>} />  
       
       <Route path={RoutesConfig.ALL_REVIEWS(':id')} element={<AllReviews />} />  
     </Routes>  

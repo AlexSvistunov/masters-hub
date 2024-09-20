@@ -5,6 +5,9 @@ import URL from "../../utils/backend-url";
 import { useEffect, useState } from "react";
 import SuccessAlert from "../../components/ui/SuccessAlert";
 import ErrorAlert from "../../components/ui/ErrorAlert";
+import { useDispatch } from 'react-redux'
+import { showAlert } from '../../store/slices/successAlert'
+import { showAlertError } from '../../store/slices/errorAlert'
 
 const BusinessSpecialistsAdd = () => {
   const { currentToken } = useAuth();
@@ -18,8 +21,10 @@ const BusinessSpecialistsAdd = () => {
     setError,
   } = useForm();
 
-  const [alertSuccess, setAlertSuccess] = useState(false)
-  const [alertError, setAlertError] = useState(false)
+  // const [alertSuccess, setAlertSuccess] = useState(false)
+  // const [alertError, setAlertError] = useState(false)
+
+  const dispatch = useDispatch()
 
   const createSpec = async () => {
     const object = {
@@ -42,40 +47,15 @@ const BusinessSpecialistsAdd = () => {
       if(!response.ok) throw new Error('Failed to fetch')
 
       const data = await response.json();
-      setAlertSuccess(true)
+      dispatch(showAlert({text: 'Специалист успешно создан!'}))
       reset()
       return data
       
     } catch (error) {
-      setAlertError(error.message)
       console.error("An error occurred:", error);
+      dispatch(showAlertError({text: 'Произошла ошибка!'}))
     }
   };
-
-  useEffect(() => {
-    if(alertSuccess) {
-      setTimeout(() => {
-        setAlertSuccess((prev) => {
-          if (prev === true) return false;
-        });
-  
-  
-      }, 4000);
-    }
-  }, [alertSuccess])
-
-  useEffect(() => {
-    if(alertError) {
-      setTimeout(() => {
-        setAlertError((prev) => {
-          if (prev === true) return false;
-        });
-  
-  
-      }, 4000);
-    }
-  }, [alertError])
-
 
 
   return (
@@ -134,13 +114,6 @@ const BusinessSpecialistsAdd = () => {
         <button className="btn btn-accent self-start">Создать специалиста</button>
       </form>
 
-      {alertSuccess && (
-        <SuccessAlert text='Специалист успешно создан!'/>
-      )}
-
-      {alertError && (
-        <ErrorAlert text={alertError}/>
-      )}
     </BusinessLayout>
   );
 };

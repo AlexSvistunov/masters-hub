@@ -22,34 +22,7 @@ const RecordingPage = () => {
   const ref = useRef();
  
   const [getRecordingData, isLoading, error, myRecording, setMyRecording] = useFetch(() => getRecording(currentToken))
-  const [specialists, setSpecialists] = useState([])
 
-  
-  const fetchSpecialists = async () => {
-    const response = await fetch(`${URL}/api/admin-panel/specialist/`, {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${currentToken}`,
-      },
-    });
-    if (!response.ok)
-      if(response.status === 404) {
-        throw new Error(
-          "Нет профиля! Создайте профиль чтобы создавать специалистов"
-        )
-      } else {
-        throw new Error(
-          "Something went wrong"
-        )
-      }
-   
-    const data = await response.json();
-    console.log(data)
-    setSpecialists(data);
-    return data;
-  };
-
-  const [getSpecialists, specialistLoading, specError] = useFetch(fetchSpecialists);
 
   useEffect(() => {
     if (token) {
@@ -63,9 +36,7 @@ const RecordingPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    getSpecialists();
-  }, []);
+
 
   return (
     <div>

@@ -25,6 +25,7 @@ export const RoutesConfig = {
   BUSINESS_WORK_TIME_SPEC: (id) => `/business/work-time/${id}`,  
   BUSINESS_WORK_TIME_EDIT: '/business/work-time/edit',  
   BUSINESS_RECORDING: '/business/recording',  
+  BUSINESS_RECORDING_SPEC: '/business/recording/:id',  
   ALL_REVIEWS: (id) => `/all-reviews/${id}`,  
 };
 
