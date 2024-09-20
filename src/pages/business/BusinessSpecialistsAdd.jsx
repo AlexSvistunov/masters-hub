@@ -86,11 +86,7 @@ const BusinessSpecialistsAdd = () => {
             name="job"
             {...register("job", {
               required: "Поле обязательно к заполнению!",
-              pattern: {
-                value: /^(master|studio)$/,
-                message:
-                  'Специализация должна быть либо "master", либо "studio"',
-              },
+             
             })}
           ></input>
 
