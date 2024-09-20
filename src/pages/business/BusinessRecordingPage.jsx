@@ -11,27 +11,27 @@ import { MoonLoader } from 'react-spinners'
 const BusinessRecordingPage = () => {
   const { currentToken } = useAuth();
 
-  const spec = "master";
+  // const spec = "master";
 
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [selected, setSelected] = useState(new Date());
+  // const [selectedDays, setSelectedDays] = useState([]);
+  // const [selected, setSelected] = useState(new Date());
 
-  const getRecording = async () => {
-    try {
-      const response = await fetch(`${URL}/api/admin-panel/recording/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${currentToken}`,
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const getRecording = async () => {
+  //   try {
+  //     const response = await fetch(`${URL}/api/admin-panel/recording/`, {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Token ${currentToken}`,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
-  const [getBusinessRecording, isLoading, error] = useFetch(getRecording);
+  // const [getBusinessRecording, isLoading, error] = useFetch(getRecording);
 
   const [specialists, setSpecialists] = useState([])
 
@@ -67,20 +67,20 @@ const BusinessRecordingPage = () => {
   }, []);
   
 
-  useEffect(() => {
-    getBusinessRecording();
-  }, []);
+  // useEffect(() => {
+  //   getBusinessRecording();
+  // }, []);
 
   return (
     <BusinessLayout>
       <h1 className="text-3xl mb-4">Записи</h1>
-      {isLoading ? (
+      {specialistLoading ? (
         <div className="flex items-center justify-center h-full">
           <MoonLoader color="#00cab6" size={75}></MoonLoader>
         </div>
-      ) : error ? (
+      ) : specError ? (
         <div className="flex flex-col gap-3 items-start">
-          <div className="text-xl">{error}</div>
+          <div className="text-xl">{specError}</div>
           <div className="flex gap-3">
             <Link to="/business/profile/creation" className="btn btn-accent">
               Создать профиль

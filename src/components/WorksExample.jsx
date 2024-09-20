@@ -24,7 +24,7 @@ const WorksExample = ({ masterData }) => {
           pagination={{ clickable: true }}
           navigation
         >
-          {masterData?.images_work?.map((workImage, index) => (
+          {masterData?.images_work?.map((workImage) => (
             <div key={workImage.image}>
               <SwiperSlide className="myCard">
                 <img

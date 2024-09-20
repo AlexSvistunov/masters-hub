@@ -3,7 +3,10 @@ import BusinessLayout from "../../components/business/BusinessLayout";
 import useAuth from "../../hooks/useAuth";
 import URL from "../../utils/backend-url";
 import { useEffect, useState } from "react";
-import SuccessAlert from "../../components/ui/SuccessAlert";
+import { useDispatch } from 'react-redux'
+import { showAlert } from '../../store/slices/successAlert'
+import { showAlertError } from '../../store/slices/errorAlert'
+
 
 const BusinessServiceAdd = () => {
   const { currentToken } = useAuth();
@@ -17,7 +20,17 @@ const BusinessServiceAdd = () => {
   } = useForm();
 
   const [categories, setCategories] = useState([])
-  const [createSuccess, setCreateSuccess] = useState(false);
+
+  const defaultValues = {
+    category: '',
+    title: '',
+    description: '',
+    price: '',
+    time: '',
+  }
+
+  const dispatch = useDispatch()
+
 
   const getCategories = async () => {
     try {
@@ -35,7 +48,6 @@ const BusinessServiceAdd = () => {
     }
   }
 
-  console.log(watch('category'))
 
   useEffect(() => {
     getCategories()
@@ -71,24 +83,35 @@ const BusinessServiceAdd = () => {
       }
 
       const data = await response.json();
-      setCreateSuccess(true)
-      reset()
+      reset(defaultValues)
+      dispatch(showAlert({text: 'Услуга успешно создана!'}))
       console.log(data);
       return data;
     } catch (error) {
+      dispatch(showAlertError({text: 'Произошла ошибка!'}))
       console.error("An error occurred:", error);
     }
   };
 
+  const getMyCategories = async () => {
+    const response = await fetch(`${URL}/api/admin-panel/categories/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${currentToken}`,
+      },
+    });
+
+
+    const data = await response.json();
+    return data;
+  } 
+
   useEffect(() => {
-    setTimeout(() => {
-      setCreateSuccess((prev) => {
-        if (prev === true) return false;
-      });
+    getMyCategories()
+  }, [])
 
+  
 
-    }, 4000);
-  }, [createSuccess]);
 
   return (
     <BusinessLayout>
@@ -157,11 +180,11 @@ const BusinessServiceAdd = () => {
       </form>
 
       
-      {createSuccess && (
-        <SuccessAlert text='Услуга успешно создана!'/>
-      )}
+    
     </BusinessLayout>
   );
 };
+
+// photo, specialist,
 
 export default BusinessServiceAdd;
