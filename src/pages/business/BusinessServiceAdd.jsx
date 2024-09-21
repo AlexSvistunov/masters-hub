@@ -27,6 +27,7 @@ const BusinessServiceAdd = () => {
 		description: '',
 		price: '',
 		time: '',
+		specialist: ''
 	}
 
 	const dispatch = useDispatch()
@@ -179,7 +180,7 @@ const BusinessServiceAdd = () => {
 							Специалист
 						</option>
 						{specialists.map(specialist => (
-							<option key={specialist.id} value={specialist}>
+							<option key={specialist.id} value={specialist.id}>
 								{specialist.name}
 							</option>
 						))}
