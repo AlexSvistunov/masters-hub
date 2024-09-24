@@ -67,21 +67,21 @@ const CreateProfileForm = () => {
 			watch('time_relax') ? watch('time_relax') : null
 		)
 
-		const testObj = {
-			name: 'Андрей Аршавин',
-			address: 'Pushkina',
-			phone: '79999999999',
-			specialization: 'master',
-			link_vk: 'https://vk.com/andrew',
-			link_tg: 'https://vk.com/jala.berghi',
-			description: 'https://vk.com/andrew',
-			time_relax: '00:30:00',
-			categories: '["7","8"]',
-		}
+		// const testObj = {
+		// 	name: 'Андрей Аршавин',
+		// 	address: 'Pushkina',
+		// 	phone: '79999999999',
+		// 	specialization: 'master',
+		// 	link_vk: 'https://vk.com/andrew',
+		// 	link_tg: 'https://vk.com/jala.berghi',
+		// 	description: 'https://vk.com/andrew',
+		// 	time_relax: '00:30:00',
+		// 	categories: '["7","8"]',
+		// }
 
 		console.log(selectedValues)
 		if (selectedValues.length) {
-			formData.append('categories', JSON.stringify(selectedValues))
+			formData.append('categories', selectedValues.join(' '))
 		}
 
 		if (avatar) {
@@ -97,8 +97,7 @@ const CreateProfileForm = () => {
 					Authorization: `Token ${currentToken}`,
 				},
 
-				// body: formData,
-				body: JSON.stringify(testObj),
+				body: formData,
 			})
 
 			if (!response.ok) {

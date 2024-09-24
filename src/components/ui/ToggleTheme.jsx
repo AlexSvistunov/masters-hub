@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../../store/slices/themeSlice";
 
-const ToggleTheme = () => {
+const ToggleTheme = ({keyword}) => {
   const dispatch = useDispatch();
   const stateTheme = useSelector((state) => state.theme.currentTheme);
 
@@ -9,7 +9,7 @@ const ToggleTheme = () => {
     dispatch(changeTheme());
   };
   return (
-    <label className="cursor-pointer" onClick={handleThemeChange}>
+    <label className={keyword === 'header' ? ' hidden tablet:block cursor-pointer' : 'cursor-pointer'} onClick={handleThemeChange}>
       {stateTheme === "light" ? (
         <svg
           className="fill-current w-10 h-10"

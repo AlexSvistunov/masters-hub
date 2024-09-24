@@ -27,8 +27,8 @@ const ErrorAlert = ({ seconds }) => {
         className="alert alert-error fixed top-4 right-4 max-w-96 z-50"
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 shrink-0 stroke-current"
+          xmlns="http://www.w3.org/2000/svg "
+          className="h-6 w-6 shrink-0 stroke-current hidden tablet:block"
           fill="none"
           viewBox="0 0 24 24"
         >

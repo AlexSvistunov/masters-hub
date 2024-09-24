@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+  import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -30,9 +30,10 @@ const Header = () => {
     };
   }, [prevScrollPos]);
 
+
   return (
     <header
-      className="navbar justify-between p-1 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2 flex-col phone:flex-row phone:p-5"
+      className="navbar justify-between p-1 container mx-auto fixed top-0 left-0 right-0 bg-base-300 z-20 rounded-xl mt-8 sm: max-w-7xl w-11/12 gap-2  phone:flex-row phone:p-5" 
       style={{ top: visible ? "0" : "-250px", transition: ".3s ease" }}
     >
       <Link
@@ -72,7 +73,7 @@ const Header = () => {
           )}
         </div>
 
-        <ToggleTheme />
+        <ToggleTheme keyword='header' />
       </div>
     </header>
   );

@@ -40,7 +40,7 @@ const BusinessRecordingSpec = () => {
 	return (
 		<BusinessLayout>
 			<div className=''>
-				<div className='flex flex-col tablet:flex-row gap-7'>
+				<div className='flex flex-col laptop:flex-row gap-7'>
 					<div>
 						<DayPicker
 							mode='single'
@@ -51,15 +51,21 @@ const BusinessRecordingSpec = () => {
 						/>
 					</div>
 
-					<div className='flex flex-col'>
+					<div className='flex flex-col flex-1'>
 						{recordingsPerDay?.map(recording => (
 							<div
 								className='bg-base-200 p-4 rounded-xl flex flex-col'
 								key={recording.id}
 							>
+							
 								<span>
-									{recording.time_start} - {recording.time_end}
+									{recording.time_start.slice(0, -3)} - {recording.time_end.slice(0, -3)}
 								</span>
+
+								<div className="">
+									<span>{recording.name} </span>
+									<span>{recording.surname}</span>
+								</div>
 								<span>{recording.service.title}</span>
 							</div>
 						))}

@@ -121,3 +121,10 @@ body {
   /* Add more CSS variables here. */
 }
 
+.btn {
+  @apply min-h-10 h-10 tablet:min-h-12 tablet:h-12
+}
+
+.navbar {
+  @apply mx-auto my-0 tablet:mx-auto tablet:mt-8
+}

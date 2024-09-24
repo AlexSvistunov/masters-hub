@@ -26,22 +26,23 @@ const EditProfile = () => {
 		}))
 	}
 	const getUpdatedValues = () => {
-		
 		const updatedValues = {}
 		const newState = { ...state, categories: myInitialCategories }
 
 		Object.keys(inputValues).forEach(key => {
 			if (JSON.stringify(inputValues[key]) !== JSON.stringify(newState[key])) {
 				console.log(key)
-				if(key === 'categories') {
+				if (key === 'categories') {
 					const categoryArray = inputValues.categories.map(el => String(el.id))
-					updatedValues[key] = categoryArray
+
+					updatedValues[key] = categoryArray.join(' ')
 				} else {
 					updatedValues[key] = inputValues[key]
 				}
-
 			}
 		})
+
+		console.log(updatedValues)
 
 		return updatedValues
 	}
@@ -111,13 +112,18 @@ const EditProfile = () => {
 	}
 
 	const removeCategoryItem = category => {
-		const newCategories = inputValues?.categories?.filter(
-			item => item.id !== category.id
-		)
-		setInputValues({
-			...inputValues,
-			categories: newCategories,
-		})
+		if(inputValues?.categories?.length === 1) {
+			dispatch(showAlertError({text: 'Вы не можете удалить последнюю категорию'}))
+		} else {
+			const newCategories = inputValues?.categories?.filter(
+				item => item.id !== category.id
+			)
+			setInputValues({
+				...inputValues,
+				categories: newCategories,
+			})
+		}
+		
 	}
 
 	useEffect(() => {

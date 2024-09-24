@@ -37,20 +37,18 @@ const BusinessSpecialistPage = () => {
 
   return (
     <BusinessLayout>
-      <div className="flex gap-10">
+      <div className="flex gap-10 tablet:flex-row flex-col">
         
         <div className="flex-auto">
-          <div className="flex gap-8 mb-5">
+          <div className="flex desktop:gap-8 gap-4 mb-5">
             <img
               src={`/backend/masterhub/static${specialistData?.photo}`}
-              width={340}
-              height={340}
-              className="rounded-lg"
+              className="rounded-lg desktop:h-80 desktop:w-60 tablet:w-40  tablet:h-44 w-40 h-44"
             ></img>
 
             <div className="bg-base-200 p-8 rounded-2xl flex-auto">
               <div className="mb-4">
-                <h3 className="text-3xl">{specialistData?.name}</h3>
+                <h3 className="laptop:text-3xl text-xl">{specialistData?.name}</h3>
                 <span className="text-gray-500 text-xl">
                   {specialistData?.job}
                 </span>
@@ -61,7 +59,7 @@ const BusinessSpecialistPage = () => {
           <Services masterData={specialistData} keyword="business" />
         </div>
 
-        <Link className="btn btn-accent" to={`/business/specialists/${id}/edit`}>Редактировать</Link>
+        <Link className="btn btn-accent self-start" to={`/business/specialists/${id}/edit`}>Редактировать</Link>
       </div>
     </BusinessLayout>
   );

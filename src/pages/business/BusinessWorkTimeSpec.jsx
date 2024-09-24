@@ -19,6 +19,10 @@ const BusinessWorkTimeSpec = () => {
     "12:00",
   ];
 
+  const getWorkTime = () => {
+    
+  }
+
   const [selectedDays, setSelectedDays] = useState([]);
   const [selected, setSelected] = useState(new Date())
 
