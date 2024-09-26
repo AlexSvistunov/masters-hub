@@ -9,10 +9,10 @@ const ToggleTheme = ({keyword}) => {
     dispatch(changeTheme());
   };
   return (
-    <label className={keyword === 'header' ? ' hidden tablet:block cursor-pointer' : 'cursor-pointer'} onClick={handleThemeChange}>
+    <label className={keyword === 'header' ? ' hidden tablet:block cursor-pointer' : 'cursor-pointer tablet:hidden'} onClick={handleThemeChange}>
       {stateTheme === "light" ? (
         <svg
-          className="fill-current w-10 h-10"
+          className="fill-current w-7 h-7 tablet:w-10 tablet:h-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -20,7 +20,7 @@ const ToggleTheme = ({keyword}) => {
         </svg>
       ) : (
         <svg
-          className="fill-current w-10 h-10"
+          className="fill-current w-7 h-7 tablet:w-10 tablet:h-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >

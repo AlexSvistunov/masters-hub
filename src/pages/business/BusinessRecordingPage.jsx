@@ -67,10 +67,6 @@ const BusinessRecordingPage = () => {
   }, []);
   
 
-  // useEffect(() => {
-  //   getBusinessRecording();
-  // }, []);
-
   return (
     <BusinessLayout>
       <h1 className="text-3xl mb-4">Записи</h1>

@@ -43,7 +43,7 @@ const FavoritesPage = () => {
       <Header />
       <Hero />
       <EnrollModal step={step} setStep={setStep} />
-      <div className="container mx-auto min-h-screen">
+      <div className="mx-auto min-h-screen">
         <Tabs />
         <div className="" ref={ref}>
           {!token ? (

@@ -17,7 +17,7 @@ const MiniCategories = () => {
   }, []);
 
   return (
-    <section className="p-7">
+    <section className="py-7">
       <div className="container mx-auto">
         <h2 className="text-4xl mb-5">Категории</h2>
         {error && <h3 className="text-center text-2xl">{error}</h3>}
