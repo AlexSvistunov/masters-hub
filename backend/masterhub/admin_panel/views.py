@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from recording.serializers import ServicesSerializer, RecordingSerializer
 from service.serializers import CategoriesSerializer
 from . import serializers
-from user.models import ProfileMaster, Categories, ProfileImages, Reviews
+from user.models import ProfileMaster, Categories, ProfileImages, Reviews, Specialist
 from user.serializers import SpecialistSerializer, SpecialistDetailSerializer, ProfileImagesSerializer
 from service.models import Service
 from user.serializers import ServiceSerializer
@@ -157,7 +157,7 @@ class RecordingAPIViewSet(GenericViewSet):
         return Response(serializer.data)
 
 
-class WorkTimeAPIViewSet(GenericViewSet, ListModelMixin):
+class WorkTimeAPIViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     serializer_class = WorkTimeAdminSerializer
 
     def get_queryset(self):
@@ -168,6 +168,14 @@ class WorkTimeAPIViewSet(GenericViewSet, ListModelMixin):
             raise NotFound('No ProfileMaster matches the given query.')
         except ValidationErrorException as exp:
             raise ValidationError(exp.messages)
+
+    def retrieve(self, *args, **kwargs):
+        queryset = self.get_queryset()
+        specialist = get_object_or_404(Specialist, id=kwargs.get('pk'))
+        queryset = queryset.filter(specialist=specialist)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class ReviewsAPIViewSet(GenericViewSet, ListModelMixin):
