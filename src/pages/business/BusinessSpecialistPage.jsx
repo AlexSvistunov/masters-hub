@@ -29,7 +29,6 @@ const BusinessSpecialistPage = () => {
 
   const [getSpecialistData, isLoading, error] = useFetch(getSpecialist);
 
-  
 
   useEffect(() => {
     getSpecialistData();

@@ -23,7 +23,7 @@ import { MoonLoader } from 'react-spinners'
 const MasterPage = () => {
 	const { currentToken } = useAuth()
 	const [stepProps, setStepProps] = useState(null)
-  
+
 	const dispatch = useDispatch()
 
 	const [isLeavingCommentOpen, setIsLeavingCommentOpen] = useState(false)
@@ -34,9 +34,6 @@ const MasterPage = () => {
 			return await MasterService.getMasterProfile(currentToken, id)
 		})
 
-	useEffect(() => {
-		window.scrollTo(0, 0)
-	}, [])
 
 	const formattedRating = getFormattedRating(masterData?.reviews)
 
@@ -65,6 +62,10 @@ const MasterPage = () => {
 
 	useEffect(() => {
 		fetchMasterProfile()
+	}, [])
+
+  useEffect(() => {
+		window.scrollTo(0, 0)
 	}, [])
 
 	return (
