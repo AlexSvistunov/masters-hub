@@ -36,7 +36,6 @@ const EditProfile = () => {
 		}  
 };  
 
-console.log(inputValues)
 	const getUpdatedValues = () => {
 		const updatedValues = {}
 		const newState = { ...state, categories: myInitialCategories }
@@ -60,17 +59,14 @@ console.log(inputValues)
 	}
 
 	const patch = async id => {
+
 		const updatedValues = getUpdatedValues()
-		const obj = {
-			photo: inputValues.photo
-		}
-
 		const formData = new FormData()
-		formData.append('photo', inputValues.photo)
-		console.log(inputValues.photo)
-		console.log(formData)
+		
+		Object.keys(updatedValues).forEach(key => {
+			formData.append(key, inputValues[key])
+		})
 
-		console.log(obj)
 		if (Object.keys(updatedValues).length > 0) {
 			try {
 				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
