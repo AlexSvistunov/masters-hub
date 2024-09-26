@@ -1,177 +1,171 @@
-
-import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import { addToFav } from "../store/slices/favSlice";
-import { deleteFromFav } from "../store/slices/favSlice";
-import { useDispatch } from "react-redux";
-import { openModal, setId } from "../store/slices/modalSlice";
+import { Link, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
+import { addToFav } from '../store/slices/favSlice'
+import { deleteFromFav } from '../store/slices/favSlice'
+import { useDispatch } from 'react-redux'
+import { openModal, setId } from '../store/slices/modalSlice'
+import { getFormattedRating } from '../utils/formattedRating'
 
 const CatalogCard = ({ item, items, setItems, keyword }) => {
-  const { currentToken } = useAuth();
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+	const { currentToken } = useAuth()
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
-  const { token } = useAuth();
+	const { token } = useAuth()
 
-  const averageRating = item?.reviews?.average_rating;
-  const formattedRating =
-    averageRating % 1 === 0 ? averageRating + ".0" : averageRating;
+	const formattedRating = getFormattedRating(item?.reviews)
 
-  return (
-    <div className="col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative min-h-44">
-      <Link className="absolute inset-0" to={`/profile/${item?.id}`} />
-      <div className="flex items-center gap-5 mb-5">
-        <img
-          className="w-12 h-12 tablet:w-16 tablet:h-16 rounded-lg"
-          src={`/backend/masterhub${item?.photo}`}
-        ></img>
-        <div className="flex flex-col gap-1">
-          <span className="tablet:text-xl">{item?.name}</span>
-          <span className="text-xs tablet:text-base">
-            {item?.address?.length > 20 && keyword !== "profile"
-              ? item?.address?.slice(0, 20) + "..."
-              : item?.address}
-          </span>
-        </div>
-      </div>
-      <footer className="flex justify-between mt-auto">
-        <div className="flex items-center">
-          {formattedRating === "нет отзывов" ? (
-            <span>Нет отзывов</span>
-          ) : (
-            <div className="flex gap-1 items-center rounded-xl bg-base-300 px-3 py-2">
-              <img
-                className="h-3 w-3"
-                src="https://dikidi.ru/assets/images/catalog/star.png"
-              ></img>
-              <div className="flex items-center gap-2">
-                {formattedRating}
-                <span>{`(${item?.reviews?.count})`}</span>
-              </div>
-            </div>
-          )}
-        </div>
-        <button
-          className="btn btn-primary relataive z-10"
-          onClick={() => {
-            if (!token) {
-              navigate('/login')
-              return;
-            }
+	return (
+		<div className='col-span-2 tablet:col-span-4 p-4 rounded-xl bg-base-200 flex flex-col relative min-h-44'>
+			<Link className='absolute inset-0' to={`/profile/${item?.id}`} />
+			<div className='flex items-center gap-5 mb-5'>
+				<img
+					className='w-12 h-12 tablet:w-16 tablet:h-16 rounded-lg'
+					src={`/backend/masterhub${item?.photo}`}
+				></img>
+				<div className='flex flex-col gap-1'>
+					<span className='tablet:text-xl'>{item?.name}</span>
+					<span className='text-xs tablet:text-base'>
+						{item?.address?.length > 20 && keyword !== 'profile'
+							? item?.address?.slice(0, 20) + '...'
+							: item?.address}
+					</span>
+				</div>
+			</div>
+			<footer className='flex justify-between mt-auto'>
+				<div className='flex items-center'>
+					{formattedRating === 'нет отзывов' ? (
+						<span>Нет отзывов</span>
+					) : (
+						<div className='flex gap-1 items-center rounded-xl bg-base-300 px-3 py-2'>
+							<img
+								className='h-3 w-3'
+								src='https://dikidi.ru/assets/images/catalog/star.png'
+							></img>
+							<div className='flex items-center gap-2'>
+								{formattedRating}
+								<span>{`(${item?.reviews?.count})`}</span>
+							</div>
+						</div>
+					)}
+				</div>
+				<button
+					className='btn btn-primary relataive z-10'
+					onClick={() => {
+						if (!token) {
+							navigate('/login')
+							return
+						}
 
-            dispatch(openModal());
-            dispatch(setId({ id: item?.id }));
-          }}
-        >
-          Записаться
-        </button>
-      </footer>
+						dispatch(openModal())
+						dispatch(setId({ id: item?.id }))
+					}}
+				>
+					Записаться
+				</button>
+			</footer>
 
-      <button
-        className="absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group"
-        onClick={() => {
-          if (!token) {
-            navigate('/login')
-            return
-          }
+			<button
+				className='absolute top-4 right-4 w-7 h-7 flex justify-center items-center py-1 px-1 box-content group'
+				onClick={() => {
+					if (!token) {
+						navigate('/login')
+						return
+					}
 
-          if (item?.is_favorite || item?.is_favorites) {
-            if (keyword === "fav") {
-              dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
-                (data) => {
-                  setItems(data.payload);
-                }
-              );
-            }
+					if (item?.is_favorite || item?.is_favorites) {
+						if (keyword === 'fav') {
+							dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
+								data => {
+									setItems(data.payload)
+								}
+							)
+						}
 
-            if (keyword === "profile") {
-              dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
-                (data) => {
-                  if (!data?.payload?.find((el) => el.id === item.id)) {
-                    setItems({
-                      ...item,
-                      is_favorite: !item.is_favorite,
-                    });
-                  }
-                }
-              );
-            }
+						if (keyword === 'profile') {
+							dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
+								data => {
+									if (!data?.payload?.find(el => el.id === item.id)) {
+										setItems({
+											...item,
+											is_favorite: !item.is_favorite,
+										})
+									}
+								}
+							)
+						}
 
-            if (!keyword) {
-              dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
-                (data) => {
-                  const newItem = {
-                    ...item,
-                    is_favorite: !item?.is_favorite,
-                  };
+						if (!keyword) {
+							dispatch(deleteFromFav({ currentToken, id: item?.id })).then(
+								data => {
+									const newItem = {
+										...item,
+										is_favorite: !item?.is_favorite,
+									}
 
-                  const newItems = items.map((el) => {
-                    if (el.id === item?.id) {
-                      return newItem;
-                    }
+									const newItems = items.map(el => {
+										if (el.id === item?.id) {
+											return newItem
+										}
 
-                    return el;
-                  });
+										return el
+									})
 
-                  setItems(newItems);
-                }
-              );
-            }
-          } else {
-            if (keyword === "profile") {
-              dispatch(addToFav({ currentToken, id: item?.id })).then(
-                (data) => {
-                  const updatedItem = data?.payload;
+									setItems(newItems)
+								}
+							)
+						}
+					} else {
+						if (keyword === 'profile') {
+							dispatch(addToFav({ currentToken, id: item?.id })).then(data => {
+								const updatedItem = data?.payload
 
-                  setItems(updatedItem);
-                }
-              );
-            }
+								setItems(updatedItem)
+							})
+						}
 
-            if (!keyword) {
-              dispatch(addToFav({ currentToken, id: item?.id })).then(
-                (data) => {
-                  const updatedItem = data.payload;
+						if (!keyword) {
+							dispatch(addToFav({ currentToken, id: item?.id })).then(data => {
+								const updatedItem = data.payload
 
-                  const updatedItems = items.map((existingItem) => {
-                    if (existingItem?.id === updatedItem?.id) {
-                      return updatedItem;
-                    }
-                    return existingItem;
-                  });
+								const updatedItems = items.map(existingItem => {
+									if (existingItem?.id === updatedItem?.id) {
+										return updatedItem
+									}
+									return existingItem
+								})
 
-                  setItems(updatedItems);
-                }
-              );
-            }
-          }
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 group-hover:scale-110 transition-all"
-          fill={
-            item?.is_favorite || item?.is_favorites
-              ? "rgb(99, 111, 228)"
-              : "transparent"
-          }
-          viewBox="0 0 24 24"
-          stroke={
-            item?.is_favorite || item?.is_favorites
-              ? "rgb(99, 111, 228)"
-              : "currentColor"
-          }
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-          />
-        </svg>
-      </button>
-    </div>
-  );
-};
+								setItems(updatedItems)
+							})
+						}
+					}
+				}}
+			>
+				<svg
+					xmlns='http://www.w3.org/2000/svg'
+					className='h-5 w-5 group-hover:scale-110 transition-all'
+					fill={
+						item?.is_favorite || item?.is_favorites
+							? 'rgb(99, 111, 228)'
+							: 'transparent'
+					}
+					viewBox='0 0 24 24'
+					stroke={
+						item?.is_favorite || item?.is_favorites
+							? 'rgb(99, 111, 228)'
+							: 'currentColor'
+					}
+				>
+					<path
+						strokeLinecap='round'
+						strokeLinejoin='round'
+						strokeWidth='2'
+						d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+					/>
+				</svg>
+			</button>
+		</div>
+	)
+}
 
-export default CatalogCard;
+export default CatalogCard

@@ -27,3 +27,17 @@ export const deleteRecording = async (id, currentToken, setMyRecording) => {
     console.error("An error occurred:", error);
   }
 };
+
+export const getRecordingSlots = async (masterId, masterData,currentToken) => {
+  const response = await fetch(
+    `${URL}/api/recording/${masterData.id}/${masterId}/`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Token ${currentToken}`,
+      },
+    }
+  )
+  const data = await response.json()
+  return data
+}

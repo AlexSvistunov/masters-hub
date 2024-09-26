@@ -20,8 +20,10 @@ const Services = ({
   keyword,
 }) => {
   const dispatch = useDispatch();
+
   const { currentToken, token } = useAuth();
   const [modalActive, setModalActive] = useState(false);
+  
   const [serviceId, setServiceId] = useState(null);
   const { id } = useParams();
 
@@ -45,7 +47,7 @@ const Services = ({
         <span className="text-2xl text-primary">
       
           {masterData?.services_count}
-          {/* {masterData?.services?.length} */}
+
         </span>
       </div>
 

@@ -8,7 +8,6 @@ import ToggleTheme from "./ui/ToggleTheme";
 import CustomDropdown from "./ui/Dropdown";
 
 const Header = () => {
-  const dispatch = useDispatch();
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
   const [visible, setVisible] = useState(true);
   const token = useSelector((state) => state.user.token);
