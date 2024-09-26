@@ -11,7 +11,7 @@ from .models import Service, Categories
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'price', 'category']
+    list_display = ['id', 'title', 'price', 'category', 'specialist']
     list_filter = ['profile__user',  'date_creation', 'category']
 
 

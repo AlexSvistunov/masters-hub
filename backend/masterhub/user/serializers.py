@@ -99,26 +99,18 @@ class ProfileMasterSerializer(serializers.ModelSerializer):
         return user.favorites_user.filter(profile=ob).exists()
 
     def get_images_work(self, obj):
-        specialization = obj.specialization
-        if specialization == 'master':
-            queryset = obj.profile_images.all()
-        else:
-            queryset = ProfileImages.objects.none()
-            for specialist in obj.profile_specialist.all():
-                query = specialist.profile_services.all()
-                queryset = queryset.union(query)
+        queryset = ProfileImages.objects.none()
+        for specialist in obj.profile_specialist.all():
+            query = specialist.profile_services.all()
+            queryset = queryset.union(query)
         serializer = ProfileImagesSerializer(queryset, many=True)
         return serializer.data
 
     def get_services(self, obj):
-        specialization = obj.specialization
-        if specialization == 'master':
-            queryset = obj.profile_services.all()
-        else:
-            queryset = Service.objects.none()
-            for specialist in obj.profile_specialist.all()[:5]:
-                services = specialist.specialist_services.all().select_related('category')
-                queryset = queryset.union(services)
+        queryset = Service.objects.none()
+        for specialist in obj.profile_specialist.all()[:5]:
+            services = specialist.specialist_services.all().select_related('category')
+            queryset = queryset.union(services)
         self.services_count = queryset.count()
         serializer = ServicesSerializer(queryset[:5], many=True)
         return serializer.data

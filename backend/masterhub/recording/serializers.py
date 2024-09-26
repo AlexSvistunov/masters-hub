@@ -83,7 +83,7 @@ class RecordingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recording
-        fields = ['id', 'profile_master', 'service', 'date', 'time_start', 'time_end']
+        fields = ['id', 'profile_master', 'service', 'date', 'time_start', 'time_end', 'name', 'surname', 'phone']
 
 
 class RecordinCreateSerializer(serializers.Serializer):

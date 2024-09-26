@@ -145,7 +145,8 @@ class Specialist(models.Model):
     )
     job = models.CharField(
         verbose_name='кфалификация',
-        max_length=50
+        max_length=50,
+        blank=True
     )
     description = models.TextField(verbose_name='описание')
     profile = models.ForeignKey(

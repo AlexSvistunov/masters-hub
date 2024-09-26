@@ -14,17 +14,29 @@ const EditProfile = () => {
 	const { currentToken } = useAuth()
 
 	const [inputValues, setInputValues] = useState({ ...state, categories: [] })
+
+	const [initialPhoto, setInitialPhoto] = useState(inputValues.photo)
 	const [categories, setCategories] = useState([])
 	const [myInitialCategories, setMyInitialCategories] = useState([])
 	const dispatch = useDispatch()
 
-	const inputChange = e => {
-		const { name, value } = e.target
-		setInputValues(prevValues => ({
-			...prevValues,
-			[name]: value,
-		}))
-	}
+	const inputChange = e => {  
+		const { name, type, value, files } = e.target; 
+
+		if (type === 'file') {  
+				setInputValues(prevValues => ({  
+						...prevValues,  
+							photo: files[0] 
+				}));  
+		} else {  
+				setInputValues(prevValues => ({  
+						...prevValues,  
+						[name]: value,  
+				}));  
+		}  
+};  
+
+console.log(inputValues)
 	const getUpdatedValues = () => {
 		const updatedValues = {}
 		const newState = { ...state, categories: myInitialCategories }
@@ -42,22 +54,32 @@ const EditProfile = () => {
 			}
 		})
 
-		console.log(updatedValues)
+
 
 		return updatedValues
 	}
 
 	const patch = async id => {
 		const updatedValues = getUpdatedValues()
+		const obj = {
+			photo: inputValues.photo
+		}
+
+		const formData = new FormData()
+		formData.append('photo', inputValues.photo)
+		console.log(inputValues.photo)
+		console.log(formData)
+
+		console.log(obj)
 		if (Object.keys(updatedValues).length > 0) {
 			try {
 				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
 					method: 'PATCH',
-					body: JSON.stringify(updatedValues),
+
 					headers: {
-						'Content-Type': 'application/json',
 						Authorization: `Token ${currentToken}`,
 					},
+					body: formData,
 				})
 
 				if (!response.ok) {
@@ -112,8 +134,10 @@ const EditProfile = () => {
 	}
 
 	const removeCategoryItem = category => {
-		if(inputValues?.categories?.length === 1) {
-			dispatch(showAlertError({text: 'Вы не можете удалить последнюю категорию'}))
+		if (inputValues?.categories?.length === 1) {
+			dispatch(
+				showAlertError({ text: 'Вы не можете удалить последнюю категорию' })
+			)
 		} else {
 			const newCategories = inputValues?.categories?.filter(
 				item => item.id !== category.id
@@ -123,7 +147,6 @@ const EditProfile = () => {
 				categories: newCategories,
 			})
 		}
-		
 	}
 
 	useEffect(() => {
@@ -237,6 +260,13 @@ const EditProfile = () => {
 						))}
 					</div>
 				</div>
+
+				<label className='flex flex-col gap-2 text-xl'>
+					Смена аватара
+					<input type='file' onChange={inputChange} />
+				</label>
+
+				{inputValues.photo && <p> Текущий аватар {initialPhoto.split('/').pop()}</p>}
 			</div>
 		</BusinessLayout>
 	)
