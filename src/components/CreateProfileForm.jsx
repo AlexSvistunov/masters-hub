@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
@@ -7,8 +7,6 @@ import CategoryService from '../service/CategoryService'
 import URL from '../utils/backend-url'
 import { formNames } from '../utils/formNames'
 import FormInput from './ui/FormInput'
-import { stringify } from 'postcss'
-import { Type } from 'lucide-react'
 
 const CreateProfileForm = () => {
 	const navigate = useNavigate()
@@ -176,10 +174,25 @@ const CreateProfileForm = () => {
 				) : null}
 			</div>
 
-			<div className='flex flex-col gap-2 items-start mb-4'>
+			<label className='flex flex-col gap-2 items-start mb-4 max-w-80'>
 				Аватар
-				<input type='file' onChange={handleFileChange} accept='image/*' />
-			</div>
+				<div className='relative w-full max-w-80'>
+					<input
+						type='file'
+						onChange={handleFileChange}
+						className='absolute inset-0 w-full h-full opacity-0 cursor-pointer'
+						accept='image/*'
+					/>
+					<button
+						type='button'
+						className='py-2 px-4 btn btn-accent rounded-md transition w-full'
+					>
+						Выберите файл
+					</button>
+
+					<span className='block my-1'>{avatar?.name}</span>
+				</div>
+			</label>
 
 			<button className='btn btn-accent my-2'>Создать профиль</button>
 		</form>

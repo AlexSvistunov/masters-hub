@@ -61,6 +61,7 @@ const EditProfile = () => {
 	const patch = async id => {
 
 		const updatedValues = getUpdatedValues()
+
 		const formData = new FormData()
 		
 		Object.keys(updatedValues).forEach(key => {
@@ -68,6 +69,7 @@ const EditProfile = () => {
 		})
 
 		if (Object.keys(updatedValues).length > 0) {
+
 			try {
 				const response = await fetch(`${URL}/api/admin-panel/profile/${id}/`, {
 					method: 'PATCH',
@@ -150,7 +152,6 @@ const EditProfile = () => {
 		getMyCategories()
 	}, [])
 
-	console.log(inputValues)
 
 	return (
 		<BusinessLayout>
@@ -257,9 +258,13 @@ const EditProfile = () => {
 					</div>
 				</div>
 
-				<label className='flex flex-col gap-2 text-xl'>
+				<label className='flex flex-col gap-2 text-xl relative'>
 					Смена аватара
-					<input type='file' onChange={inputChange} />
+					<input type='file' onChange={inputChange} className='absolute inset-0 w-full h-full opacity-0 cursor-pointer' accept='image/*' />
+
+					<button className='py-2 px-4 btn btn-accent rounded-md transition'>Выберите файл</button>
+
+					<span>{inputValues?.photo?.name}</span>
 				</label>
 
 				{inputValues.photo && <p> Текущий аватар {initialPhoto.split('/').pop()}</p>}
@@ -273,7 +278,6 @@ const EditProfile = () => {
 // validation
 // ask for backend validation
 
-// alert
 // delete
 
 export default EditProfile

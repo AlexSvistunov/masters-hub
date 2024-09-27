@@ -9,7 +9,7 @@ export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startTheme());
-  }, []);
+  }, [dispatch]);
 
   return (
     <AlertProvider>

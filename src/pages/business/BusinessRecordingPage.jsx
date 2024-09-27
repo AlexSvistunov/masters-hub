@@ -3,35 +3,12 @@ import BusinessLayout from "../../components/business/BusinessLayout";
 import URL from "../../utils/backend-url";
 import useAuth from "../../hooks/useAuth";
 import { useFetch } from "../../hooks/useFetch";
-import { DayPicker } from "react-day-picker";
 import { Link } from 'react-router-dom'
 import BusinessSpecialists from '../../components/business/BusinessSpecialists'
 import { MoonLoader } from 'react-spinners'
 
 const BusinessRecordingPage = () => {
   const { currentToken } = useAuth();
-
-  // const spec = "master";
-
-  // const [selectedDays, setSelectedDays] = useState([]);
-  // const [selected, setSelected] = useState(new Date());
-
-  // const getRecording = async () => {
-  //   try {
-  //     const response = await fetch(`${URL}/api/admin-panel/recording/`, {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Token ${currentToken}`,
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
-  // const [getBusinessRecording, isLoading, error] = useFetch(getRecording);
 
   const [specialists, setSpecialists] = useState([])
 

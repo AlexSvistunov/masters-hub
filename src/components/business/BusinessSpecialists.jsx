@@ -8,7 +8,8 @@ const BusinessSpecialists = ({ specialist, keyword }) => {
 					<div className='flex gap-8 flex-auto'>
 						<img
 							className='object-cover bg-center tablet:h-40 tablet:w-40 w-24 h-24 rounded-lg'
-							src={`/backend/masterhub/static/${specialist.photo}`}
+							// src={`/backend/masterhub/static/${specialist.photo}`}
+							src={`/backend/masterhub${specialist.photo}`}
 							alt=''
 						/>
 						<div className='max-w-xs'>

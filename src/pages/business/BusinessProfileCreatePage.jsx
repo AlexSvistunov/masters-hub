@@ -7,8 +7,6 @@ const CreateProfile = () => {
       <h1 className="text-3xl mb-4">Создание профиля</h1>
       <CreateProfileForm/>
       
-
-      {/* <MyDropzone/> */}
     </div>
   );
 };

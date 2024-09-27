@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  currentTheme: localStorage.getItem('currentTheme') ?  localStorage.getItem('currentTheme') : 'dark'
-};
+const initialState = {  
+  currentTheme: localStorage.getItem('currentTheme') || 'dark',
+};  
 
 const themeSlice = createSlice({
   name: "currentTheme",
@@ -13,15 +13,13 @@ const themeSlice = createSlice({
       document.querySelector('html').setAttribute('data-theme', state.currentTheme)
     },
 
-    changeTheme: (state) => {
-    
-     const newTheme = state.currentTheme === 'dark' ? 'light' : 'dark'
-     state.currentTheme = newTheme
+    changeTheme: (state) => {  
+      const newTheme = state.currentTheme === 'dark' ? 'light' : 'dark';  
+      state.currentTheme = newTheme;  
 
-     localStorage.setItem('currentTheme', newTheme)
-     document.querySelector('html').setAttribute('data-theme', state.currentTheme)
-     themeSlice.actions.startTheme()
-    },
+      localStorage.setItem('currentTheme', newTheme);  
+      document.querySelector('html').setAttribute('data-theme', newTheme);
+    },  
   },
 });
 
