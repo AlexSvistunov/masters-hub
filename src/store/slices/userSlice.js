@@ -11,21 +11,22 @@ export const logIn = createAsyncThunk(
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify({ password: password, email: email }),
+        body: JSON.stringify({ password, email }),
       });
 
       const data = await response.json();
       console.log(data);
       return data;
     } catch (error) {
-      alert(error.message);
+      console.log(error)
     }
   }
 );
 
 export const signUp = createAsyncThunk(
   "user/signUp",
-  async ({ email, username, specialization, password }) => {
+  async ({ email, username, password }) => {
+
     try {
       const response = await fetch(`${URL}/api/users/`, {
         method: "POST",
@@ -35,7 +36,6 @@ export const signUp = createAsyncThunk(
         body: JSON.stringify({
           email,
           username,
-          specialization,
           password,
         }),
       });
@@ -44,7 +44,7 @@ export const signUp = createAsyncThunk(
       console.log(data);
       return data;
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   }
 );
@@ -96,10 +96,6 @@ const userSlice = createSlice({
         state.image = `/backend/masterhub/static${action.payload.image}`;
         localStorage.setItem("token", action.payload.auth_token);
         localStorage.setItem("img", `/backend/masterhub/static${action.payload.image}`);
-      } else {
-        for (let key in action.payload) {
-          alert(`Некорректный ${key}`);
-        }
       }
     });
 
@@ -111,9 +107,6 @@ const userSlice = createSlice({
         localStorage.setItem("img", `/backend/masterhub/static${action.payload.image}`);
       }
 
-      if (action.payload["non_field_errors"]) {
-        alert(action.payload["non_field_errors"][0]);
-      }
     });
 
     builder.addCase(logOut.fulfilled, (state) => {

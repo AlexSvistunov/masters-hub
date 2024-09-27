@@ -1,24 +1,7 @@
-import { useDispatch } from "react-redux";
-import { logIn } from "../store/slices/userSlice";
-import Auth from "./Auth";
-import { useNavigate } from "react-router-dom";
+import Auth from './Auth'
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+	return <Auth keyword='Войти' />
+}
 
-  const loginHandler = async ({ email, password }) => {
-    if (email && password) {
-      await dispatch(logIn({ email, password })).then((data) => {
-        console.log(data);
-        if (data.payload.auth_token) {
-          navigate("/");
-        }
-      });
-    }
-  };
-
-  return <Auth keyword="Войти" authHandler={loginHandler} />;
-};
-
-export default Login;
+export default Login
